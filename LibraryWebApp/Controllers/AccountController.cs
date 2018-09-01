@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibraryWebApp.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LibraryWebApp.Controllers
 {
@@ -40,6 +42,86 @@ namespace LibraryWebApp.Controllers
             private set { _userManager = value; }
         }
 
+        #region  custom code
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddUserToRole()
+        {
+            var model = new AddUserToRoleViewModel()
+            {
+                UserName = string.Empty,
+                Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                SelectedRole = string.Empty
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddUserToRole(AddUserToRoleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model = new AddUserToRoleViewModel()
+                {
+                    UserName = model.UserName,
+                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    SelectedRole = model.SelectedRole
+                };
+                return View(model);
+            }
+
+            var user = UserManager.FindByName(model.UserName);
+            if (user == null)
+            {
+                ViewBag.Error = $"User '{model.UserName}' is not found!";
+                model = new AddUserToRoleViewModel()
+                {
+                    UserName = model.UserName,
+                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    SelectedRole = model.SelectedRole
+                };
+                return View(model);
+            }
+
+            var roleId = GetRoleId(model.SelectedRole);
+            if (user.Roles.FirstOrDefault(r => Convert.ToInt32(r.RoleId) == roleId) == null)
+            {
+                if (user.Roles.Count != 0)
+                    user.Roles.Clear();
+
+                var result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
+                if (result == null)
+                    return HttpNotFound();
+            }
+            else
+            {
+                ViewBag.Error = $"User '{model.UserName}' is already in the role '{model.SelectedRole}'";
+                model = new AddUserToRoleViewModel()
+                {
+                    UserName = model.UserName,
+                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    SelectedRole = model.SelectedRole
+                };
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private string[] Roles = {"Admin", "Staff", "Member", "User"};
+
+        private int GetRoleId(string role)
+        {
+            for (int i = 0; i < Roles.Length; ++i)
+                if (role == Roles[i])
+                    return i;
+            return -1; // if role does not exist, return -1
+        }
+
+        #endregion
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -63,7 +145,7 @@ namespace LibraryWebApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe,
                 shouldLockout: false);
             switch (result)
             {
@@ -142,8 +224,9 @@ namespace LibraryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRole(user.Id, Roles[3]);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
