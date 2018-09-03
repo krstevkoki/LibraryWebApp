@@ -225,7 +225,7 @@ namespace LibraryWebApp.Controllers
             {
                 var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
-                UserManager.AddToRole(user.Id, Roles.User);
+                await UserManager.AddToRoleAsync(user.Id, Roles.User);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
