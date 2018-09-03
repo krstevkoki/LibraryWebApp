@@ -20,6 +20,9 @@ namespace LibraryWebApp.Models
         public int Pages { get; set; }
 
         [Required]
+        public int Quantity { get; set; }
+
+        [Required]
         public Genre Genre { get; set; }
 
         public string CoverURL { get; set; }
@@ -34,10 +37,13 @@ namespace LibraryWebApp.Models
 
         public virtual ICollection<Publisher> Publishers { get; set; }
 
+        public virtual ICollection<Review> Reviews { get; set; }
+
         public Book()
         {
             Authors = new List<Author>();
             Publishers = new List<Publisher>();
+            Reviews = new List<Review>();
         }
     }
 }
