@@ -9,6 +9,7 @@ namespace LibraryWebApp.Models
     public class Genre
     {
         [Required]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Genre")]

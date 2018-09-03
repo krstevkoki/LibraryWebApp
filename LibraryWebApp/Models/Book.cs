@@ -9,6 +9,7 @@ namespace LibraryWebApp.Models
     public class Book
     {
         [Required]
+        [Key]
         public int Id { get; set; }
 
         [Required]

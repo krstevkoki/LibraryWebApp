@@ -9,9 +9,7 @@ namespace LibraryWebApp.Models
     public class Publisher
     {
         [Required]
-        public int Key { get; set; }
-
-        [Required]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Publisher Name")]
