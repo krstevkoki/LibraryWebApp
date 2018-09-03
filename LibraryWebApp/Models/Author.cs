@@ -13,15 +13,15 @@ namespace LibraryWebApp.Models
 
         [Display(Name = "Author Name")]
         [Required]
-        public string AuthorName { get; set; }
+        public string Name { get; set; }
 
         public string ImageURL { get; set; }
 
-        public virtual ICollection<Book> books { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
 
         public Author()
         {
-            books = new List<Book>();
+            Books = new List<Book>();
         }
     }
 }

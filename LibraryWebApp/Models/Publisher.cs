@@ -9,25 +9,26 @@ namespace LibraryWebApp.Models
     public class Publisher
     {
         [Required]
+        public int Key { get; set; }
+
+        [Required]
         public int Id { get; set; }
 
-        [Display(Name = "Publisher")]
+        [Display(Name = "Publisher Name")]
         [Required]
-        public string PublisherName { get; set; }
+        public string Name { get; set; }
 
-        [Display(Name = "Country")]
         [Required]
-        public string PublisherCountry { get; set; }
+        public string Country { get; set; }
 
-        [Display(Name = "City")]
         [Required]
-        public string PublisherCity { get; set; }
+        public string City { get; set; }
 
         [Required]
         public string Address { get; set; }
 
-        [RegularExpression("07[01235678]\\d{6}", ErrorMessage = "Invalid phone number!")]
         [Required]
+        [Phone]
         public string PhoneNumber { get; set; }
     }
 }

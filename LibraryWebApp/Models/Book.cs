@@ -15,7 +15,7 @@ namespace LibraryWebApp.Models
         public string Title { get; set; }
 
         [Required]
-        [Range(0,int.MaxValue)]
+        [Range(1,int.MaxValue)]
         public int Pages { get; set; }
 
         [Required]
@@ -29,14 +29,14 @@ namespace LibraryWebApp.Models
         [Required]
         public DateTime PublishDate { get; set; }
 
-        public virtual ICollection<Author> authors { get; set; }
+        public virtual ICollection<Author> Authors { get; set; }
 
-        public virtual ICollection<Publisher> publishers { get; set; }
+        public virtual ICollection<Publisher> Publishers { get; set; }
 
         public Book()
         {
-            authors = new List<Author>();
-            publishers = new List<Publisher>();
+            Authors = new List<Author>();
+            Publishers = new List<Publisher>();
         }
     }
 }
