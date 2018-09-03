@@ -51,7 +51,7 @@ namespace LibraryWebApp.Controllers
             var model = new AddUserToRoleViewModel()
             {
                 UserName = string.Empty,
-                Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                Roles = Roles.ExportToList(),
                 SelectedRole = string.Empty
             };
             return View(model);
@@ -66,7 +66,7 @@ namespace LibraryWebApp.Controllers
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
-                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };
                 return View(model);
@@ -79,7 +79,7 @@ namespace LibraryWebApp.Controllers
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
-                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };
                 return View(model);
@@ -101,7 +101,7 @@ namespace LibraryWebApp.Controllers
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
-                    Roles = new List<string> {"Admin", "Staff", "Member", "User"},
+                    Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };
                 return View(model);
@@ -110,12 +110,11 @@ namespace LibraryWebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private string[] Roles = {"Admin", "Staff", "Member", "User"};
-
-        private int GetRoleId(string role)
+        private static int GetRoleId(string role)
         {
-            for (int i = 0; i < Roles.Length; ++i)
-                if (role == Roles[i])
+            var roles = Roles.ExportToList();
+            for (int i = 0; i < Roles.Count; ++i)
+                if (role == roles[i])
                     return i;
             return -1; // if role does not exist, return -1
         }
@@ -226,7 +225,7 @@ namespace LibraryWebApp.Controllers
             {
                 var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
-                UserManager.AddToRole(user.Id, Roles[3]);
+                UserManager.AddToRole(user.Id, Roles.User);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
