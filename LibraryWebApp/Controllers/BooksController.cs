@@ -38,7 +38,15 @@ namespace LibraryWebApp.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new AddAuthorToBookModel()
+            {
+
+
+                Book = new Book(),
+                Authors = (db.Authors.ToList()),
+                SelectedAuthor = -1
+            };
+            return View(model);
         }
 
         // POST: Books/Create
@@ -123,5 +131,6 @@ namespace LibraryWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
