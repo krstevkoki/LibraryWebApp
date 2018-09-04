@@ -32,7 +32,7 @@ namespace LibraryWebApp.Models
         public string PublishPlace { get; set; }
 
         [Required]
-        
+        [Column(TypeName = "datetime2")]
         public DateTime PublishDate { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }
