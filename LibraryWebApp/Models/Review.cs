@@ -19,6 +19,7 @@ namespace LibraryWebApp.Models
         public string ReviewMessage { get; set; }
 
         [Required]
+        [Column(TypeName = "datetime2")]
         public DateTime ReviewDate { get; set; }
     }
 }
