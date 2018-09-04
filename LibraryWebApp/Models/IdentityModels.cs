@@ -13,7 +13,7 @@ namespace LibraryWebApp.Models
     {
         [Required]
         [Display(Name = "Age")]
-        [Range(14, int.MaxValue)]
+        [Range(14, 99)]
         public int Age { get; set; }
 
         [Required] [Display(Name = "Gender")] public bool Gender { get; set; }
