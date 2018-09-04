@@ -70,10 +70,34 @@ namespace LibraryWebApp.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Passwords do not match!")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Age")]
+        [Range(14, 99)]
+        public int Age { get; set; }
+
+        [Required] [Display(Name = "Gender")] public bool Gender { get; set; }
+        public bool IsMember { get; set; }
+
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [Required(AllowEmptyStrings = true)]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [Required(AllowEmptyStrings = true)]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [Required(AllowEmptyStrings = true)]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
     }
 
     public class ResetPasswordViewModel
