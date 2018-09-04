@@ -12,7 +12,7 @@ namespace LibraryWebApp.Controllers
 {
     public class AuthorsController : Controller
     {
-        private LibraryWebAppContext db = new LibraryWebAppContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Authors
         public ActionResult Index()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryWebApp.Models
 {
@@ -16,13 +17,13 @@ namespace LibraryWebApp.Models
         public string Title { get; set; }
 
         [Required]
-        [Range(1,int.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int Pages { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
-        [Required]
         public Genre Genre { get; set; }
 
         public string CoverURL { get; set; }
@@ -31,6 +32,7 @@ namespace LibraryWebApp.Models
         public string PublishPlace { get; set; }
 
         [Required]
+        
         public DateTime PublishDate { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }

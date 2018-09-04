@@ -12,7 +12,7 @@ namespace LibraryWebApp.Controllers
 {
     public class ReviewsController : Controller
     {
-        private LibraryWebAppContext db = new LibraryWebAppContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Reviews
         public ActionResult Index()

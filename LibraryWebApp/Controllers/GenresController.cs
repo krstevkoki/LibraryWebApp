@@ -12,7 +12,7 @@ namespace LibraryWebApp.Controllers
 {
     public class GenresController : Controller
     {
-        private LibraryWebAppContext db = new LibraryWebAppContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Genres
         public ActionResult Index()
