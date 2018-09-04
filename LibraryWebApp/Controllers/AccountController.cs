@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -223,11 +224,48 @@ namespace LibraryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var usernameExists = await UserManager.FindByNameAsync(model.UserName);
+                var emailExists = await UserManager.FindByEmailAsync(model.Email);
+                if (usernameExists != null && emailExists != null)
+                {
+                    ViewBag.UserNameExists = $"User with username '{model.UserName}' already exists! " +
+                                             "Please choose another username!";
+                    ViewBag.EmailExists = $"User with email '{model.Email}' already exists! " +
+                                          "Please choose another email!";
+                    return View(model);
+                }
+
+                if (usernameExists != null)
+                {
+                    ViewBag.UserNameExists = $"User with username '{model.UserName}' already exists! " +
+                                             "Please choose another username!";
+                    return View(model);
+                }
+
+                if (emailExists != null)
+                {
+                    ViewBag.EmailExists = $"User with email '{model.Email}' already exists! " +
+                                          "Please choose another email!";
+                    return View(model);
+                }
+
                 var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
+                user.Age = model.Age;
+                user.City = model.City;
+                user.Country = model.Country;
+                user.Address = model.Address;
+                user.Gender = model.Gender;
+                user.IsMember = model.IsMember;
+                if (user.IsMember.Value)
+                    user.MemberSince = DateTime.Now;
+
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
                 var result = await UserManager.CreateAsync(user, model.Password);
-                await UserManager.AddToRoleAsync(user.Id, Roles.User);
+
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, Roles.User);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
