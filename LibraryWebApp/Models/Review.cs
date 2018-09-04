@@ -19,6 +19,6 @@ namespace LibraryWebApp.Models
         public string ReviewMessage { get; set; }
 
         [Required]
-        public DateTime ReviewData { get; set; }
+        public DateTime ReviewDate { get; set; }
     }
 }
