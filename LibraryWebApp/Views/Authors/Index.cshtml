@@ -18,23 +18,42 @@
         <th>
             @Html.DisplayNameFor(model => model.ImageURL)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageURL)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageURL)
+            </td>
+            <td>
+                @if (item.Books.Count == 0)
+                {
+                    <span class="alert-warning">This author has no books!</span>
+                }
+                else
+                {
+                    <ul class="list-group list-unstyled">
+                        @foreach (var book in item.Books)
+                        {
+                            <li class="list-group-item">@book.Title</li>
+                        }
+                    </ul>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            </td>
+        </tr>
+    }
 
 </table>
