@@ -21,7 +21,7 @@ namespace LibraryWebApp.Models
         public int Pages { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
         public Genre Genre { get; set; }
