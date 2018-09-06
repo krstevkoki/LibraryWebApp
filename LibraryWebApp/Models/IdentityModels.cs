@@ -16,20 +16,14 @@ namespace LibraryWebApp.Models
         [Range(14, 99)]
         public int Age { get; set; }
 
-        [Required] [Display(Name = "Gender")] public bool Gender { get; set; }
-        [Display(Name = "Member?")] public bool? IsMember { get; set; }
-        [Display(Name = "Member Since:")] public DateTime? MemberSince { get; set; }
+        [Required] public bool Gender { get; set; }
+        public bool? IsMember { get; set; }
+        public DateTime? MemberSince { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         public string City { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         public string Country { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         public string Address { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -48,7 +42,7 @@ namespace LibraryWebApp.Models
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Review> Reviews { get; set; }
-      
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

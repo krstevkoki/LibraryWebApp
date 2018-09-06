@@ -84,18 +84,12 @@ namespace LibraryWebApp.Models
         [Required] [Display(Name = "Gender")] public bool Gender { get; set; }
         public bool IsMember { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         [Display(Name = "City")]
         public string City { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         [Display(Name = "Country")]
         public string Country { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         [Display(Name = "Address")]
         public string Address { get; set; }
     }
