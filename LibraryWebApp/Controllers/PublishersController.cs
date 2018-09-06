@@ -17,7 +17,8 @@ namespace LibraryWebApp.Controllers
         // GET: Publishers
         public ActionResult Index()
         {
-            return View(db.Publishers.ToList());
+            var model = db.Publishers.Include(m => m.Books).ToList();
+            return View(model);
         }
 
         // GET: Publishers/Details/5
