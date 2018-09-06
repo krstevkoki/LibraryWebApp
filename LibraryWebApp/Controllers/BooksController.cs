@@ -13,11 +13,13 @@ namespace LibraryWebApp.Controllers
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+     
 
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            var model = db.Books.Include(m => m.Authors).ToList();
+            return View(model);
         }
 
 
@@ -93,7 +95,6 @@ namespace LibraryWebApp.Controllers
             };
             return View(model);
         }
-
 
 
         // GET: Books/Edit/5
