@@ -12,8 +12,8 @@ namespace LibraryWebApp.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Publisher Name")]
         [Required]
+        [Display(Name = "Publisher Name")]
         public string Name { get; set; }
 
         [Required]
@@ -28,5 +28,12 @@ namespace LibraryWebApp.Models
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        public virtual ICollection<Book> Books { get; set; }
+
+        public Publisher()
+        {
+            Books = new List<Book>();
+        }
     }
 }
