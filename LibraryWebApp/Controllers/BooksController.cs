@@ -27,11 +27,13 @@ namespace LibraryWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Book book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
@@ -40,8 +42,6 @@ namespace LibraryWebApp.Controllers
         {
             var model = new AddAuthorToBookModel()
             {
-
-
                 Book = new Book(),
                 Authors = (db.Authors.ToList()),
                 SelectedAuthor = -1,
@@ -58,16 +58,38 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Pages,Quantity,CoverURL,PublishPlace,PublishDate")] Book book)
+        public ActionResult Create(AddAuthorToBookModel model)
         {
             if (ModelState.IsValid)
             {
+                var book = new Book()
+                {
+                    Title = model.Book.Title,
+                    Pages = model.Book.Pages,
+                    Quantity = model.Book.Quantity,
+                    CoverURL = model.Book.CoverURL,
+                    PublishPlace = model.Book.PublishPlace,
+                    PublishDate = model.Book.PublishDate,
+                    Genre = db.Genres.Find(model.SelectedGenre),
+                };
+                book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
+                book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(book);
+            model = new AddAuthorToBookModel()
+            {
+                Book = new Book(),
+                Authors = (db.Authors.ToList()),
+                SelectedAuthor = -1,
+                Publishers = (db.Publishers.ToList()),
+                SelectedPublisher = -1,
+                Genres = (db.Genres.ToList()),
+                SelectedGenre = -1
+            };
+            return View(model);
         }
 
         // GET: Books/Edit/5
@@ -77,11 +99,13 @@ namespace LibraryWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Book book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
@@ -90,7 +114,8 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Pages,Quantity,CoverURL,PublishPlace,PublishDate")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Title,Pages,Quantity,CoverURL,PublishPlace,PublishDate")]
+            Book book)
         {
             if (ModelState.IsValid)
             {
@@ -98,6 +123,7 @@ namespace LibraryWebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(book);
         }
 
@@ -108,11 +134,13 @@ namespace LibraryWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Book book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
@@ -133,8 +161,8 @@ namespace LibraryWebApp.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
-
     }
 }
