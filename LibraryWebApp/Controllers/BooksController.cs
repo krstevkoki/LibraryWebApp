@@ -44,7 +44,11 @@ namespace LibraryWebApp.Controllers
 
                 Book = new Book(),
                 Authors = (db.Authors.ToList()),
-                SelectedAuthor = -1
+                SelectedAuthor = -1,
+                Publishers = (db.Publishers.ToList()),
+                SelectedPublisher = -1,
+                Genres = (db.Genres.ToList()),
+                SelectedGenre = -1
             };
             return View(model);
         }
