@@ -20,6 +20,8 @@ namespace LibraryWebApp.Controllers
             return View(db.Books.ToList());
         }
 
+
+
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {
@@ -91,6 +93,8 @@ namespace LibraryWebApp.Controllers
             };
             return View(model);
         }
+
+
 
         // GET: Books/Edit/5
         public ActionResult Edit(int? id)
