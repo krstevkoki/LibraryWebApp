@@ -265,7 +265,10 @@ namespace LibraryWebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, Roles.User);
+                    if (user.IsMember.Value)
+                        await UserManager.AddToRoleAsync(user.Id, Roles.Member);
+                    else
+                        await UserManager.AddToRoleAsync(user.Id, Roles.User);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
