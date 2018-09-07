@@ -26,6 +26,10 @@ namespace LibraryWebApp.Models
 
         public Genre Genre { get; set; }
 
+        [Required]
+        [Range(1,100000.00)]
+        public decimal Price { get; set; }
+
         public string CoverURL { get; set; }
 
         [Required]

@@ -74,6 +74,7 @@ namespace LibraryWebApp.Controllers
                     CoverURL = model.Book.CoverURL,
                     PublishPlace = model.Book.PublishPlace,
                     PublishDate = model.Book.PublishDate,
+                    Price = model.Book.Price,
                     Genre = db.Genres.Find(model.SelectedGenre),
                 };
                 book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
