@@ -13,7 +13,7 @@ namespace LibraryWebApp.Controllers
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-     
+
 
         // GET: Books
         public ActionResult Index()
@@ -21,7 +21,6 @@ namespace LibraryWebApp.Controllers
             var model = db.Books.Include(m => m.Authors).ToList();
             return View(model);
         }
-
 
 
         // GET: Books/Details/5
@@ -106,13 +105,24 @@ namespace LibraryWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = db.Books.Find(id);
+            var book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
 
-            return View(book);
+            var model = new AddAuthorToBookModel()
+            {
+                Book = book,
+                Authors = (db.Authors.ToList()),
+                SelectedAuthor = -1,
+                Publishers = (db.Publishers.ToList()),
+                SelectedPublisher = -1,
+                Genres = (db.Genres.ToList()),
+                SelectedGenre = -1
+            };
+
+            return View(model);
         }
 
         // POST: Books/Edit/5
@@ -120,17 +130,40 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Pages,Quantity,CoverURL,PublishPlace,PublishDate")]
-            Book book)
+        public ActionResult Edit(AddAuthorToBookModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
+                var book = db.Books.Find(model.Book.Id);
+                if (book == null)
+                    return HttpNotFound();
+
+                book.Title = model.Book.Title;
+                book.Pages = model.Book.Pages;
+                book.Quantity = model.Book.Quantity;
+                book.CoverURL = model.Book.CoverURL;
+                book.PublishPlace = model.Book.PublishPlace;
+                book.PublishDate = model.Book.PublishDate;
+                book.Price = model.Book.Price;
+                book.Genre = db.Genres.Find(model.SelectedGenre);
+                book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
+                book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(book);
+            model = new AddAuthorToBookModel()
+            {
+                Book = model.Book,
+                Authors = (db.Authors.ToList()),
+                SelectedAuthor = -1,
+                Publishers = (db.Publishers.ToList()),
+                SelectedPublisher = -1,
+                Genres = (db.Genres.ToList()),
+                SelectedGenre = -1
+            };
+            return View(model);
         }
 
         // GET: Books/Delete/5
