@@ -14,8 +14,7 @@ namespace LibraryWebApp.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
         public int Points { get; set; }
-        public DateTime? DateRegistration { get; set; }
-        public DateTime DateExpiring { get; set; }
+        public DateTime? DateExpiring { get; set; }
     }
 
     public class ManageLoginsViewModel
