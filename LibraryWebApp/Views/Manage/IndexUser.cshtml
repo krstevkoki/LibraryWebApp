@@ -24,7 +24,7 @@
             ]
         </dd>
         <dt class="dt">User: </dt>
-        <dd class="dd">@User.Identity.Name</dd>
+        <dd id="username" class="dd">@User.Identity.Name</dd>
         <dt class="dt">User Role:</dt>
         <dd class="dd">
             === User ===
@@ -69,8 +69,10 @@
                     height: 350,
                     buttons: {
                         Accept:
-                            function() {
-                                window.open('/Account/Register');
+                            function () {
+                                url = "/Account/AddToRoleMember?username=" + $("#username").html();
+                                console.log(url);
+                                window.location = url;
                                 $(this).dialog("close");
                             },
 
