@@ -397,6 +397,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\IndexAdminCss.css" />
     <Content Include="Content\IndexMembersCss.css" />
     <Content Include="Content\IndexUserCss.css" />
     <Content Include="favicon.ico" />
