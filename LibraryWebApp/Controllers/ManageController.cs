@@ -70,9 +70,7 @@ namespace LibraryWebApp.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                DateRegistration = user.MemberSince.Value,
-                DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : (DateTime?)null
-
+                DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : DateTime.MinValue
             };
             if (User.IsInRole(Roles.Admin))
                 return View("IndexAdmin", model);
