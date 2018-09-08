@@ -35,34 +35,22 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-
+        <footer id="ftr" class="text-center" style="margin-top:20px;">
+            <span id="c1" class="contact">Our fb-page:</span>
+            <span id="c2" class="contact">Address:</span>
+            <span id="c3" class="contact">E-mail: </span>
+            <span id="c4" class="contact">Phone:</span>
+            <p id="d1"><a href="https://www.facebook.com/britishlibrary/?ref=br_rs">Click here</a></p>
+            <p id="d2"> st. Partizanski Odredi bb. Skopje</p>
+            <p id="d3">libary.lib.gmail.com</p>
+            <p id="d4">077-435-678</p>
+            <p>&copy; @DateTime.Now.Year - LibaryWebApp</p>
+        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    <footer id="ftr" class="text-center">
-        <span id="c1" class="contact">Our fb-page:</span>
-        <span id="c2" class="contact">Address:</span>
-        <span id="c3" class="contact">E-mail: </span>
-        <span id="c4" class="contact">Phone:</span>
-
-
-        <p id="d1"><a href="https://www.facebook.com/britishlibrary/?ref=br_rs">Click here</a></p>
-        <p id="d2"> st. Partizanski Odredi bb. Skopje</p>
-        <p id="d3">libary.lib.gmail.com</p>
-        <p id="d4">077-435-678</p>
-
-    </footer>
-    <footer class="text-center" style="margin-top:20px;">
-        <p>&copy; @DateTime.Now.Year - LibaryWebApp</p>
-    </footer>
 </body>
 
 </html>
-
-@section styles {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexUserCss.css")" />
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
-}
