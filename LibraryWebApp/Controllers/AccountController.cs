@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -109,6 +110,31 @@ namespace LibraryWebApp.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> AddToRoleMember(string username)
+        {
+            if (!User.IsInRole(Roles.User))
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+            var user = await UserManager.FindByNameAsync(username);
+            if (user == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            user.Roles.Clear();
+            var result = await UserManager.AddToRoleAsync(user.Id, Roles.Member);
+            if (result.Succeeded)
+            {
+                var authenticationManager = HttpContext.GetOwinContext().Authentication;
+                authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+
+                return RedirectToAction("Index", "Manage");
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         private static int GetRoleId(string role)
