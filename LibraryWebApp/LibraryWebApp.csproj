@@ -563,6 +563,7 @@
     <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Manage\IndexAdmin.cshtml" />
     <Content Include="Views\Manage\IndexUser.cshtml" />
+    <Content Include="Views\Manage\IndexMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

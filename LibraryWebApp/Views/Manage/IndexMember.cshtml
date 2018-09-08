@@ -1,0 +1,42 @@
+﻿@model LibraryWebApp.Models.IndexViewModel
+@{
+    ViewBag.Title = "IndexMember";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 id="a">Welcome to Members section</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4 id="b">Your personal data</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="dt">Password:</dt>
+        <dd class="dd">
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+        <dt class="dt">User: </dt>
+        <dd class="dd">@User.Identity.Name</dd>
+        <dt class="dt">User Role:</dt>
+        <dd class="dd">
+            === Member ===
+        </dd>
+        
+
+    </dl>
+</div>
+
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
+}

@@ -72,6 +72,8 @@ namespace LibraryWebApp.Controllers
                 return View("IndexAdmin", model);
             else if (User.IsInRole(Roles.User))
                 return View("IndexUser", model);
+            else if (User.IsInRole(Roles.Member))
+                return View("IndexMember", model);
             return View(model);
 
         }
