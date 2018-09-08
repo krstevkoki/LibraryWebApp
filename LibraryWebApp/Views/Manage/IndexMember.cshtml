@@ -30,11 +30,12 @@
         <dd class="dd">
             === Member ===
         </dd>
-        <dt class="dt">Date of registration: </dt>
-        <dd class="dd">@Model.DateExpiring</dd>
+        <dt class="dt">Member since:</dt>
+        <dd class="dd">@Model.DateRegistration</dd>
+        <dt>Days diff:</dt>
+        <dd>@Model.DateDifference.Days</dd>
     </dl>
 </div>
-
 <div id="points">
     <p id="border">Total points: @Model.Points</p>
 </div>
@@ -49,10 +50,10 @@
                 <h4 class="modal-title">Membership expiring</h4>
             </div>
             <div class="modal-body">
-                <p class="text-danger">Your membership is expiring on @Model.DateExpiring</p>
+                <p class="text-danger">Your membership is expiring after @Model.DateDifference.Days days</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                <button id="btn" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
             </div>
         </div>
 
@@ -61,7 +62,23 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(function () { $("#popModal").modal('show'); });
+
+        if (@Model.DateDifference.Days < 30) {
+            $(function () { $("#popModal").modal('show'); });
+        }
+        if (@Model.DateDifference.Days<= 0) {
+
+            $("#popModal #btn").on("click", function () {
+                url = "/Account/AddToRoleUser?username=" + $("#username").html();
+                console.log(url);
+                window.location = url;
+                $(this).dialog("close");
+
+            });
+               
+            
+        }
+
     </script>
 }
 @section styles {
