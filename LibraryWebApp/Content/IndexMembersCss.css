@@ -94,3 +94,18 @@
     padding: 10px;
     color: darkblue;
 }
+
+#points{
+    border: 2px solid;
+    width: 220px;
+    border-color: darkblue;
+    padding: 9px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 900px;
+    color: darkgoldenrod;
+    
+}
+
+
+

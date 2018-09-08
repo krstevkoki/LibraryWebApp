@@ -30,10 +30,11 @@
         <dd class="dd">
             === Member ===
         </dd>
-        <dt>Points:</dt>
-        @User
-
     </dl>
+</div>
+
+<div  id="points">
+    <p id="border" >Total points:</p>
 </div>
 
 <div id="popModal" class="modal fade" role="dialog">
@@ -56,12 +57,9 @@
 </div>
 
 @section scripts{
-   
-    
-    
     <script type="text/javascript">
         $(function () { $("#popModal").modal('show'); });
-    </script>
+     </script>
 }
 @section styles {
     <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />

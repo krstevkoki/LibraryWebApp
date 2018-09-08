@@ -56,8 +56,13 @@ namespace LibraryWebApp.Controllers
                                     : message == ManageMessageId.RemovePhoneSuccess
                                         ? "Your phone number was removed."
                                         : "";
-
+         
             var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -65,6 +70,7 @@ namespace LibraryWebApp.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : (DateTime?) null
               
             };
             if (User.IsInRole(Roles.Admin))
