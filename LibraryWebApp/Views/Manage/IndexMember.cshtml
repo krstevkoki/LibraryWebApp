@@ -31,12 +31,12 @@
             === Member ===
         </dd>
         <dt class="dt">Date of registration: </dt>
-        <dd class="dd">@Model.DateRegistration + @Model.DateExpiring</dd>
+        <dd class="dd">@Model.DateExpiring</dd>
     </dl>
 </div>
 
 <div id="points">
-    <p id="border">Total points:</p>
+    <p id="border">Total points: @Model.Points</p>
 </div>
 
 
@@ -49,7 +49,7 @@
                 <h4 class="modal-title">Membership expiring</h4>
             </div>
             <div class="modal-body">
-                <p class="text-danger">Your membership is expiring after </p>
+                <p class="text-danger">Your membership is expiring on @Model.DateExpiring</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
