@@ -26,7 +26,7 @@ namespace LibraryWebApp
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/site.css",
+                "~/Content/Site.css",
                 "~/Content/DataTables/css/dataTables.bootstrap.css"));
         }
     }
