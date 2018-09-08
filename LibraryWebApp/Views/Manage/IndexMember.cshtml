@@ -30,12 +30,15 @@
         <dd class="dd">
             === Member ===
         </dd>
+        <dt class="dt">Date of registration: </dt>
+        <dd class="dd">@Model.DateRegistration + @Model.DateExpiring</dd>
     </dl>
 </div>
 
-<div  id="points">
-    <p id="border" >Total points:</p>
+<div id="points">
+    <p id="border">Total points:</p>
 </div>
+
 
 <div id="popModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -46,7 +49,7 @@
                 <h4 class="modal-title">Membership expiring</h4>
             </div>
             <div class="modal-body">
-                <p class="text-danger">Your membership is expiring on @DateTime.Now</p>
+                <p class="text-danger">Your membership is expiring after </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
@@ -59,7 +62,7 @@
 @section scripts{
     <script type="text/javascript">
         $(function () { $("#popModal").modal('show'); });
-     </script>
+    </script>
 }
 @section styles {
     <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />
