@@ -1,0 +1,32 @@
+﻿.dt {
+    font-weight: 800;
+    font-size: 20px;
+    font-style: oblique;
+    margin-top: -3px;
+    color: tomato;
+}
+
+.dd {
+    font-size: 14px;
+    font-weight: bold;
+    color: chocolate;
+}
+
+#a {
+    background-image: url(../images/14.jpeg);
+    background-size: contain;
+    border-radius: 20px;
+    height: 50px;
+    padding: 10px;
+    color: tomato;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#b {
+    font-size: 22px;
+    font-weight: bolder;
+    margin-left: 60px;
+    color: tomato;
+}
