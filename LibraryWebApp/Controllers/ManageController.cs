@@ -65,8 +65,7 @@ namespace LibraryWebApp.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                Points = 0,
-                DateExpiring = DateTime.Now
+              
             };
             if (User.IsInRole(Roles.Admin))
                 return View("IndexAdmin", model);
