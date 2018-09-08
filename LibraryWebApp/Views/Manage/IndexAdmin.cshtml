@@ -3,15 +3,15 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>Admin View Only</h2>
+<h2 id="a">Admin View Only</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Manage your account settings</h4>
-    <hr />
+    <h4 id="b">Your personal data</h4>
+    <hr/>
     <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
+        <dt class="dt">Password:</dt>
+        <dd class="dd">
             [
             @if (Model.HasPassword)
             {
@@ -23,11 +23,23 @@
             }
             ]
         </dd>
-        <dt>User: </dt>
-        <dd>@User.Identity.Name</dd>
-        <dt>User Role:</dt>
-        <dd>
+        <dt class="dt">User: </dt>
+        <dd class="dd">@User.Identity.Name</dd>
+        <dt class="dt">User Role:</dt>
+        <dd class="dd">
             === ADMIN ===
+        </dd>
+        <dt class="dt">Warning:</dt>
+        <dd class="dd text-uppercase text-danger">
+            <b>
+                You are the admin. Be carefull what you're doing. <br/>
+                You have the full power. Just kidding you can't do shit!
+            </b>
         </dd>
     </dl>
 </div>
+
+@section styles
+{
+    <link rel="stylesheet" type="text/css" href="@Href("../../Content/IndexAdminCss.css")"/>
+}
