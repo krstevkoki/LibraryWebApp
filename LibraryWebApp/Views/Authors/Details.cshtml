@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            <a href="@Model.ImageURL"><img src="@Model.ImageURL" style="max-width:200px; max-height: 200px" ;/></a>
+            <a href="@Model.ImageURL"><img src="@Model.ImageURL" style="max-width:200px; max-height: 200px" ; /></a>
         </dd>
 
     </dl>
@@ -33,3 +33,9 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexUserCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
+}

@@ -3,18 +3,18 @@
     ViewBag.Title = "Register";
 }
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h3>
         <b>General Details:</b>
     </h3>
-    @Html.ValidationSummary(true, "", new {@class = "text-danger small"})
+    @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
     <div class="form-group">
-        @Html.LabelFor(m => m.UserName, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.UserName, "", new {@class = "text-danger alert-danger small"})
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger alert-danger small" })
             @if (ViewBag.UserNameExists != null)
             {
                 <span class="alert-danger text-danger small">@ViewBag.UserNameExists</span>
@@ -22,10 +22,10 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger alert-danger"})
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger alert-danger" })
             @if (ViewBag.EmailExists != null)
             {
                 <span class="alert-danger text-danger small">@ViewBag.EmailExists</span>
@@ -33,36 +33,36 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger alert-danger small"})
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger alert-danger small" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new {@class = "text-danger alert-danger small"})
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger alert-danger small" })
         </div>
     </div>
 
-    <hr style="height: 1px; background-color: lightblue; color: lightblue"/>
+    <hr style="height: 1px; background-color: lightblue; color: lightblue" />
     <h3>
         <b>Personal Details:</b>
     </h3>
     <div class="form-group">
-        @Html.LabelFor(m => m.Age, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Age, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Age, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Age, "", new {@class = "text-danger alert-danger small"})
+            @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger alert-danger small" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Gender, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
             <label class="radio-inline">
-                @Html.RadioButtonFor(m => m.Gender, true, new {@checked = "true"})<span>Male</span>
+                @Html.RadioButtonFor(m => m.Gender, true, new { @checked = "true" })<span>Male</span>
             </label>
             <label class="radio-inline">
                 @Html.RadioButtonFor(m => m.Gender, false)<span>Female</span>
@@ -70,27 +70,27 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.City, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.City, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.City, "", new {@class = "text-danger alert-danger small"})
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger alert-danger small" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Country, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Country, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Country, "", new {@class = "text-danger alert-danger small"})
+            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger alert-danger small" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Address, new {@class = "col-md-2 control-label", style = "cursor: pointer"})
+        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Address, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Address, "", new {@class = "text-danger alert-danger small"})
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger alert-danger small" })
             <div>
                 <label class="checkbox-inline">
-                    @Html.CheckBoxFor(m => m.IsMember, new {@checked = "true"})
+                    @Html.CheckBoxFor(m => m.IsMember, new { @checked = "true" })
                     <span class="text-info">Do you want to become our member?</span>
                 </label>
             </div>
@@ -98,11 +98,16 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-primary" value="Register"/>
+            <input type="submit" class="btn btn-primary" value="Register" />
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexUserCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
 }

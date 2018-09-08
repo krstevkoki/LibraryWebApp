@@ -51,19 +51,27 @@
 #c4 { margin-left: 150px; }
 
 #c {
-    margin-left: 60px;
+    margin-left: -240px;
     margin-bottom: -50px;       
 }
-
-#d2 {
-    margin: 170px;
-    width: 70px;
+#d1{
+   
+    margin-left:-560px;
+   
+}
+#d2{
+    margin-top:-30px;
+    margin-left:-94px;
+}
+#d3{
+    margin-left:330px;
+    margin-top:-30px;
 }
 
-#d3 { margin-left: -155px; }
-
-#d5 { margin-left: 120px; }
-
+#d4{
+    margin-left: 730px;
+    margin-top: -30px;
+}
 #a {
     background-image: url(../images/12.jpg);
     background-repeat: no-repeat;

@@ -40,51 +40,57 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pages)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            <img src="@item.CoverURL" style="max-width:200px; max-height:200px" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishPlace)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishDate)
-        </td>
-        <td>
-            @if (item.Authors.Count == 0)
-            {
-                <span class="alert-warning">This book does not have Author!</span>
-            }
-            else
-            {
-                <ul class="list-group list-unstyled">
-                    @foreach (var author in item.Authors)
-                    {
-                        <li class="list-group-item">@author.Name</li>
-                    }
-                </ul>
-            }
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pages)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                <img src="@item.CoverURL" style="max-width:200px; max-height:200px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishPlace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishDate)
+            </td>
+            <td>
+                @if (item.Authors.Count == 0)
+                {
+                    <span class="alert-warning">This book does not have Author!</span>
+                }
+                else
+                {
+                    <ul class="list-group list-unstyled">
+                        @foreach (var author in item.Authors)
+                        {
+                            <li class="list-group-item">@author.Name</li>
+                        }
+                    </ul>
+                }
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexUserCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
+}
