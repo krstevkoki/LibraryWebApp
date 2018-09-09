@@ -113,11 +113,9 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.User)]
         public async Task<ActionResult> AddToRoleMember(string username)
         {
-            if (!User.IsInRole(Roles.User))
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-
             var user = await UserManager.FindByNameAsync(username);
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -126,10 +124,15 @@ namespace LibraryWebApp.Controllers
             var result = await UserManager.AddToRoleAsync(user.Id, Roles.Member);
             if (result.Succeeded)
             {
+                user.IsMember = true;
+                user.MemberSince = DateTime.Now;
+                await UserManager.UpdateAsync(user);
+
                 var authenticationManager = HttpContext.GetOwinContext().Authentication;
                 authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+                var identity =
+                    await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties {IsPersistent = false}, identity);
 
                 return RedirectToAction("Index", "Manage");
             }
@@ -138,28 +141,48 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Member)]
         public async Task<ActionResult> AddToRoleUser(string username)
         {
-            if (!User.IsInRole(Roles.User))
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-
             var user = await UserManager.FindByNameAsync(username);
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
             user.Roles.Clear();
             var result = await UserManager.AddToRoleAsync(user.Id, Roles.User);
             if (result.Succeeded)
             {
+                user.IsMember = false;
+                user.MemberSince = null;
+                user.Points = 0;
+                await UserManager.UpdateAsync(user);
+
                 var authenticationManager = HttpContext.GetOwinContext().Authentication;
                 authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+                var identity =
+                    await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties {IsPersistent = false}, identity);
 
                 return RedirectToAction("Index", "Manage");
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Member)]
+        public async Task<ActionResult> ContinueMembership(string username)
+        {
+            var user = await UserManager.FindByNameAsync(username);
+            if (user == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            user.MemberSince = DateTime.Now;
+            await UserManager.UpdateAsync(user);
+
+            var authenticationManager = HttpContext.GetOwinContext().Authentication;
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            authenticationManager.SignIn(new AuthenticationProperties {IsPersistent = false}, identity);
+            return RedirectToAction("Index", "Manage");
         }
 
         private static int GetRoleId(string role)
