@@ -70,9 +70,8 @@ namespace LibraryWebApp.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                DateRegistration = user.MemberSince.Value,
+                DateRegistration = user.MemberSince.HasValue ? user.MemberSince.Value : DateTime.MinValue,
                 DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddDays(0) : DateTime.MinValue,
-               
             };
             model.DateDifference = DateTime.Now.Subtract(DateTime.Now);
 
