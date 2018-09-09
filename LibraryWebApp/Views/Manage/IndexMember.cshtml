@@ -9,7 +9,7 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4 id="b">Your personal data</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt class="dt">Password:</dt>
         <dd class="dd">
@@ -25,85 +25,92 @@
             ]
         </dd>
         <dt class="dt">User: </dt>
-        <dd class="dd">@User.Identity.Name</dd>
+        <dd id="username" class="dd">@User.Identity.Name</dd>
         <dt class="dt">User Role:</dt>
         <dd class="dd">
             === Member ===
         </dd>
         <dt class="dt">Member since:</dt>
         <dd class="dd">@Model.DateRegistration</dd>
-        <dt>Days diff:</dt>
-        <dd>@Model.DateDifference.Days</dd>
+        <dt class="dt">Expiration date:</dt>
+        <dd class="dd">@Model.DateExpiring</dd>
     </dl>
 </div>
+
 <div id="points">
     <p id="border">Total points: @Model.Points</p>
 </div>
-
 
 <div id="popModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                @if (Model.DateDifference.Value.Days != 0)
+                {
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                }
                 <h4 class="modal-title">Membership expiring</h4>
             </div>
             <div class="modal-body">
                 @{
-                    if (Model.DateDifference.Days == 1)
+                    if (Model.DateDifference.Value.Days == 0)
                     {
-                        <p class="text-danger">Your membership is expiring after @Model.DateDifference.Days day</p>
+                        <p class="text-danger">
+                            Your membership has expired! If you continue your membership immediately
+                            you will save your points, otherwise you lose all of your points
+                        </p>
                     }
-                    else
+                    else if (Model.DateDifference.Value.Days == 1)
                     {
-                        <p class="text-danger">Your membership is expiring after @Model.DateDifference.Days days</p>
+                        <p class="text-danger">Your membership is expiring in @Model.DateDifference.Value.Days day</p>
+                    }
+                    else if (Model.DateDifference.Value.Days != 1)
+                    {
+                        <p class="text-danger">Your membership is expiring in @Model.DateDifference.Value.Days days</p>
                     }
                 }
             </div>
             <div class="modal-footer">
-                <button id="btn" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-                <button id="btn2" type="button" class="btn btn-default" data-dismiss="modal">Continue membership</button>
+                <button id="btn" type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+                @if (Model.DateDifference.Value.Days == 0)
+                {
+                    <button id="btn2" type="button" class="btn btn-primary" data-dismiss="modal">Continue membership</button>
+                }
             </div>
         </div>
-
     </div>
 </div>
 
-@section scripts{
+@section scripts {
     <script type="text/javascript">
-
-        if (@Model.DateDifference.Days < 30) {
-            $(function () { $("#popModal").modal('show'); });
+        if (@Model.DateDifference.Value.Days <= 30) {
+            $(function() {
+                $("#popModal").modal({
+                    backdrop: "static"
+                });
+            });
         }
-        if (@Model.DateDifference.Days <= 0) {
 
-            $("#popModal #btn").on("click", function () {
+        $("#popModal #btn").on("click",
+            function() {
                 url = "/Account/AddToRoleUser?username=" + $("#username").html();
                 console.log(url);
                 window.location = url;
                 $(this).dialog("close");
-
             });
 
-
-            $("#popModal #btn2").on("click", function () {
-                url = "/Account/AddToRoleMember?username=" + $("#username").html();
+        $("#popModal #btn2").on("click",
+            function() {
+                url = "/Account/ContinueMembership?username=" + $("#username").html();
                 console.log(url);
                 window.location = url;
                 $(this).dialog("close");
-                });
-            
-        }
-
+            });
     </script>
 }
+
 @section styles {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
-
-
-
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css"/>
 }
-
-
