@@ -54,6 +54,7 @@
             </div>
             <div class="modal-footer">
                 <button id="btn" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                <button id="btn2" type="button" class="btn btn-default" data-dismiss="modal">Continue membership</button>
             </div>
         </div>
 
@@ -66,7 +67,7 @@
         if (@Model.DateDifference.Days < 30) {
             $(function () { $("#popModal").modal('show'); });
         }
-        if (@Model.DateDifference.Days<= 0) {
+        if (@Model.DateDifference.Days <= 0) {
 
             $("#popModal #btn").on("click", function () {
                 url = "/Account/AddToRoleUser?username=" + $("#username").html();
@@ -75,7 +76,14 @@
                 $(this).dialog("close");
 
             });
-               
+
+
+            $("#popModal #btn2").on("click", function () {
+                url = "/Account/AddToRoleMember?username=" + $("#username").html();
+                console.log(url);
+                window.location = url;
+                $(this).dialog("close");
+                });
             
         }
 

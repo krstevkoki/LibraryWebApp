@@ -137,6 +137,31 @@ namespace LibraryWebApp.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> AddToRoleUser(string username)
+        {
+            if (!User.IsInRole(Roles.User))
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+            var user = await UserManager.FindByNameAsync(username);
+            if (user == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            user.Roles.Clear();
+            var result = await UserManager.AddToRoleAsync(user.Id, Roles.User);
+            if (result.Succeeded)
+            {
+                var authenticationManager = HttpContext.GetOwinContext().Authentication;
+                authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+
+                return RedirectToAction("Index", "Manage");
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+        }
+
         private static int GetRoleId(string role)
         {
             var roles = Roles.ExportToList();
