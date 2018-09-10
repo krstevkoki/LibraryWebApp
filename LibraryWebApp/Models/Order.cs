@@ -36,16 +36,18 @@ namespace LibraryWebApp.Models
         public string Country { get; set; }
 
         [Required]
+        [Phone]
         public string Phone { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         public decimal Total { get; set; }
 
         public System.DateTime OrderDate { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         public Order()
         {
