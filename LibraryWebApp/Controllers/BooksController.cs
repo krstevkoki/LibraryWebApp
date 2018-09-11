@@ -119,7 +119,8 @@ namespace LibraryWebApp.Controllers
                 Publishers = (db.Publishers.ToList()),
                 SelectedPublisher = -1,
                 Genres = (db.Genres.ToList()),
-                SelectedGenre = -1
+                SelectedGenre = -1,
+                PublishDate = book.PublishDate
             };
 
             return View(model);
@@ -143,7 +144,7 @@ namespace LibraryWebApp.Controllers
                 book.Quantity = model.Book.Quantity;
                 book.CoverURL = model.Book.CoverURL;
                 book.PublishPlace = model.Book.PublishPlace;
-                book.PublishDate = model.Book.PublishDate;
+                book.PublishDate = model.PublishDate;
                 book.Price = model.Book.Price;
                 book.Genre = db.Genres.Find(model.SelectedGenre);
                 book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
@@ -161,7 +162,8 @@ namespace LibraryWebApp.Controllers
                 Publishers = (db.Publishers.ToList()),
                 SelectedPublisher = -1,
                 Genres = (db.Genres.ToList()),
-                SelectedGenre = -1
+                SelectedGenre = -1,
+                PublishDate = model.Book.PublishDate
             };
             return View(model);
         }
