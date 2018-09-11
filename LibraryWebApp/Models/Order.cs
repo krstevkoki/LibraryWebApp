@@ -45,7 +45,7 @@ namespace LibraryWebApp.Models
 
         public decimal Total { get; set; }
 
-        public System.DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
