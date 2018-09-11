@@ -7,9 +7,11 @@
 
 <h2>Details</h2>
 
+@Html.Hidden("IsAuthenticated", Request.IsAuthenticated)
+
 <div>
     <h4>Book</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -40,7 +42,7 @@
         </dt>
 
         <dd>
-            <img src="@Model.CoverURL" style="max-height: 200px; max-width:200px" />
+            <img src="@Model.CoverURL" style="max-height: 200px; max-width: 200px"/>
         </dd>
 
         <dt>
@@ -58,11 +60,57 @@
         <dd>
             @Html.DisplayFor(model => model.PublishDate)
         </dd>
-
+        @if (Model.Quantity > 0)
+        {
+            <dd>
+                <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Id">Add to cart</button>
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <button type="button" class="btn btn-primary" title="Out of stock" disabled>Add to cart</button>
+            </dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
 
     @Html.ActionLink("Back to List", "Index")
+
+    @section scripts {
+        <script type="text/javascript">
+            var bookCount = @Model.Quantity;
+            var bookId = @Model.Id;
+
+            $(document).ready(function() {
+                $(".js-add-to-cart").on("click",
+                    function() {
+                        if ($("#IsAuthenticated").attr("value") === "False") {
+                            document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
+                            return;
+                        }
+
+                        var button = $(this);
+                        bookId = button.attr("data-book-id");
+
+                        $.post("/ShoppingCart/AddToCart",
+                            { "id": bookId },
+                            function(response) {
+                                console.log(response);
+                                $("#cart-items-count").text(response.CartCount);
+                                $(".message").text("Go to checkout");
+                            });
+                        bookCount--;
+
+                        if (bookCount === 0) {
+                            $(".js-add-to-cart").prop("disabled", true);
+                            $(".js-add-to-cart").prop("title", "Out of stock");
+                        }
+                    });
+            });
+        </script>
+    }
+
 </p>
