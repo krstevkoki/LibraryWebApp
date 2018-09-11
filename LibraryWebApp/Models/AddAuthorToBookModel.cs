@@ -14,6 +14,7 @@ namespace LibraryWebApp.Models
         public int SelectedAuthor { get; set; }
         public int SelectedPublisher { get; set; }
         public int SelectedGenre { get; set; }
+        public DateTime PublishDate { get; set; }
 
         public AddAuthorToBookModel()
         {
