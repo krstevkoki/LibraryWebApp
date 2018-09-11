@@ -23,7 +23,7 @@
             <tr>
                 <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new {id = cartItem.BookID}, new {})</td>
                 <td id="item-quantity">@cartItem.Count</td>
-                <td id="item-price" data-book-price="@cartItem.Book.Price"></td>
+                <td class="item-price" data-book-price="@cartItem.Book.Price"></td>
                 <td>
                     <button class="btn btn-danger js-delete" data-book-id="@cartItem.BookID">Remove Item</button>
                 </td>
@@ -62,11 +62,13 @@
             else
                 $("#no-cart-items").hide();
 
-            var price = $("#item-price").attr("data-book-price");
-            var quantity = $("#item-quantity").text();
-            $("#item-price").text(
-                new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+            $("td.item-price").each(function () {
+                var quantity = $(this).siblings("#item-quantity").text();
+                var price = $(this).attr("data-book-price");
+                $(this).text(
+                    new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
                     .format(quantity * price));
+            });
 
             $("td .js-delete").on("click",
                 function() {
@@ -81,10 +83,9 @@
                                 var parent = button.parents("tr");
                                 $(parent).fadeOut("slow");
                             } else {
-
                                 button.parent().siblings("#item-quantity").text(response.ItemCount);
-                                var price = button.parent().siblings("#item-price").attr("data-book-price");
-                                button.parent().siblings("#item-price").text(
+                                var price = button.parent().siblings(".item-price").attr("data-book-price");
+                                button.parent().siblings(".item-price").text(
                                     new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
                                     .format(response.ItemCount * price));
                             }
@@ -102,6 +103,9 @@
                             }
 
                             $("#cart-items-count").text(response.CartCount);
+
+                            if (response.CartCount === 0)
+                                $("span.message").text("Shopping bag is empty");
                         });
                 });
         });
