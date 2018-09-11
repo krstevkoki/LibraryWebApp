@@ -20,13 +20,9 @@ namespace LibraryWebApp.Models
 
         public int Count { get; set; }
 
-        public System.DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public virtual Book Book { get; set; }
-
-        public Cart()
-        {
-            Book = new Book();
-        }
+        
     }
 }
