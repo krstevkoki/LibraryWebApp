@@ -1,59 +1,63 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - LibraryWebApp</title>
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("LibraryWebApp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Books", "Index", "Books")</li>
-                    <li>@Html.ActionLink("Authors", "Index", "Authors")</li>
-                    <li>@Html.ActionLink("Publishers", "Index", "Publishers")</li>
-                    <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
-                    <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
-                    <li>@Html.ActionLink("Carts", "Index", "Carts")</li>
-                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
-                    <li>@Html.ActionLink("OrderDetails", "Index", "OrderDetails")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("LibraryWebApp", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                <li>@Html.ActionLink("Authors", "Index", "Authors")</li>
+                <li>@Html.ActionLink("Publishers", "Index", "Publishers")</li>
+                <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+                <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer id="ftr" class="text-center" style="margin-top:20px;">
-            <span id="c1" class="contact">Our fb-page:</span>
-            <span id="c2" class="contact">Address:</span>
-            <span id="c3" class="contact">E-mail: </span>
-            <span id="c4" class="contact">Phone:</span>
-            <p id="d1"><a href="https://www.facebook.com/britishlibrary/?ref=br_rs">Click here</a></p>
-            <p id="d2"> st. Partizanski Odredi bb. Skopje</p>
-            <p id="d3">libary.lib.gmail.com</p>
-            <p id="d4">077-435-678</p>
-            <p>&copy; @DateTime.Now.Year - LibaryWebApp</p>
-        </footer>
-    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    <footer id="ftr" class="text-center" style="margin-top: 20px;">
+        <span id="c1" class="contact">Our fb-page:</span>
+        <span id="c2" class="contact">Address:</span>
+        <span id="c3" class="contact">E-mail: </span>
+        <span id="c4" class="contact">Phone:</span>
+        <p id="d1">
+            <a href="https://www.facebook.com/britishlibrary/?ref=br_rs">Click here</a>
+        </p>
+        <p id="d2"> st. Partizanski Odredi bb. Skopje</p>
+        <p id="d3">libary.lib.gmail.com</p>
+        <p id="d4">077-435-678</p>
+        <p>&copy; @DateTime.Now.Year - LibaryWebApp</p>
+    </footer>
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+<script type="text/javascript">
+    $(document).ready(function() {
+        var count = $("#cart-items-count").attr("data-cart-count");
+        $("#cart-items-count").html(count);
+    });
+</script>
 </body>
 
 </html>
