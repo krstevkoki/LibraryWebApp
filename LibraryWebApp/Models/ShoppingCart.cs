@@ -116,7 +116,9 @@ namespace LibraryWebApp.Models
             }
 
             order.Total = GetTotal();
+            db.Entry(order).State = EntityState.Modified;
             await db.SaveChangesAsync();
+
             await EmptyCart();
 
             return order.OrderId;
