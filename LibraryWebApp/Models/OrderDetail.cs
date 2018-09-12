@@ -26,11 +26,5 @@ namespace LibraryWebApp.Models
         public virtual Book Book { get; set; }
 
         public virtual Order Order { get; set; }
-
-        public OrderDetail()
-        {
-            Book = new Book();
-            Order = new Order();
-        }
     }
 }
