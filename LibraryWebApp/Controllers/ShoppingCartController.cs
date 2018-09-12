@@ -10,6 +10,7 @@ using LibraryWebApp.Models;
 
 namespace LibraryWebApp.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
