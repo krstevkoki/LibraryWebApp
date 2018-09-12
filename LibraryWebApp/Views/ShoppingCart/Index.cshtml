@@ -13,6 +13,7 @@
             <th>Item</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Total</th>
             <th></th>
         </tr>
         </thead>
@@ -22,28 +23,30 @@
         {
             <tr>
                 <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new {id = cartItem.BookID}, new {})</td>
-                <td id="item-quantity">@cartItem.Count</td>
+                <td class="item-quantity">@cartItem.Count</td>
                 <td class="item-price" data-book-price="@cartItem.Book.Price"></td>
+                <td class="item-total"></td>
                 <td>
-                    <button class="btn btn-danger js-delete" data-book-id="@cartItem.BookID">Remove Item</button>
+                    <button class="btn btn-danger btn-sm js-delete" data-book-id="@cartItem.BookID">Remove Item</button>
                 </td>
             </tr>
         }
         <tr>
             <td>
-
             </td>
             <td>
             </td>
             <td class="text-right">
-                Total
+                Order Total:
             </td>
             <td id="cart-total">
                 $@Model.CartTotal
             </td>
+            <td></td>
         </tr>
         </tbody>
     </table>
+    @Html.ActionLink("Checkout", "AddressAndPayment", "Checkout", new {}, new {@class="btn btn-primary", id="button"})
 }
 <div id="no-cart-items">
     <h4 class="alert alert-danger">
@@ -63,11 +66,18 @@
                 $("#no-cart-items").hide();
 
             $("td.item-price").each(function () {
-                var quantity = $(this).siblings("#item-quantity").text();
                 var price = $(this).attr("data-book-price");
                 $(this).text(
                     new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(quantity * price));
+                    .format(price));
+            });
+
+            $("td.item-total").each(function () {
+                var price = $(this).siblings(".item-price").attr("data-book-price");
+                var quantity = $(this).siblings(".item-quantity").text();
+                $(this).text(
+                    new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                        .format(price * quantity));
             });
 
             $("td .js-delete").on("click",
@@ -83,9 +93,9 @@
                                 var parent = button.parents("tr");
                                 $(parent).fadeOut("slow");
                             } else {
-                                button.parent().siblings("#item-quantity").text(response.ItemCount);
+                                button.parent().siblings(".item-quantity").text(response.ItemCount);
                                 var price = button.parent().siblings(".item-price").attr("data-book-price");
-                                button.parent().siblings(".item-price").text(
+                                button.parent().siblings(".item-total").text(
                                     new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
                                     .format(response.ItemCount * price));
                             }
@@ -95,10 +105,10 @@
                                     .format(response.CartTotal));
 
                             if (response.CartCount < 1) {
-                                $("table").hide();
+                                $("table, #button").hide();
                                 $("#no-cart-items").show();
                             } else {
-                                $("table").show();
+                                $("table, #button").show();
                                 $("#no-cart-items").hide();
                             }
 
