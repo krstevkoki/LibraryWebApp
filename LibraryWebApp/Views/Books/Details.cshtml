@@ -9,15 +9,15 @@
 
 @Html.Hidden("IsAuthenticated", Request.IsAuthenticated)
 
-<div>
-    <h4>Book</h4>
+<div id="cent">
+    <h4 id="hd">Book</h4>
     <hr/>
     <dl class="dl-horizontal">
-        <dt class="dt">
+        <dt class="dt" >
             @Html.DisplayNameFor(model => model.Book.Title)
         </dt>
 
-        <dd>
+        <dd class="dd">
             @Html.DisplayFor(model => model.Book.Title)
         </dd>
 
@@ -25,7 +25,7 @@
             @Html.DisplayNameFor(model => model.Book.Pages)
         </dt>
 
-        <dd>
+        <dd class="dd">
             @Html.DisplayFor(model => model.Book.Pages)
         </dd>
 
@@ -33,7 +33,7 @@
             @Html.DisplayNameFor(model => model.Book.Quantity)
         </dt>
 
-        <dd>
+        <dd class="dd">
             @Html.DisplayFor(model => model.Book.Quantity)
         </dd>
 
@@ -41,7 +41,7 @@
             @Html.DisplayNameFor(model => model.Book.CoverURL)
         </dt>
 
-        <dd>
+        <dd class="dd">
             <img src="@Model.Book.CoverURL" style="max-height: 200px; max-width: 200px" />
         </dd>
 
@@ -49,7 +49,7 @@
             @Html.DisplayNameFor(model => model.Book.PublishPlace)
         </dt>
 
-        <dd>
+        <dd class="dd">
             @Html.DisplayFor(model => model.Book.PublishPlace)
         </dd>
 
@@ -57,7 +57,7 @@
             @Html.DisplayNameFor(model => model.Book.PublishDate)
         </dt>
 
-        <dd>
+        <dd class="dd">
             @Html.DisplayFor(model => model.Book.PublishDate)
         </dd>
         @if (Model.Book.Quantity > 0)
@@ -76,18 +76,22 @@
     </dl>
 </div>
 
-<div id="myCarousel" class="carousel slide">
+<span id="recomended" class="text-center">You might also want to read: </span>
+
+<div id="myCarousel" class="carousel slide" >
     <div class="carousel-inner" role="listbox">
         <div class="item active">
             <img src="@Model.Book.CoverURL" class="center-block" />
            
           </div>
         
-        <div class="item move">
-            @foreach (var book in Model.Books.Skip(1))
+        <div class="item">
+          
+            @foreach (var book in Model.Books)
             {
-            <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a>
+           <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a><link />
             }
+                
           
         </div>
     </div>
@@ -101,6 +105,8 @@
     @Html.ActionLink("Back to List", "Index")
 
     @section scripts {
+        <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
+        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
         <script type="text/javascript">
             var bookCount = @Model.Book.Quantity;
             var bookId = @Model.Book.Id;
@@ -136,13 +142,20 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('.carousel').carousel({
-                    interval: 4200
+                    interval: 4200,
+                    animation: 3000,
+                    auto: 10,
+                    scroll: -1,
+                    visible: 3,
+                    wrap: 'circular',
+                    setupCallback: scrollCheck,
+                
+
                 })
             });
         </script>
 
-        <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
-        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
+
     }
 
 </p>
