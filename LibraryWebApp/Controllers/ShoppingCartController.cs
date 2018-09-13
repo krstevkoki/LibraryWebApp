@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LibraryWebApp.Controllers
 {
@@ -19,11 +20,18 @@ namespace LibraryWebApp.Controllers
         public ActionResult Index()
         {
             var cart = ShoppingCart.GetCard(this.HttpContext);
-            
+
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (user == null)
+                return HttpNotFound();
+
             var model = new ShoppingCartViewModel()
             {
                 CartItems = cart.GetCartItems(),
-                CartTotal = cart.GetTotal()
+                CartTotal = cart.GetTotal(),
+                Points = user.Points
             };
 
             return View(model);

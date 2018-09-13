@@ -9,10 +9,6 @@ namespace LibraryWebApp.Models
     {
         public List<Cart> CartItems { get; set; }
         public decimal CartTotal { get; set; }
-
-        public ShoppingCartViewModel()
-        {
-            CartItems = new List<Cart>();
-        }
+        public int Points { get; set; }
     }
 }
