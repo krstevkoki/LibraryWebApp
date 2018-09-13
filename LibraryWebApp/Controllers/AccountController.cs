@@ -93,6 +93,13 @@ namespace LibraryWebApp.Controllers
                 if (user.Roles.Count != 0)
                     user.Roles.Clear();
 
+                if (model.SelectedRole == Roles.User)
+                {
+                    user.IsMember = false;
+                    user.MemberSince = null;
+                    user.Points = 0;
+                }
+
                 var result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
                 if (result == null)
                     return HttpNotFound();
@@ -126,6 +133,8 @@ namespace LibraryWebApp.Controllers
             {
                 user.IsMember = true;
                 user.MemberSince = DateTime.Now;
+                if (user.Points == 0)
+                    user.Points = 150;
                 await UserManager.UpdateAsync(user);
 
                 var authenticationManager = HttpContext.GetOwinContext().Authentication;
@@ -330,8 +339,13 @@ namespace LibraryWebApp.Controllers
                 user.Address = model.Address;
                 user.Gender = model.Gender;
                 user.IsMember = model.IsMember;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
                 if (user.IsMember.Value)
+                {
                     user.MemberSince = DateTime.Now;
+                    user.Points = 100;
+                }
 
                 // Your code...
                 // Could also be before try if you know the exception occurs in SaveChanges
