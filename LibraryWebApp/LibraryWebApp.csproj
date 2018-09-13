@@ -425,6 +425,10 @@
     <Content Include="images\15.jpg" />
     <Content Include="images\16.jpg" />
     <Content Include="images\17.jpg" />
+    <Content Include="images\facebook.png" />
+    <Content Include="images\linkedin.png" />
+    <Content Include="images\twitter.png" />
+    <Content Include="images\whiteBg.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

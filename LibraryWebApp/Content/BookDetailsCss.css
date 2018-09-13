@@ -1,43 +1,46 @@
 ﻿body {
-
+    background-color: antiquewhite;
 }
 
-#bdt{
+#headerDetails{
+    background-color: blue;
+    height: 70px;
+    margin-top:80px;
+}
+
+#ht{
+    color: white;
     font-weight: bolder;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: goldenrod;
-    background-image: url(../images/17.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 45px;
-    border-radius: 20px;
-    padding: 4px
-
-}
-
-.dt{
-    font-size: 22px;
-    color: darkgoldenrod;
-    font-weight: bolder;
-}
-
-.dd{
-    font-size: 25px;
-    font-weight: bolder;
-    color: darkblue;
-    font-style: italic;
-
-}
-
-#hd{
+    padding: 10px;
     text-align: center;
-    font-weight: bolder;
-    font-size: 23px;
-    color: goldenrod;
+
+}
+  
+#container{
+    background-color: white;
+    height:940px;
+    margin-top: -20px;
+}
+
+#editions {
+    padding: 30px;
+    margin-left: 50px;
+}
+
+#bookImg{
+    margin-left: 30px;
+}
+
+.warper{
+    border: 2px dotted gray;
+    width: 30%;
+    height: 300px;
 }
 
 #recomended{
     font-weight: bolder;
+    color: firebrick;
     font-size: 22px;
-    color: firebrick
 }
+
+
