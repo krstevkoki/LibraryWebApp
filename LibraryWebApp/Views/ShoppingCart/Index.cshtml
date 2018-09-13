@@ -37,16 +37,20 @@
             <td>
             </td>
             <td class="text-right">
+                Total:<br/>
+                Discount:<br/>
                 Order Total:
             </td>
-            <td id="cart-total">
-                $@Model.CartTotal
+            <td id="cart-total" data-cart-total="@Model.CartTotal">
+                <span id="total"></span><br/>
+                <span id="discount"></span><br/>
+                <span id="order-total"></span>
             </td>
             <td></td>
         </tr>
         </tbody>
     </table>
-    @Html.ActionLink("Checkout", "AddressAndPayment", "Checkout", new {}, new {@class="btn btn-primary", id="button"})
+    @Html.ActionLink("Go to Checkout", "AddressAndPayment", "Checkout", new {}, new {@class = "btn btn-primary", id = "button"})
 }
 <div id="no-cart-items">
     <h4 class="alert alert-danger">
@@ -58,27 +62,71 @@
 @section scripts {
     <script type="text/javascript">
         var count = @Model.CartItems.Count;
+        var points = @Model.Points;
+        var discount = calculateDiscount(points);
 
-        $(document).ready(function () {
+        function calculateDiscount(points) {
+            if (points < 150)
+                return 0;
+            if (points >= 150 && points <= 250)
+                return 5;
+            if (points >= 251 && points <= 350)
+                return 6;
+            if (points >= 351 && points <= 450)
+                return 7;
+            if (points >= 451 && points <= 550)
+                return 8;
+            if (points >= 551 && points <= 650)
+                return 9;
+            if (points >= 651 && points <= 750)
+                return 10;
+            if (points >= 751 && points <= 850)
+                return 11;
+            if (points >= 851 && points <= 950)
+                return 12;
+            if (points >= 951 && points <= 1050)
+                return 13;
+            if (points >= 1051 && points <= 1150)
+                return 14;
+            return 15;
+        }
+
+        $(document).ready(function() {
             if (count === 0)
                 $("#no-cart-items").show();
             else
                 $("#no-cart-items").hide();
 
-            $("td.item-price").each(function () {
+            $("td.item-price").each(function() {
                 var price = $(this).attr("data-book-price");
                 $(this).text(
                     new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
                     .format(price));
             });
 
-            $("td.item-total").each(function () {
+            $("td.item-total").each(function() {
                 var price = $(this).siblings(".item-price").attr("data-book-price");
                 var quantity = $(this).siblings(".item-quantity").text();
                 $(this).text(
                     new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                        .format(price * quantity));
+                    .format(price * quantity));
             });
+
+            var total = $("td#cart-total").attr("data-cart-total");
+            $("span#total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                .format(total));
+
+            if (discount !== 0) {
+                $("span#discount").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                    .format((discount / 100) * total));
+                $("span#order-total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                    .format(total - ((discount / 100) * total)));
+            } else {
+                $("span#discount").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                    .format(discount));
+                $("span#order-total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                    .format(total));
+            }
 
             $("td .js-delete").on("click",
                 function() {
@@ -88,7 +136,6 @@
                     $.post("/ShoppingCart/RemoveFromCart",
                         { "id": bookId },
                         function(response) {
-                            console.log(response);
                             if (response.ItemCount === 0) {
                                 var parent = button.parents("tr");
                                 $(parent).fadeOut("slow");
@@ -100,9 +147,13 @@
                                     .format(response.ItemCount * price));
                             }
 
-                            $('#cart-total')
+                            $("span#total")
                                 .text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
                                     .format(response.CartTotal));
+
+                            $("span#order-total")
+                                .text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                                    .format(response.CartTotal - ((discount / 100) * response.CartTotal)));
 
                             if (response.CartCount < 1) {
                                 $("table, #button").hide();
