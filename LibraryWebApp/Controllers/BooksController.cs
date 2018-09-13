@@ -31,13 +31,20 @@ namespace LibraryWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = db.Books.Find(id);
+            Book book = db.Books.Include(b => b.Genre).FirstOrDefault(b => b.Id == id);
+
             if (book == null)
             {
                 return HttpNotFound();
             }
 
-            return View(book);
+            BookDetailsViewModel model = new BookDetailsViewModel()
+            {
+                Book = book,
+                Books = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList()
+            };
+
+            return View(model);
         }
 
         // GET: Books/Create

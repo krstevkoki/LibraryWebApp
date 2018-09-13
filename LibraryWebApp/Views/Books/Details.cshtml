@@ -1,11 +1,11 @@
-﻿@model LibraryWebApp.Models.Book
+﻿@model LibraryWebApp.Models.BookDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 id="bdt" class="text-center">Details</h2>
 
 @Html.Hidden("IsAuthenticated", Request.IsAuthenticated)
 
@@ -13,57 +13,57 @@
     <h4>Book</h4>
     <hr/>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Book.Title)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Pages)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.Pages)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Pages)
+            @Html.DisplayFor(model => model.Book.Pages)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Quantity)
+            @Html.DisplayFor(model => model.Book.Quantity)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CoverURL)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.CoverURL)
         </dt>
 
         <dd>
-            <img src="@Model.CoverURL" style="max-height: 200px; max-width: 200px"/>
+            <img src="@Model.Book.CoverURL" style="max-height: 200px; max-width: 200px" />
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PublishPlace)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.PublishPlace)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PublishPlace)
+            @Html.DisplayFor(model => model.Book.PublishPlace)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PublishDate)
+        <dt class="dt">
+            @Html.DisplayNameFor(model => model.Book.PublishDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PublishDate)
+            @Html.DisplayFor(model => model.Book.PublishDate)
         </dd>
-        @if (Model.Quantity > 0)
+        @if (Model.Book.Quantity > 0)
         {
             <dd>
-                <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Id">Add to cart</button>
+                <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
             </dd>
         }
         else
@@ -72,17 +72,38 @@
                 <button type="button" class="btn btn-primary" title="Out of stock" disabled>Add to cart</button>
             </dd>
         }
+       
     </dl>
 </div>
+
+<div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="@Model.Book.CoverURL" class="center-block" />
+           
+          </div>
+        
+        <div class="item move">
+            @foreach (var book in Model.Books.Skip(1))
+            {
+            <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a>
+            }
+          
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Book.Id }) |
 
     @Html.ActionLink("Back to List", "Index")
 
     @section scripts {
         <script type="text/javascript">
-            var bookCount = @Model.Quantity;
-            var bookId = @Model.Id;
+            var bookCount = @Model.Book.Quantity;
+            var bookId = @Model.Book.Id;
 
             $(document).ready(function() {
                 $(".js-add-to-cart").on("click",
@@ -111,6 +132,17 @@
                     });
             });
         </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.carousel').carousel({
+                    interval: 4200
+                })
+            });
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
+        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
     }
 
 </p>
