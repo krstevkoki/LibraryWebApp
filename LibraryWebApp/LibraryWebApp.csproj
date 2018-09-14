@@ -242,6 +242,7 @@
     <Compile Include="Models\Publisher.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\ShippingAndPaymentViewModel.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartAddViewModel.cs" />
     <Compile Include="Models\ShoppingCartRemoveViewModel.cs" />
@@ -606,7 +607,7 @@
     <Content Include="Views\OrderDetails\Edit.cshtml" />
     <Content Include="Views\OrderDetails\Index.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
-    <Content Include="Views\Checkout\AddressAndPayment.cshtml" />
+    <Content Include="Views\Checkout\ShippingAndPayment.cshtml" />
     <Content Include="Views\Checkout\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup>
