@@ -38,7 +38,7 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddToCart(int id)
+        public ActionResult AddToCart(int id)
         {
             var book = db.Books.Find(id);
 
@@ -47,7 +47,7 @@ namespace LibraryWebApp.Controllers
 
             var cart = ShoppingCart.GetCard(this.HttpContext);
 
-            await cart.AddToCard(book);
+            cart.AddToCard(book);
 
             var result = new ShoppingCartAddViewModel()
             {
@@ -61,15 +61,15 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> RemoveFromCart(int id)
+        public ActionResult RemoveFromCart(int id)
         {
             var cart = ShoppingCart.GetCard(this.HttpContext);
-            var book = await db.Books.FirstOrDefaultAsync(b => b.Id == id);
+            var book = db.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
                 return Json(HttpNotFound());
 
             var bookName = book.Title;
-            var itemCount = await cart.RemoveFromCard(id);
+            var itemCount = cart.RemoveFromCard(id);
 
             var results = new ShoppingCartRemoveViewModel
             {
