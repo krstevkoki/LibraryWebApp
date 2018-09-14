@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace LibraryWebApp.Controllers
@@ -17,7 +18,7 @@ namespace LibraryWebApp.Controllers
 
         // GET: Checkout
         [HttpGet]
-        public ActionResult AddressAndPayment()
+        public ActionResult ShippingAndPayment()
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
@@ -25,53 +26,79 @@ namespace LibraryWebApp.Controllers
             if (user == null)
                 return HttpNotFound();
 
-            var model = new Order()
+            var model = new ShippingAndPaymentViewModel()
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Address = user.Address,
-                City = user.City,
-                Country = user.Country,
-                Phone = user.PhoneNumber,
-                Email = user.Email,
-                State = user.Country
+                Order = new Order()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Address = user.Address,
+                    City = user.City,
+                    Country = user.Country,
+                    Phone = user.PhoneNumber,
+                    Email = user.Email,
+                    State = user.Country
+                },
+                CreditCard = new CreditCard()
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddressAndPayment(Order order)
+        public ActionResult ShippingAndPayment(ShippingAndPaymentViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(order);
+            {
+                return View(model);
+            }
 
-            order.Username = User.Identity.Name;
-            order.OrderDate = DateTime.Now;
-            db.Orders.Add(order);
-            await db.SaveChangesAsync();
-
+            model.Order.Username = User.Identity.Name;
+            model.Order.OrderDate = DateTime.Now;
+            
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (user == null)
                 return HttpNotFound();
 
-            user.FirstName = order.FirstName;
-            user.LastName = order.LastName;
+            user.FirstName = model.Order.FirstName;
+            user.LastName = model.Order.LastName;
+            
+            var creditCard = db.CreditCards.Find(model.CreditCard.CardNumber);
 
-            var cart = ShoppingCart.GetCard(this.HttpContext);
-            var itemsCount = cart.GetCartItems().Sum(x => x.Count);
-
-            if (user.Points != 0)
-            {   
-                user.Points += (itemsCount * 10);
-                await userManager.UpdateAsync(user);
+            if (creditCard == null || 
+                creditCard.CardHolder != model.CreditCard.CardHolder ||
+                creditCard.CVV2 != model.CreditCard.CVV2 ||
+                creditCard.ExpiryDate != model.CreditCard.ExpiryDate)  // credit card doesn't exist
+            {
+                ModelState.AddModelError("", "Credit card does not exist!");
+                return View(model);
             }
 
-            await cart.CreateOrder(order);
+            if (creditCard.ExpiryDate < DateTime.Now)  // credit card has expired
+            {
+                ModelState.AddModelError("", "Credit card has expired!");
+                return View(model);
+            }
 
-            return RedirectToAction("Complete", "Checkout", new {id = order.OrderId});
+            var cart = ShoppingCart.GetCard(this.HttpContext);
+            int result = cart.CreateOrder(model.Order, creditCard);
+
+            if (result != -1)  // available funds on the credit card
+            {
+                if (user.Points != 0)
+                {
+                    var itemsCount = cart.GetCartItems().Sum(x => x.Count);
+                    user.Points += (itemsCount * 10);
+                    userManager.Update(user);
+                }
+
+                return RedirectToAction("Complete", "Checkout", new { id = model.Order.OrderId });
+            }
+
+            ModelState.AddModelError("", "Insufficient funds on your balance!");
+            return View(model);
         }
 
         [HttpGet]
