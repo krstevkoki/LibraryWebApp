@@ -15,96 +15,88 @@
 
     <div id="header" class="row">
         
-        <div class="col-md-12 bg-primary">
-        
+        <div class="col-md-12 col-xs-12 bg-primary">
             <h2 id="ht" class="text-center "><strong>Book Details</strong></h2>
-       
-        </div>
+       </div>
 
     </div>
 
    <br />
-    
+   <br />
 
     <div id="a" class="row">
 
-        <div class="col-md-9">
-
+        <div class="col-md-9 col-xs-6">
             <p><strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
             <a href="/Books/Edit/@Model.Book.Id">Add another one?</a>
             </p>
-
         </div>
-
     </div>
 
-    
+    <br />
+   
     <div class="row">
 
-        <div class="col-sm-2 ">
-
+        <div class="col-md-2 col-xs-4 col-sm-3">
             <img class="img-responsive" src="@Model.Book.CoverURL" />
-           
+        </div>
+
+        <div class="col-md-2 col-xs-1 col-sm-3">
+            @foreach (var item in Model.Book.Authors)
+            {
+                <p><strong>@Model.Book.Title by <a href="/Authors/Details/@item.Id">@item.Name</a></strong></p>
+            }
+
+            <div class="row">
+                <div class="col-md-7 col-xs-1 col-sm-7">
+                    <p>Published in <a href="">@Model.Book.PublishPlace</a></p>
+                </div>
+            </div>
+
+            <br />
+            <div class="row">
+                <div class="col-md-9 col-xs-1 col-sm-8">
+                    <p><strong>The Physical Object</strong></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-11 col-xs-1 col-sm-9">
+                    <p>Number of pages: @Model.Book.Pages</p>
+                    <p>ID: @Model.Book.Id</p>
+                    <a href="/Books/Edit/@Model.Book.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
+                </div>
+            </div>
         </div>
 
         
-        <div class="col-sm-3 text-left">
 
 
-        </div>
-            
 
-        
 
     </div>
 
-           
-                
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div id="btn">
-
-                    @if (Model.Book.Quantity > 0)
-                    {
-
-                        <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary " title="Out of stock" disabled>Add to cart</button>
-                    }
-
-
-                </div>
-               
-
-
-                
-
-             
-
-           
-        </div>
+      </div>
 
 
 
-        
+    </div>    
 
 
+<div id="btn">
 
+    @if (Model.Book.Quantity > 0)
+    {
+
+        <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-primary " title="Out of stock" disabled>Add to cart</button>
+    }
+
+
+</div>
 
 <p>
 
