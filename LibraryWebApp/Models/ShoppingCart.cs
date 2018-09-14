@@ -27,7 +27,7 @@ namespace LibraryWebApp.Models
             return GetCard(controller.HttpContext);
         }
 
-        public async Task AddToCard(Book book)
+        public void AddToCard(Book book)
         {
             var cartItem = db.Carts.FirstOrDefault(c => c.CartId == ShoppingCartId && c.BookID == book.Id);
 
@@ -48,10 +48,10 @@ namespace LibraryWebApp.Models
                 cartItem.Count++;
             }
 
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
-        public async Task<int> RemoveFromCard(int id)
+        public int RemoveFromCard(int id)
         {
             int itemCount = 0;
 
@@ -64,20 +64,20 @@ namespace LibraryWebApp.Models
                 else
                     db.Carts.Remove(cartItem);
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
 
             return itemCount;
         }
 
-        public async Task EmptyCart()
+        public void EmptyCart()
         {
             var cartItems = db.Carts.Where(c => c.CartId == ShoppingCartId);
 
             foreach (var cartItem in cartItems)
                 db.Carts.Remove(cartItem);
 
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
         public List<Cart> GetCartItems()
@@ -99,8 +99,13 @@ namespace LibraryWebApp.Models
             return total ?? decimal.Zero;
         }
 
-        public async Task<int> CreateOrder(Order order)
+        public int CreateOrder(Order order, CreditCard creditCard)
         {
+            order.Total = GetTotal();
+
+            if (creditCard.Balance < order.Total)
+                return -1;
+
             var cartItems = GetCartItems();
 
             foreach (var cartItem in cartItems)
@@ -114,12 +119,22 @@ namespace LibraryWebApp.Models
                 };
                 db.OrderDetails.Add(orderDetail);
             }
+            
+            creditCard.Balance -= order.Total;
 
-            order.Total = GetTotal();
-            db.Entry(order).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            db.Orders.Add(order);
+            db.Entry(creditCard).State = EntityState.Modified;
+            db.SaveChanges();
 
-            await EmptyCart();
+            foreach (var item in order.OrderDetails)
+            {
+                var book = db.Books.Find(item.BookId);
+                book.Quantity -= item.Quantity;
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            EmptyCart();
 
             return order.OrderId;
         }
