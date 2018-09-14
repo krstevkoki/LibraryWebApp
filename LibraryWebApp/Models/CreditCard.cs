@@ -31,8 +31,8 @@ namespace LibraryWebApp.Models
         public string CVV2 { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(0.00, double.MaxValue)]
         [Display(Name = "Account balance")]
-        public int Balance { get; set; }
+        public decimal Balance { get; set; }
     }
 }
