@@ -42,6 +42,7 @@ namespace LibraryWebApp.Controllers
             {
                 Book = book,
                 Books = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList()
+                
             };
 
             return View(model);

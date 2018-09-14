@@ -11,5 +11,6 @@ namespace LibraryWebApp.Models
 
         public List<Book> Books { get; set; }
 
+        public List<Book> BooksByAuthor { get; set; }
     }
 }

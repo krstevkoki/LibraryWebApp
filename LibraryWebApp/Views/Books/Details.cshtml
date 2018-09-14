@@ -10,103 +10,138 @@
 @Html.Hidden("IsAuthenticated", Request.IsAuthenticated)
 
 
-<div id="container" class="container" style="height: 800px">
+<div id="container" class="container" style="height: 1800px">
 
     <div class="row bg-primary text-center" style="height: 50px;">
         <h2>Book Details</h2>
     </div>
     <br />
-   
-    <p><strong>@Model.Book.Quantity editions</strong> of @Model.Book.Title found in the catalog.
-    <a href="/Books/Edit/@Model.Book.Id">Add another edition?</a>
+
+    <p>
+        <strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
     </p>
 
     <div class="row">
-        <div class="col-sm-2 col-md-3 col-lg-2" style="background-color:yellow;">
+        <div class="col-sm-2 col-md-3 col-lg-2">
             <img class="img-responsive" src="@Model.Book.CoverURL" />
         </div>
-       
-        <div class="col-sm-5 col-md-6 col-lg-7" style="background-color:pink;">
+
+        <div class="col-sm-5 col-md-6 col-lg-7">
             <h4>@Model.Book.Title</h4>
-            @foreach (var item in Model.Book.Authors) {
-            <p>by <a href="/Authors/Details/@item.Id">@item.Name</a></p>
+            @foreach (var item in Model.Book.Authors)
+            {
+                <p>by <a href="/Authors/Details/@item.Id">@item.Name</a></p>
             }
-           
-        <p>Published in <a href="">@Model.Book.PublishPlace</a></p>
-            
+
+            <p>Published in <a href="">@Model.Book.PublishPlace</a></p>
+
             <h4>The physical object</h4>
             <p>Number of pages: @Model.Book.Pages</p>
             <p>Publish date: @Model.Book.PublishDate</p>
-            <br />
+
+
             <a href="/Books/Edit/@Model.Book.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
+
         </div>
-       
-        <div class="col-sm-5 col-md-3 col-lg-3" style="background-color:yellow;">
-            
-            <div id="nav" style="border: 2px dotted gray; height: 300px; width: 227px;margin-left:-7%;">
-                <p class="text-center"><strong>Prefer this physical book?</strong></p>
-                <p class="text-center"><a href="">Check nearby libaries</a></p>
+
+        <div class="col-sm-5 col-md-3 col-lg-3">
+
+            <div id="nav" style="border: 2px dotted gray; height: 270px; width: 228px;margin-left:-7%;">
+                <p class="text-center"><strong>Book price: @Model.Book.Price</strong></p>
+                <p class="text-center"><strong>Like this book?</strong></p>
+                <div class="text-center" id="btn">
+
+                    @if (Model.Book.Quantity > 0)
+                    {
+
+                        <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary " title="Out of stock" disabled>Add to cart</button>
+                    }
+
+
+                </div>
+                <br />
+                <div class="text-center">
+                    <a href="/Books/Index"><button type="submit" class="btn btn-primary">Back to list</button></a>
+                </div>
                 <hr />
-                <p class="text-center"><strong>You can find this book also on:</strong></p>
-                <p class="text-center"><a href="">Amazon</a></p>
-                <p class="text-center"><a href="">Books</a></p>
-                <hr />
+
                 <p class="text-center"><strong>Share this book:</strong></p>
                 <div id="social" class="text-center">
-                <a href="http://www.facebook.com/"> <img src="/images/facebook.png"></a>
-                <a href="http://www.linkedin.com/"> <img src="/images/linkedin.png"></a>
-                <a href="http://twitter.com/"> <img src="/images/twitter.png"></a>
+                    <a href="http://www.facebook.com/"> <img src="/images/facebook.png"></a>
+
+                    <a href="http://twitter.com/"> <img src="/images/twitter.png"></a>
                 </div>
             </div>
         </div>
     </div>
 
+    <br /><br />
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h4 style="color:firebrick">You might also want to read following books from @Model.Book.Genre.Name genre</h4>
+        </div>
+    </div>
 
+    <div id="myCarousel" class="carousel slide">
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="@Model.Book.CoverURL" class="center-block" />
+
+            </div>
+
+            <div class="item">
+
+                @foreach (var book in Model.Books)
+                {
+                    <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a><link />
+                }
+
+
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+
+
+    <br /><br />
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @foreach (var item in Model.Book.Authors)
+            {
+                <h4 style="color:firebrick">Other books from @item.Name</h4>
+            }
+        </div>
+    </div>
+
+    <div id="myCarousel2" class="carousel slide">
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="@Model.Book.CoverURL" class="center-block" />
+
+            </div>
+
+            <div class="item">
+
+                @foreach (var book in Model.Books)
+                {
+                    <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a><link />
+                }
+
+
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+   
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="btn">
-
-    @if (Model.Book.Quantity > 0)
-    {
-
-        <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
-    }
-    else
-    {
-        <button type="button" class="btn btn-primary " title="Out of stock" disabled>Add to cart</button>
-    }
-
-
-</div>
 
 <p>
 
@@ -149,7 +184,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('.carousel').carousel({
-                    interval: 4200,
+
                     animation: 3000,
                     auto: 10,
                     scroll: 1,
@@ -161,6 +196,8 @@
                 })
             });
         </script>
+
+        
 
 
     }
