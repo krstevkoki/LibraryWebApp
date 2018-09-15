@@ -48,18 +48,25 @@
             <a href="/Authors/Edit/@Model.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
             }
         </div>
-        <div class="col-xs-11 col-md-10 col-lg-10 text-right" >
-            <a href="/Books/Index"><button type="submit" class="btn btn-primary">Back to list</button></a>
-
-        </div>
+        
     </div>
 
+
+    <h4 style="color:firebrick">Books from @Model.Name</h4>
+
+    <div class="row">
+        @foreach(var book in Model.Books)
+        {
+            <div class="col-sm-3 col-md-3 col-lg-3 cc">
+              <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="img-responsive" /></a>
+            </div>
+        }
+    </div>
+
+
 </div>
 
-<div class="row">
 
-    <div></div>
-</div>
 
 
 
@@ -68,6 +75,6 @@
 @section scripts{
 
 
-<link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
+<link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")" />
 <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
 }

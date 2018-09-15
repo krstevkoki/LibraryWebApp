@@ -1,0 +1,20 @@
+﻿body {
+    background-color: antiquewhite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+
+#container {
+    background-color: white;
+}
+
+.c{
+    float: left;
+    margin: 15px;
+    padding: 50px;
+    width: 300px;
+    height: 400px;
+    border: 1px solid black;
+}
