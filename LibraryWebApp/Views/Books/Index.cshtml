@@ -5,86 +5,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pages)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CoverURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishPlace)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishDate)
-        </th>
 
-        <th>
-            @Html.DisplayName("Author")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th></th>
-    </tr>
+<div id="container" class="container">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pages)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                <img src="@item.CoverURL" style="max-width:200px; max-height:200px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishPlace)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDate)
-            </td>
-            <td>
-                @if (item.Authors.Count == 0)
-                {
-                    <span class="alert-warning">This book does not have Author!</span>
-                }
-                else
-                {
-                    <ul class="list-group list-unstyled">
-                        @foreach (var author in item.Authors)
-                        {
-                            <li class="list-group-item">@author.Name</li>
-                        }
-                    </ul>
-                }
-            </td>
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>B O O K S</h3>
+        </div>
+    </div>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+    <br />
+    <br />
 
-</table>
-   
+
+    <div class="row" >
+        @foreach(var book in Model)
+            {
+        <div class="col-sm-6 col-md-4 col-lg-4 text-center cc">
+            <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="img-responsive right" style="max-width:200px; max-height: 200px; float: left;" /></a>
+           
+            <br />
+            @foreach (var author in book.Authors)
+            {
+               <p><strong>Author:</strong> <a href="/Authors/Details/@author.Id">@author.Name</a></p>
+            }
+            <br /><br /><br /><br /><br />
+               <p >
+                   <a href="/Books/Edit/@book.Id"><buttom class="btn btn-primary" type="submit">Edit</buttom></a>
+                   <a href="/Books/Delete/@book.Id"><button type="submit" class="btn btn-primary">Delete</button></a>
+                   <a href="/Books/Details/@book.Id"><button type="submit" class="btn btn-primary">Details</button></a>
+               </p>
+        </div>
+            }
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+
+
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BooksIndexCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
+}
 
 
 

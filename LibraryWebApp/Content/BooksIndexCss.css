@@ -1,8 +1,6 @@
 ﻿body {
     background-color: antiquewhite;
-    height: 100%;
-    width: 100%;
-    position: absolute;
+ 
 }
 
 
@@ -10,11 +8,15 @@
     background-color: white;
 }
 
-.c{
-    float: left;
-    margin: 15px;
-    padding: 50px;
-    width: 300px;
-    height: 400px;
+.cc{
     border: 1px solid black;
+    float:left;
+    padding: 5px;
+   
+    
+    
+}
+
+.l{
+    font-size: x-small;
 }
