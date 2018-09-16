@@ -230,6 +230,7 @@
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\AddAuthorToBookModel.cs" />
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\AuthorDetailsViewModel.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\ViewModels\BookDetailsViewModel.cs" />
     <Compile Include="Models\Dto\BooksDto.cs" />

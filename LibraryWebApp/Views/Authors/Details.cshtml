@@ -1,4 +1,4 @@
-﻿@model LibraryWebApp.Models.Author
+﻿@model LibraryWebApp.Models.AuthorDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -14,7 +14,7 @@
 
     <div class="row text-center">
         <div class="col-sm-12">
-            <h2>@Model.Name</h2>
+            <h2>@Model.Author.Name</h2>
         </div>
 
     </div>
@@ -22,7 +22,7 @@
     <br />
     <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-2">
-            <img class="img-responsive" src="@Model.ImageURL">
+            <img class="img-responsive" src="@Model.Author.ImageURL">
         </div>
 
         <div class="col-sm-10 col-md-9 col-lg-10 text-left">
@@ -45,33 +45,60 @@
         <div class="col-xs-1 col-md-2 col-lg-2 text-left">
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                <a href="/Authors/Edit/@Model.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
+                <a href="/Authors/Edit/@Model.Author.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
             }
         </div>
 
     </div>
 
 
-    <h4 style="color:firebrick">Books from @Model.Name</h4>
+    <h4 style="color:firebrick">Books from @Model.Author.Name</h4>
 
-    <div class="row">
-        @foreach (var book in Model.Books)
-        {
-            <div class="col-sm-3 col-md-3 col-lg-3 cc">
-               <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="img-responsive" style="max-width:230px; max-height: 230px;"/></a>
-            </div>
-            
-           
-        }
+    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.BooksByAuthor.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
+                }
+                else
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                }
+            }
+        </ol>
+
+        <div class="carousel-inner" role="listbox"  style="background-color:gray">
+            @for (int i = 0; i < Model.BooksByAuthor.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <div class="item active"  style="background-color:gray">
+                        <a href="/Books/Details/@Model.BooksByAuthor[i].Id">
+                            <img src="@Model.BooksByAuthor[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="item" style="background-color: gray">
+                        <a href="/Books/Details/@Model.BooksByAuthor[i].Id">
+                            <img src="@Model.BooksByAuthor[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+            }
+
         </div>
-
-
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                <a href="/Books/index"><button type="submit" class="btn btn-primary">Back to list</button></a>
-            </div>
-        </div>
-
+        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 
 
@@ -79,10 +106,67 @@
 
 
 
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+            <a href="/Books/index"><button type="submit" class="btn btn-primary">Back to list</button></a>
+        </div>
+    </div>
 
-    @section scripts{
+</div>
 
 
-        <link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")" />
-        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
-    }
+
+
+
+
+
+
+
+@section scripts
+{
+
+
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css">
+    <script type="text/javascript">
+        var bookCount = @Model.BooksByAuthor.Count;
+        var bookId = @Model.BooksByAuthor;
+
+        $(document).ready(function() {
+            $(".js-add-to-cart").on("click",
+                function() {
+                    if ($("#IsAuthenticated").attr("value") === "False") {
+                        document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
+                        return;
+                    }
+
+                    var button = $(this);
+                    bookId = button.attr("data-book-id");
+
+                    $.post("/ShoppingCart/AddToCart",
+                        { "id": bookId },
+                        function(response) {
+                            console.log(response);
+                            $("#cart-items-count").text(response.CartCount);
+                            $(".message").text("Go to checkout");
+                        });
+                    bookCount--;
+
+                    if (bookCount === 0) {
+                        $(".js-add-to-cart").prop("disabled", true);
+                        $(".js-add-to-cart").prop("title", "Out of stock");
+                    }
+                });
+
+            $('.carousel').carousel({
+                visible: 5,
+                animation: 5000,
+                pause: "hover",
+                scroll: 1,
+                wrap: "circular",
+                setupCallback: scrollCheck,
+            });
+        });
+    </script>
+}
