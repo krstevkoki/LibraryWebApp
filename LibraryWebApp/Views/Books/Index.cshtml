@@ -21,20 +21,22 @@
     <div class="row" >
         @foreach(var book in Model)
             {
-        <div class="col-sm-6 col-md-4 col-lg-4 text-center cc">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center cc">
             <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="img-responsive right" style="max-width:200px; max-height: 200px; float: left;" /></a>
            
             <br />
+            <p><strong>Book Title: @book.Title</strong></p>
             @foreach (var author in book.Authors)
             {
                <p><strong>Author:</strong> <a href="/Authors/Details/@author.Id">@author.Name</a></p>
             }
-            <br /><br /><br /><br /><br />
-               <p >
-                   <a href="/Books/Edit/@book.Id"><buttom class="btn btn-primary" type="submit">Edit</buttom></a>
-                   <a href="/Books/Delete/@book.Id"><button type="submit" class="btn btn-primary">Delete</button></a>
-                   <a href="/Books/Details/@book.Id"><button type="submit" class="btn btn-primary">Details</button></a>
-               </p>
+            <br /><br /><br />
+                            
+                 <p class="l">
+                    <a href="/Books/Edit/@book.Id"><buttom class="btn btn-primary" type="submit">Edit</buttom></a>
+                    <a href="/Books/Delete/@book.Id"><button type="submit" class="btn btn-primary">Delete</button></a>
+                    <a href="/Books/Details/@book.Id"><button type="submit" class="btn btn-primary">Details</button></a>
+                 </p>
         </div>
             }
     </div>
