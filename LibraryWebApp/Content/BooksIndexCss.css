@@ -8,15 +8,34 @@
     background-color: white;
 }
 
-.cc{
+*{
+    box-sizing: border-box;
+}
+
+.column{
+    float: left;
+    padding-top: 7px;
     border: 1px solid black;
-    float:left;
-    padding: 5px;
- 
-    
+    margin: 11px;
+    width: 270px;
+    height: 400px;
     
 }
 
-.l{
-    font-size: x-small;
+.row:after {
+    content: "";
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 992px) {
+    .column {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width:90%;
+    }
 }

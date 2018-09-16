@@ -34,40 +34,39 @@
         <br/>
     </div>
 
-    <div class="row">
-        @foreach (var book in Model)
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center cc">
-                <a href="/Books/Details/@book.Id">
-                    <img src="@book.CoverURL" class="img-responsive right" style="max-width: 200px; max-height: 200px; float: left;"/>
-                </a>
+       <div class="row">
+           @foreach(var book in Model)
+           {
+           <div class="column" style="background-color:lightcyan">
+               <img src="@book.CoverURL" class="img-responsive center-block" />
 
-                <br/>
-                <p>
-                    <strong>Book Title: @book.Title</strong>
-                </p>
-                @foreach (var author in book.Authors)
-                {
-                    <p>
-                        <strong>Author:</strong> <a href="/Authors/Details/@author.Id">@author.Name</a>
-                    </p>
-                }
-                <br/><br/><br/>
+               <p class="text-center"><strong>Book Title: @book.Title</strong></p>
 
-                <p class="l">
-                    <a href="/Books/Edit/@book.Id">
-                        <buttom class="btn btn-primary">Edit</buttom>
-                    </a>
-                    <a href="/Books/Delete/@book.Id">
-                        <button class="btn btn-primary">Delete</button>
-                    </a>
-                    <a href="/Books/Details/@book.Id">
-                        <button class="btn btn-primary">Details</button>
-                    </a>
-                </p>
-            </div>
-        }
-    </div>
+               @foreach (var author in book.Authors)
+               {
+                   <p class="text-center">
+                       <strong>Author:</strong> <a href="/Authors/Details/@author.Id">@author.Name</a>
+                   </p>
+               }
+
+                   <p class="text-center">
+                       @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                       {
+                       <a href="/Books/Edit/@book.Id">
+                           <buttom class="btn btn-primary">Edit</buttom>
+                       </a>
+                       <a href="/Books/Delete/@book.Id">
+                           <button class="btn btn-primary">Delete</button>
+                       </a>
+                       }
+                       <a href="/Books/Details/@book.Id">
+                           <button class="btn btn-primary">Details</button>
+                       </a>
+                   </p>
+           </div>
+           }
+       </div>
+
 </div>
 
 @section styles {
