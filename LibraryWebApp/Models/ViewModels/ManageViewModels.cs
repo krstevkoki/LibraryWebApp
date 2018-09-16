@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace LibraryWebApp.Models
+namespace LibraryWebApp.Models.ViewModels
 {
     public class IndexViewModel
     {

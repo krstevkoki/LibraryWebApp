@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibraryWebApp.Models;
+using LibraryWebApp.Models.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LibraryWebApp.Controllers

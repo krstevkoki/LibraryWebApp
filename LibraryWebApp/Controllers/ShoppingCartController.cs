@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using LibraryWebApp.Models.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace LibraryWebApp.Controllers

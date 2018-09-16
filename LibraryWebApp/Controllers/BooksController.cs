@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using LibraryWebApp.Models.ViewModels;
+using LibraryWebApp.Models.Dto;
 
 namespace LibraryWebApp.Controllers
 {
