@@ -44,7 +44,7 @@ namespace LibraryWebApp.Controllers
             var booksByGenre = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList();
             booksByGenre.Remove(book);
 
-            var reviewsForBook = book.Reviews.ToList();
+            var reviewsForBook = book.Reviews.OrderByDescending(item => item.ReviewDate).ToList();
 
             var model = new BookDetailsViewModel()
             {
@@ -229,6 +229,30 @@ namespace LibraryWebApp.Controllers
                 return Json(new HttpNotFoundResult($"We didn't find any match for query '{query}'!"));
 
             return Json(result);
+        }
+
+        [HttpPost]
+        public ActionResult LeaveReview(Review review)
+        {
+            review.ReviewDate = DateTime.Now;
+            var book = db.Books.Find(review.BookID);
+
+            if (book == null)
+                return Json(new Dictionary<string, string>
+                {
+                    { "Message", "The book was not found. Review was not added!" },
+                    { "Code", "404" }
+                });
+
+            book.Reviews.Add(review);
+            db.Entry(book).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Json(new Dictionary<string, string>
+            {
+                { "Message", "The review was successfuly added" },
+                { "Code", "200" }
+            });
         }
 
         protected override void Dispose(bool disposing)
