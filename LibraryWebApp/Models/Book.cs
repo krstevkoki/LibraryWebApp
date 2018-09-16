@@ -45,6 +45,7 @@ namespace LibraryWebApp.Models
 
         public virtual ICollection<Review> Reviews { get; set; }
 
+
         public Book()
         {
             Authors = new List<Author>();

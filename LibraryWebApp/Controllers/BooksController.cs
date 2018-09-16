@@ -43,10 +43,13 @@ namespace LibraryWebApp.Controllers
             var booksByGenre = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList();
             booksByGenre.Remove(book);
 
+            var reviewsForBook = book.Reviews.ToList();
+
             var model = new BookDetailsViewModel()
             {
                 Book = book,
-                BooksByGenre = booksByGenre
+                BooksByGenre = booksByGenre,
+                ReviewsForBook = reviewsForBook
             };
 
             return View(model);
