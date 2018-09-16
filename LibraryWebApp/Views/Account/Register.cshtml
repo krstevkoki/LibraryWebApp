@@ -25,7 +25,7 @@
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label", style = "cursor: pointer" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger alert-danger" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger alert-danger small" })
             @if (ViewBag.EmailExists != null)
             {
                 <span class="alert-danger text-danger small">@ViewBag.EmailExists</span>
