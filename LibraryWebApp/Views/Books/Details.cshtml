@@ -15,7 +15,7 @@
     <div class="row bg-primary text-center" style="height: 50px;">
         <h2>Book Details</h2>
     </div>
-    <br />
+    <br/>
 
     <p>
         <strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
@@ -23,17 +23,20 @@
 
     <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-2">
-            <img class="img-responsive" src="@Model.Book.CoverURL" />
+            <img class="img-responsive" src="@Model.Book.CoverURL"/>
         </div>
 
         <div class="col-sm-5 col-md-6 col-lg-7">
             <h4>@Model.Book.Title</h4>
-            @foreach (var item in Model.Book.Authors)
-            {
-                <p>by <a href="/Authors/Details/@item.Id">@item.Name</a></p>
-            }
+            <p>
+                by
+                @foreach (var item in Model.Book.Authors)
+                {
+                    <a href="/Authors/Details/@item.Id">@item.Name </a>
+                }
+            </p>
 
-            <p>Published in <a href="">@Model.Book.PublishPlace</a></p>
+            <p>Published in <span>@Model.Book.PublishPlace</span></p>
 
             <h4>The physical object</h4>
             <p>Number of pages: @Model.Book.Pages</p>
@@ -41,20 +44,24 @@
 
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-            <a href="/Books/Edit/@Model.Book.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
+                <a href="/Books/Edit/@Model.Book.Id">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </a>
             }
         </div>
 
         <div class="col-sm-5 col-md-3 col-lg-3">
-
-            <div id="nav" style="border: 2px dotted gray; height: 270px; width: 228px;margin-left:-7%;">
-                <p class="text-center"><strong>Book price: @Model.Book.Price</strong></p>
-                <p class="text-center"><strong>Like this book?</strong></p>
+            <div id="nav" style="border: 2px dotted gray; ">
+                <p class="text-center">
+                    <strong>Book price: @Model.Book.Price</strong>
+                </p>
+                <p class="text-center">
+                    <strong>Like this book?</strong>
+                </p>
                 <div class="text-center" id="btn">
 
                     @if (Model.Book.Quantity > 0)
                     {
-
                         <button type="button" class="btn btn-primary js-add-to-cart" data-book-id="@Model.Book.Id">Add to cart</button>
                     }
                     else
@@ -64,143 +71,133 @@
 
 
                 </div>
-                <br />
+                <br/>
                 <div class="text-center">
-                    <a href="/Books/Index"><button type="submit" class="btn btn-primary">Back to list</button></a>
+                    <a href="/Books/Index">
+                        <button type="submit" class="btn btn-primary">Back to list</button>
+                    </a>
                 </div>
-                <hr />
+                <hr/>
 
-                <p class="text-center"><strong>Share this book:</strong></p>
+                <p class="text-center">
+                    <strong>Share this book:</strong>
+                </p>
                 <div id="social" class="text-center">
-                    <a href="http://www.facebook.com/"> <img src="/images/facebook.png"></a>
+                    <a href="http://www.facebook.com/">
+                        <img src="/images/facebook.png">
+                    </a>
 
-                    <a href="http://twitter.com/"> <img src="/images/twitter.png"></a>
+                    <a href="http://twitter.com/">
+                        <img src="/images/twitter.png">
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <br /><br />
+    <br/><br/>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
-            <h4 style="color:firebrick">You might also want to read following books from @Model.Book.Genre.Name genre</h4>
+            <h4 style="color: firebrick">You might also want to read the following books from @Model.Book.Genre.Name genre</h4>
         </div>
     </div>
 
-    <div id="myCarousel" class="carousel slide">
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="@Model.Book.CoverURL" class="center-block" />
-
-            </div>
-
-            <div class="item">
-
-                @foreach (var book in Model.Books)
-                {
-                    <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a><link />
-                }
-
-
-            </div>
-        </div>
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div>
-
-
-    <br /><br />
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            @foreach (var item in Model.Book.Authors)
+    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
             {
-                <h4 style="color:firebrick">Other books from @item.Name</h4>
-            }
-        </div>
-    </div>
-
-    <div id="myCarousel2" class="carousel slide">
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="@Model.Book.CoverURL" class="center-block" />
-
-            </div>
-
-            <div class="item">
-
-                @foreach (var book in Model.Books)
+                if (i == 0)
                 {
-                    <a href="/Books/Details/@book.Id"><img src="@book.CoverURL" class="center-block" /></a><link />
+                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
                 }
+                else
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                }
+            }
+        </ol>
 
+        <div class="carousel-inner" role="listbox">
+            @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <div class="item active">
+                        <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                            <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="item">
+                        <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                            <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                        </a>
+                    </div>
+                }
+            }
 
-            </div>
         </div>
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-   
-
 </div>
 
+@section styles
+{
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css"/>
+}
 
-<p>
+@section scripts
+{
+    <script type="text/javascript">
+        var bookCount = @Model.Book.Quantity;
+        var bookId = @Model.Book.Id;
 
-    @section scripts {
+        $(document).ready(function() {
+            $(".js-add-to-cart").on("click",
+                function() {
+                    if ($("#IsAuthenticated").attr("value") === "False") {
+                        document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
+                        return;
+                    }
 
-        <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
-        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
-        <script type="text/javascript">
-            var bookCount = @Model.Book.Quantity;
-            var bookId = @Model.Book.Id;
+                    var button = $(this);
+                    bookId = button.attr("data-book-id");
 
-            $(document).ready(function() {
-                $(".js-add-to-cart").on("click",
-                    function() {
-                        if ($("#IsAuthenticated").attr("value") === "False") {
-                            document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
-                            return;
-                        }
+                    $.post("/ShoppingCart/AddToCart",
+                        { "id": bookId },
+                        function(response) {
+                            console.log(response);
+                            $("#cart-items-count").text(response.CartCount);
+                            $(".message").text("Go to checkout");
+                        });
+                    bookCount--;
 
-                        var button = $(this);
-                        bookId = button.attr("data-book-id");
+                    if (bookCount === 0) {
+                        $(".js-add-to-cart").prop("disabled", true);
+                        $(".js-add-to-cart").prop("title", "Out of stock");
+                    }
+                });
 
-                        $.post("/ShoppingCart/AddToCart",
-                            { "id": bookId },
-                            function(response) {
-                                console.log(response);
-                                $("#cart-items-count").text(response.CartCount);
-                                $(".message").text("Go to checkout");
-                            });
-                        bookCount--;
-
-                        if (bookCount === 0) {
-                            $(".js-add-to-cart").prop("disabled", true);
-                            $(".js-add-to-cart").prop("title", "Out of stock");
-                        }
-                    });
+            $('.carousel').carousel({
+                animation: 5000,
+                pause: "hover",
+                auto: 10,
+                scroll: 1,
+                visible: 3,
+                wrap: "circular",
+                setupCallback: scrollCheck,
             });
-        </script>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.carousel').carousel({
-
-                    animation: 3000,
-                    auto: 10,
-                    scroll: 1,
-                    visible: 3,
-                    wrap: 'circular',
-                    setupCallback: scrollCheck,
-
-
-                })
-            });
-        </script>
-
-        
-
-
-    }
-
-</p>
+        });
+    </script>
+}
