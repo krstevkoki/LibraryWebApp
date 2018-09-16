@@ -9,8 +9,6 @@ namespace LibraryWebApp.Models
     {
         public Book Book { get; set; }
 
-        public List<Book> Books { get; set; }
-
-        public List<Book> BooksByAuthor { get; set; }
+        public List<Book> BooksByGenre { get; set; }
     }
 }
