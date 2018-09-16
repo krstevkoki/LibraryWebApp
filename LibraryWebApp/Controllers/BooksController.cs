@@ -40,7 +40,7 @@ namespace LibraryWebApp.Controllers
 
             var booksByGenre = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList();
             booksByGenre.Remove(book);
-           
+
             var model = new BookDetailsViewModel()
             {
                 Book = book,
@@ -202,6 +202,27 @@ namespace LibraryWebApp.Controllers
             db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Search(string query)
+        {
+            if (query == null)
+            {
+                return Json(new HttpStatusCodeResult(HttpStatusCode.BadRequest, "The search query is empty!"));
+            }
+
+            var result = db.Books.Where(b => b.Title.Contains(query)).Select(b => new BooksDto()
+            {
+                Id = b.Id,
+                Title = b.Title,
+                CoverUrl = b.CoverURL
+            }).ToList();
+            
+            if (result.Count == 0)
+                return Json(new HttpNotFoundResult($"We didn't find any match for query '{query}'!"));
+
+            return Json(result);
         }
 
         protected override void Dispose(bool disposing)
