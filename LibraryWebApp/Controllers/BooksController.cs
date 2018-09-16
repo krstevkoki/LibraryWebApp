@@ -38,11 +38,13 @@ namespace LibraryWebApp.Controllers
                 return HttpNotFound();
             }
 
-            BookDetailsViewModel model = new BookDetailsViewModel()
+            var booksByGenre = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList();
+            booksByGenre.Remove(book);
+           
+            var model = new BookDetailsViewModel()
             {
                 Book = book,
-                Books = db.Books.Include(b => b.Genre).Where(b => b.Genre.Name == book.Genre.Name).ToList()
-                
+                BooksByGenre = booksByGenre
             };
 
             return View(model);
