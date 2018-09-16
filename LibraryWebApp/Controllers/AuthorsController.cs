@@ -28,12 +28,23 @@ namespace LibraryWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.Authors.Find(id);
+
+            var author = db.Authors.Include(a => a.Books).FirstOrDefault(a => a.Id == id);
+
             if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(author);
+
+            var booksByAuthor = author.Books.ToList();
+
+            var model = new AuthorDetailsViewModel(){
+                Author = author,
+                BooksByAuthor = booksByAuthor
+            };
+
+          
+            return View(model);
         }
 
         // GET: Authors/Create
