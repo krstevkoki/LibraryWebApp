@@ -14,6 +14,9 @@ namespace LibraryWebApp.Models
         public int Id { get; set; }
 
         [Required]
+        public int BookID { get; set; }
+
+        [Required]
         public string ReviewerUsername { get; set; }
 
         [Required]
@@ -22,5 +25,7 @@ namespace LibraryWebApp.Models
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime ReviewDate { get; set; }
+
+        
     }
 }

@@ -431,6 +431,7 @@
     <Content Include="images\16.jpg" />
     <Content Include="images\17.jpg" />
     <Content Include="images\facebook.png" />
+    <Content Include="images\icon.jpg" />
     <Content Include="images\linkedin.png" />
     <Content Include="images\twitter.png" />
     <Content Include="images\whiteBg.jpg" />
