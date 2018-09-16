@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using LibraryWebApp.Models;
 using LibraryWebApp.Models.ViewModels;
 using LibraryWebApp.Models.Dto;
@@ -209,7 +210,7 @@ namespace LibraryWebApp.Controllers
         [HttpPost]
         public ActionResult Search(string query)
         {
-            if (query == null)
+            if (query == null || query.IsEmpty())
             {
                 return Json(new HttpStatusCodeResult(HttpStatusCode.BadRequest, "The search query is empty!"));
             }
