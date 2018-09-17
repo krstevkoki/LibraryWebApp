@@ -18,6 +18,7 @@ namespace LibraryWebApp.Models.ViewModels
         public DateTime? DateExpiring { get; set; }
         public TimeSpan? DateDifference { get; set; }
         public List<ApplicationUser> Users { get; set; }
+        public ApplicationUser User { get; set; }
     }
 
     public class ManageLoginsViewModel
