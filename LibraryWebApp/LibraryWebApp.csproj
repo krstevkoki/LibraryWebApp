@@ -431,6 +431,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\IndexAdminCss.css" />
     <Content Include="Content\IndexMembersCss.css" />
+    <Content Include="Content\IndexStaffCss.css" />
     <Content Include="Content\IndexUserCss.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
@@ -443,6 +444,7 @@
     <Content Include="images\15.jpg" />
     <Content Include="images\16.jpg" />
     <Content Include="images\17.jpg" />
+    <Content Include="images\18.png" />
     <Content Include="images\facebook.png" />
     <Content Include="images\icon.jpg" />
     <Content Include="images\linkedin.png" />
