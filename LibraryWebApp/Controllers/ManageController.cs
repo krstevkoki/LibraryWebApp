@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -74,7 +75,8 @@ namespace LibraryWebApp.Controllers
                 DateRegistration = user.MemberSince.HasValue ? user.MemberSince.Value : DateTime.MinValue,
                 DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : DateTime.MinValue,
                 Points = user.Points,
-                Users = UserManager.Users.ToList()
+                Users = UserManager.Users.ToList(),
+                User = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)
             };
             model.DateDifference = model.DateExpiring - model.DateRegistration;
 
@@ -241,6 +243,48 @@ namespace LibraryWebApp.Controllers
 
             return RedirectToAction("Index", new {Message = ManageMessageId.RemovePhoneSuccess});
         }
+
+        #region custom code
+
+        [HttpGet]
+        public ActionResult EditDetails()
+        {
+            var user = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var model = new EditDetailsViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                Gender = user.Gender,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDetails(EditDetailsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Age = model.Age;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.City = model.City;
+                user.Country = model.Country;
+
+                UserManager.Update(user);
+
+                return RedirectToAction("Index", "Manage");
+            }
+            return View(model);
+        }
+        #endregion
 
         //
         // GET: /Manage/ChangePassword
