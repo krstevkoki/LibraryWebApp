@@ -3,14 +3,14 @@
     ViewBag.Title = "Manage";
 }
 
-<h2 id="a">Admin View Only</h2>
+<h2 id="a">Admin View</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4 id="b">Your personal data</h4>
     <hr/>
     <dl class="dl-horizontal">
-        <dt class="dt">User: </dt>
+        <dt class="dt">Username: </dt>
         <dd class="dd">@User.Identity.Name</dd>
         <dt class="dt">User Role:</dt>
         <dd class="dd">
@@ -26,7 +26,7 @@
     </dl>
     <ul class="nav nav-tabs">
         <li class="active">
-            <a data-toggle="tab" href="#changeDetails">Edit personal details</a>
+            <a data-toggle="tab" href="#changeDetails">Personal details</a>
         </li>
         <li>
             <a data-toggle="tab" href="#manageUsers">Manage Users</a>
@@ -51,7 +51,55 @@
     <div class="tab-content">
         <div id="changeDetails" class="tab-pane fade in active">
             <br />
-            @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new {@class = "btn btn-primary"})
+            @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Edit details", "EditDetails", "Manage", null, new { @class = "btn btn-primary" })
+            <br />
+            <br />
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.FirstName, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.LastName, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Age, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Age, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Gender, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBox("Gender", Model.User.Gender ? "Male" : "Female", new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Address, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Address, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.City, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.City, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Country, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Country, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="manageUsers" class="tab-pane fade in">
             <div class="table-responsive">
