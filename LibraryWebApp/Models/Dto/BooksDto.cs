@@ -10,5 +10,6 @@ namespace LibraryWebApp.Models.Dto
         public int Id { get; set; }
         public string Title { get; set; }
         public string CoverUrl { get; set; }
+        public string Genre { get; set; }
     }
 }
