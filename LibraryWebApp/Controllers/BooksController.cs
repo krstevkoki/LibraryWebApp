@@ -23,7 +23,7 @@ namespace LibraryWebApp.Controllers
         public ActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 16;
 
             // var model = db.Books.Include(m => m.Authors).ToList();
 
