@@ -70,7 +70,7 @@
     </div>
 
     <div class="row">
-    <div class="col-sm-2 col-md-4 col-lg-6">
+    <div class="l col-sm-2 col-md-4 col-lg-6">
 
         <strong>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</strong>
 
@@ -136,6 +136,7 @@
                                         '</p>' +
                                         '</div>');
                                     $(".pagination").hide();
+                                    $(".l").hide();
                                     if (userRole === "Admin" || userRole === "Staff")
                                         $("#results p.text-center:last").prepend(
                                             '<a href="/Books/Edit/' + response[i].Id + '" class="btn btn-primary btn-result">Edit</a>' +
