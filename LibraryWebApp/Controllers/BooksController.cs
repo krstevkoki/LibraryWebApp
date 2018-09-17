@@ -22,6 +22,10 @@ namespace LibraryWebApp.Controllers
         public ActionResult Index()
         {
             var model = db.Books.Include(m => m.Authors).ToList();
+            ViewBag.UserRole = User.IsInRole(Roles.Admin) ? "Admin" :
+                User.IsInRole(Roles.Staff) ? "Staff" :
+                User.IsInRole(Roles.Member) ? "Member" :
+                User.IsInRole(Roles.User) ? "User" : "";
             return View(model);
         }
 
@@ -224,7 +228,7 @@ namespace LibraryWebApp.Controllers
                 Title = b.Title,
                 CoverUrl = b.CoverURL
             }).ToList();
-            
+
             if (result.Count == 0)
                 return Json(new HttpNotFoundResult($"We didn't find any match for query '{query}'!"));
 
