@@ -17,7 +17,7 @@
     </div>
 
     <div class="clearfix">
-        <br/>
+        <br />
     </div>
 
     <div class="row">
@@ -25,15 +25,15 @@
             <div class="form-inline">
                 <div class="form-group">
                     <label for="search" style="cursor: pointer;">Search for a book:</label>
-                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query"/>
+                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query" />
                 </div>
             </div>
         </div>
     </div>
 
     <div class="clearfix">
-        <br/>
-        <br/>
+        <br />
+        <br />
     </div>
 
     <div class="row">
@@ -42,7 +42,7 @@
             @foreach (var book in Model)
             {
                 <div class="column" style="background-color: lightcyan">
-                    <img src="@book.CoverURL" class="img-responsive center-block"/>
+                    <img src="@book.CoverURL" class="img-responsive center-block" />
 
                     <p class="text-center">
                         <strong>Book Title: @book.Title</strong>
@@ -69,11 +69,26 @@
         <div id="results"></div>
     </div>
 
+    <div class="row">
+    <div class="col-sm-2 col-md-4 col-lg-6">
 
-    <div class="pagination">
         <strong>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</strong>
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
     </div>
+
+        </div>
+
+    <div class="row">
+
+        <div class="pagination text-center col-sm-12 col-xs-12 col-md-12 col-lg-12">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+        </div>
+
+    </div>
+
+
 
 </div>
 
@@ -120,7 +135,7 @@
                                         '<a href="/Books/Details/' + response[i].Id + '" class="btn btn-primary">Details</a>' +
                                         '</p>' +
                                         '</div>');
-
+                                    $(".pagination").hide();
                                     if (userRole === "Admin" || userRole === "Staff")
                                         $("#results p.text-center:last").prepend(
                                             '<a href="/Books/Edit/' + response[i].Id + '" class="btn btn-primary btn-result">Edit</a>' +
