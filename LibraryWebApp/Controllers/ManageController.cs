@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibraryWebApp.Models;
 using LibraryWebApp.Models.ViewModels;
+using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace LibraryWebApp.Controllers
 {
@@ -16,6 +18,7 @@ namespace LibraryWebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -64,6 +67,17 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            var orders = db.Orders.Include(o => o.OrderDetails).Where(o => o.Username == User.Identity.Name).ToList();
+            var books = new List<Book>();
+
+            foreach(var order in orders)
+            {
+                foreach(var orderDetail in order.OrderDetails)
+                {
+                    books.Add(db.Books.Find(orderDetail.BookId));
+                }
+            }
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -75,7 +89,8 @@ namespace LibraryWebApp.Controllers
                 DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : DateTime.MinValue,
                 Points = user.Points,
                 Users = UserManager.Users.ToList(),
-                User = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)
+                User = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name),
+                PurchasedBooks = books
             };
             model.DateDifference = model.DateExpiring - model.DateRegistration;
 

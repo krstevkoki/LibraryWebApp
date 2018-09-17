@@ -9,7 +9,7 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4 id="b">Your personal data</h4>
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
         <dt class="dt">Password:</dt>
         <dd class="dd">
@@ -82,6 +82,47 @@
     </div>
 </div>
 
+
+<table class="table">
+
+    <thead>
+        
+    <tr>
+        <th>
+          Title
+        </th>
+        <th>
+           Pages
+        </th>
+        <th>
+           Price
+        </th>
+       
+        
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in Model.PurchasedBooks)
+    {
+        <tr>
+            <td>
+              @item.Title
+            </td>
+            <td>
+                @item.Pages
+            </td>
+            <td>
+                @item.Price
+            </td>
+            
+        </tr>
+    }
+</tbody>
+</table>
+
+
 @section scripts {
     <script type="text/javascript">
         if (@Model.DateDifference.Value.Days <= 30) {
@@ -111,6 +152,6 @@
 }
 
 @section styles {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")"/>
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
 }

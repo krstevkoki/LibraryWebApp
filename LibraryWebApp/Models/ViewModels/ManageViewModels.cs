@@ -19,6 +19,7 @@ namespace LibraryWebApp.Models.ViewModels
         public TimeSpan? DateDifference { get; set; }
         public List<ApplicationUser> Users { get; set; }
         public ApplicationUser User { get; set; }
+        public List<Book> PurchasedBooks { get; set; }
     }
 
     public class ManageLoginsViewModel
