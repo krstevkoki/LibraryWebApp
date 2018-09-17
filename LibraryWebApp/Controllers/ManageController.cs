@@ -73,7 +73,8 @@ namespace LibraryWebApp.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 DateRegistration = user.MemberSince.HasValue ? user.MemberSince.Value : DateTime.MinValue,
                 DateExpiring = user.MemberSince.HasValue ? user.MemberSince.Value.AddYears(1) : DateTime.MinValue,
-                Points = user.Points
+                Points = user.Points,
+                Users = UserManager.Users.ToList()
             };
             model.DateDifference = model.DateExpiring - model.DateRegistration;
 
