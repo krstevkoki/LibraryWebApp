@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using LibraryWebApp.Models;
 using LibraryWebApp.Models.ViewModels;
+using PagedList;
 using LibraryWebApp.Models.Dto;
 
 namespace LibraryWebApp.Controllers
@@ -19,9 +20,15 @@ namespace LibraryWebApp.Controllers
 
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var model = db.Books.Include(m => m.Authors).ToList();
+            var pageNumber = page ?? 1;
+            var pageSize = 4;
+
+            // var model = db.Books.Include(m => m.Authors).ToList();
+
+            var model = db.Books.Include(m => m.Authors).OrderByDescending(b=>b.Id).ToPagedList(pageNumber, pageSize);
+
             ViewBag.UserRole = User.IsInRole(Roles.Admin) ? "Admin" :
                 User.IsInRole(Roles.Staff) ? "Staff" :
                 User.IsInRole(Roles.Member) ? "Member" :

@@ -1,4 +1,8 @@
-﻿@model IEnumerable<LibraryWebApp.Models.Book>
+﻿@*@model IEnumerable<LibraryWebApp.Models.Book>*@
+
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<LibraryWebApp.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -63,6 +67,12 @@
             }
         </div>
         <div id="results"></div>
+    </div>
+
+
+    <div class="pagination">
+        <strong>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</strong>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
     </div>
 
 </div>
