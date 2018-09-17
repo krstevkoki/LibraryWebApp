@@ -1,0 +1,32 @@
+﻿.dt {
+    font-weight: 800;
+    font-size: 20px;
+    font-style: oblique;
+    margin-top: -3px;
+    color: cadetblue;
+}
+
+.dd {
+    font-size: 14px;
+    font-weight: bold;
+    color: darkorchid;
+}
+
+#a {
+    background-image: url(../images/18.png);
+    background-size: contain;
+    border-radius: 20px;
+    height: 50px;
+    padding: 10px;
+    color: darkslateblue;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#b {
+    font-size: 22px;
+    font-weight: bolder;
+    margin-left: 60px;
+    color: cadetblue;
+}
