@@ -1,25 +1,24 @@
-﻿body {
-    background-color: antiquewhite;
- 
-}
+﻿* { box-sizing: border-box; }
 
+body { background-color: antiquewhite; }
 
-#container {
-    background-color: white;
-}
+#container { background-color: white; }
 
-*{
-    box-sizing: border-box;
-}
-
-.column{
+.column {
     float: left;
     padding-top: 7px;
     border: 1px solid black;
     margin: 11px;
     width: 270px;
     height: 400px;
-    
+}
+
+.column-result {
+    height: 380px;  
+}
+
+.btn-result {
+    margin-right: 5px;
 }
 
 .row:after {
@@ -29,13 +28,9 @@
 }
 
 @media screen and (max-width: 992px) {
-    .column {
-        width: 30%;
-    }
+    .column { width: 30%; }
 }
 
-@media screen and (max-width: 600px) {
-    .column {
-        width:90%;
-    }
+@media screen and (max-width: 768px) {
+    .column { width: 90%; }
 }
