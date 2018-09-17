@@ -33,6 +33,7 @@
     </div>
 
     <div class="row">
+        <div id="no-results-message" class="alert alert-danger text-danger"></div>
         <div id="basic">
             @foreach (var book in Model)
             {
@@ -75,25 +76,29 @@
 {
     <script type="text/javascript">
         var userRole = "@ViewBag.UserRole";
-
         $(document).ready(function () {
-            console.log(userRole);
 
-            $("#results").hide();
+            $("#results, #no-results-message").hide();
 
             $("#search").on("keyup",
                 function() {
-                    var query = $(this).val();
-                    console.log(query);
-                    $("#basic").hide();
-                    $("#results").empty();
-                    $("#results").hide();
+                    var query = $(this).val().trim();
+                    $("#basic, #results, #no-results-message").hide();
+                    $("#results, #no-results-message").empty();
 
                     if (query !== "") {
                         $.post("/Books/Search",
                             { query: query },
                             function (response) {
-                                console.log(response);
+                                if (response.hasOwnProperty("StatusCode")) {
+                                    $("#no-results-message").append(
+                                        '<span class="glyphicon glyphicon-info-sign"></span>' +
+                                        '<span>'+ response.StatusDescription +'</span>'
+                                    );
+                                    $("#no-results-message").show();
+                                    return;
+                                }
+
                                 for (var i = 0; i < response.length; ++i) {
                                     $("#results").append(
                                         '<div class="column column-result" style="background-color: lightcyan">' +
@@ -105,6 +110,7 @@
                                         '<a href="/Books/Details/' + response[i].Id + '" class="btn btn-primary">Details</a>' +
                                         '</p>' +
                                         '</div>');
+
                                     if (userRole === "Admin" || userRole === "Staff")
                                         $("#results p.text-center:last").prepend(
                                             '<a href="/Books/Edit/' + response[i].Id + '" class="btn btn-primary btn-result">Edit</a>' +
@@ -117,10 +123,10 @@
                             function() {
                                 $(this).show();
                             });
-
+                        $("#no-results-message").hide();
                     } else {
-                        $("#results").empty();
-                        $("#results").hide();
+                        $("#results, #no-results-message").empty();
+                        $("#results, #no-results-message").hide();
                         $("#basic").fadeIn(500,
                             function() {
                                 $(this).show();
