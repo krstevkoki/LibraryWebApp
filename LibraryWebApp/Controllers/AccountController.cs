@@ -124,9 +124,12 @@ namespace LibraryWebApp.Controllers
         [Authorize(Roles = Roles.User)]
         public async Task<ActionResult> AddToRoleMember(string username)
         {
+            if (username == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                
             var user = await UserManager.FindByNameAsync(username);
             if (user == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
             user.Roles.Clear();
             var result = await UserManager.AddToRoleAsync(user.Id, Roles.Member);
@@ -154,9 +157,13 @@ namespace LibraryWebApp.Controllers
         [Authorize(Roles = Roles.Member)]
         public async Task<ActionResult> AddToRoleUser(string username)
         {
+            if (username == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            
             var user = await UserManager.FindByNameAsync(username);
             if (user == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
             user.Roles.Clear();
             var result = await UserManager.AddToRoleAsync(user.Id, Roles.User);
             if (result.Succeeded)
@@ -182,9 +189,12 @@ namespace LibraryWebApp.Controllers
         [Authorize(Roles = Roles.Member)]
         public async Task<ActionResult> ContinueMembership(string username)
         {
+            if (username == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                
             var user = await UserManager.FindByNameAsync(username);
             if (user == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
             user.MemberSince = DateTime.Now;
             await UserManager.UpdateAsync(user);
