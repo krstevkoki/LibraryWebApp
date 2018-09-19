@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Your Shopping Bag (<span id="items-count">@Model.CartItems.Count</span>)</h2>
+<h2>Your Shopping Bag <small>(<span id="items-count">@Model.CartItems.Count</span>)</small></h2>
 @if (Model.CartItems.Count > 0)
 {
     <div class="table-responsive">

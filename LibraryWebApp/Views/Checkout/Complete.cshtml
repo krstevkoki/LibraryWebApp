@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Complete</h2>
-<p>Thanks for your order! Your order number is: @Model</p>
-<p>How about shopping for some more music in our @Html.ActionLink("library!", "Index", "Books")</p>
+<h2>Your order has been placed!</h2>
+<p>Thanks for your order! Your order number is: 
+    <strong>@Html.ActionLink($"{Model}", "Details", "Orders", new {id = Model}, new {})</strong>
+    </p>
+<p>How about shopping for some more books in our @Html.ActionLink("library!", "Index", "Books")</p>

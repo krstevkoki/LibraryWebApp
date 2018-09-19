@@ -14,9 +14,18 @@
     </div>
     <br />
 
-    <p>
-        <strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
-    </p>
+    @if (Model.Book.Quantity > 0)
+    {
+        <p>
+            <strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
+        </p>
+    }
+    else
+    {
+        <p>
+            <strong class="text-danger">This book is out of stock</strong>
+        </p>
+    }
 
     <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-2">
@@ -35,7 +44,7 @@
 
             <p>Published in <span>@Model.Book.PublishPlace</span></p>
 
-            <h4>The physical object</h4>
+            <h4>The physical object:</h4>
             <p>Number of pages: @Model.Book.Pages</p>
             <p>Publish date: @Model.Book.PublishDate</p>
 
@@ -52,7 +61,7 @@
         <div class="col-sm-5 col-md-3 col-lg-3">
             <div id="nav" style="border: 2px dotted gray;">
                 <p class="text-center">
-                    <strong>Book price: @Model.Book.Price</strong>
+                    <strong>Book price: <span id="book-price">@Model.Book.Price</span></strong>
                 </p>
                 <p class="text-center">
                     <strong>Like this book?</strong>
@@ -99,7 +108,7 @@
     </div>
 
     <br /><br />
-    
+
     @if (Model.BooksByGenre.Count > 0)
     {
         <div class="row">
@@ -132,7 +141,7 @@
                     {
                         <div class="item active">
                             <a href="/Books/Details/@Model.BooksByGenre[i].Id">
-                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                             </a>
                         </div>
                     }
@@ -140,7 +149,7 @@
                     {
                         <div class="item">
                             <a href="/Books/Details/@Model.BooksByGenre[i].Id">
-                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                             </a>
                         </div>
                     }
@@ -156,7 +165,7 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <br/>
+        <br />
     }
 
     @if (Model.ReviewsForBook.Count > 0)
@@ -215,8 +224,10 @@
         var bookCount = @Model.Book.Quantity;
         var bookId = @Model.Book.Id;
 
-        $(document).ready(function() {
-
+        $(document).ready(function () {
+            var price = $("#book-price").text();
+            $("#book-price").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" }).format(price));
+            
             $(".js-add-to-cart").on("click",
                 function() {
                     if ($("#IsAuthenticated").attr("value") === "False") {

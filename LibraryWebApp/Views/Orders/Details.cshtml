@@ -5,111 +5,99 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <div class="row">
+        <h3>Details for Order - <strong>@Model.OrderId</strong></h3>
+        <hr/>
+    </div>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+    <div class="row">
+        <h4>
+            <strong>Shipping Details:</strong>
+        </h4>
+        <div class="table-responsive">
+            <table class="text-center table table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center">First Name</th>
+                    <th class="text-center">Last Name</th>
+                    <th class="text-center">Phone</th>
+                    <th class="text-center">Address</th>
+                    <th class="text-center">Postal Code</th>
+                    <th class="text-center">City</th>
+                    <th class="text-center">Country</th>
+                    <th class="text-center">State</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.LastName</td>
+                    <td>@Model.Phone</td>
+                    <td>@Model.Address</td>
+                    <td>@Model.PostalCode</td>
+                    <td>@Model.City</td>
+                    <td>@Model.Country</td>
+                    <td>@Model.State</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+    <div class="row">
+        <h4>
+            <strong>Order Items:</strong>
+        </h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.State)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.State)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostalCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderDate)
-        </dd>
-
-    </dl>
+        <div class="table-responsive">
+            <table class="text-center table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Item Price</th>
+                    <th class="text-center">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.Book.CoverURL" style="max-height: 100px; max-width: 100px"/>
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Book.Title, "Details", "Books", new {id = item.BookId}, new {})
+                        </td>
+                        <td>@item.Quantity</td>
+                        <td class="item-price">@item.UnitPrice</td>
+                        <td class="item-total">@(item.Quantity * item.UnitPrice)</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right"><b>Order total:</b></td>
+                    <td><b class="order-total">@Model.Total</b></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@section scripts 
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var formatter = new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" });
+
+            $(".item-price, .item-total, .order-total").each(function() {
+                var price = $(this).text();
+                $(this).text(formatter.format(price));
+            });
+        });
+    </script>
+}
