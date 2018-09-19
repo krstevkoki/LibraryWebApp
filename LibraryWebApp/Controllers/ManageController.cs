@@ -75,7 +75,7 @@ namespace LibraryWebApp.Controllers
             {
                 foreach(var orderDetail in order.OrderDetails)
                 {
-                    books.Add(db.Books.Find(orderDetail.BookId));
+                    books.Add(db.Books.Include(b => b.Genre).FirstOrDefault(b => b.Id == orderDetail.BookId));
                 }
             }
             var model = new IndexViewModel
