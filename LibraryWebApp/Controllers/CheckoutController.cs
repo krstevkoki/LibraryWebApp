@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -56,7 +57,7 @@ namespace LibraryWebApp.Controllers
 
             model.Order.Username = User.Identity.Name;
             model.Order.OrderDate = DateTime.Now;
-            
+
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
@@ -65,19 +66,19 @@ namespace LibraryWebApp.Controllers
 
             user.FirstName = model.Order.FirstName;
             user.LastName = model.Order.LastName;
-            
+
             var creditCard = db.CreditCards.Find(model.CreditCard.CardNumber);
 
-            if (creditCard == null || 
+            if (creditCard == null ||
                 creditCard.CardHolder != model.CreditCard.CardHolder ||
                 creditCard.CVV2 != model.CreditCard.CVV2 ||
-                creditCard.ExpiryDate != model.CreditCard.ExpiryDate)  // credit card doesn't exist
+                creditCard.ExpiryDate != model.CreditCard.ExpiryDate) // credit card doesn't exist
             {
                 ModelState.AddModelError("", "Credit card does not exist!");
                 return View(model);
             }
 
-            if (creditCard.ExpiryDate < DateTime.Now)  // credit card has expired
+            if (creditCard.ExpiryDate < DateTime.Now) // credit card has expired
             {
                 ModelState.AddModelError("", "Credit card has expired!");
                 return View(model);
@@ -86,7 +87,7 @@ namespace LibraryWebApp.Controllers
             var cart = ShoppingCart.GetCard(this.HttpContext);
             int result = cart.CreateOrder(model.Order, creditCard);
 
-            if (result != -1)  // available funds on the credit card
+            if (result != -1) // available funds on the credit card
             {
                 if (user.Points != 0)
                 {
@@ -95,7 +96,7 @@ namespace LibraryWebApp.Controllers
                     userManager.Update(user);
                 }
 
-                return RedirectToAction("Complete", "Checkout", new { id = model.Order.OrderId });
+                return RedirectToAction("Complete", "Checkout", new {id = model.Order.OrderId});
             }
 
             ModelState.AddModelError("", "Insufficient funds on your balance!");
@@ -108,8 +109,13 @@ namespace LibraryWebApp.Controllers
             if (!id.HasValue)
                 return HttpNotFound();
 
-            if (db.Orders.Any(o => o.OrderId == id.Value && o.Username == User.Identity.Name))
-                return View(id.Value);
+            if (db.Orders.Any(o => o.OrderId == id.Value))
+            {
+                if (db.Orders.Any(o => o.OrderId == id.Value && o.Username == User.Identity.Name))
+                    return View(id.Value);
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             return HttpNotFound();
         }
     }

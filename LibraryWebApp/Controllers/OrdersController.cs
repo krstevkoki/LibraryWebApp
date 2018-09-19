@@ -27,11 +27,13 @@ namespace LibraryWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.Include(o => o.OrderDetails).FirstOrDefault(o => o.OrderId == id);
             if (order == null)
             {
                 return HttpNotFound();
             }
+            if (order.Username != User.Identity.Name)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             return View(order);
         }
 
