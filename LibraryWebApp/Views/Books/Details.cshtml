@@ -12,7 +12,7 @@
     <div class="row bg-primary text-center">
         <h2>Book Details</h2>
     </div>
-    <br/>
+    <br />
 
     <p>
         <strong>@Model.Book.Quantity editions</strong> of <strong>@Model.Book.Title</strong> found in the catalog.
@@ -20,7 +20,7 @@
 
     <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-2">
-            <img class="img-responsive" src="@Model.Book.CoverURL"/>
+            <img class="img-responsive" src="@Model.Book.CoverURL" />
         </div>
 
         <div class="col-sm-5 col-md-6 col-lg-7">
@@ -41,9 +41,11 @@
 
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                <a href="/Books/Edit/@Model.Book.Id">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </a>
+                @Html.ActionLink("Edit", "Edit", "Books", new { id = Model.Book.Id }, new { @class = "btn btn-warning" })
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", "Books", new { id = Model.Book.Id }, new { @class = "btn btn-danger" })
             }
         </div>
 
@@ -59,27 +61,26 @@
 
                     @if (Model.Book.Quantity > 0)
                     {
-                        <button type="button" class="btn btn-primary js-add-to-cart">Add to cart</button>
+                        <button type="button" class="btn btn-info js-add-to-cart">Add to cart</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary " title="Out of stock" disabled>Add to cart</button>
+                        <button type="button" class="btn btn-info " title="Out of stock" disabled>Add to cart</button>
                     }
                 </div>
-                <br/>
-                <div class="text-center">
-                    <a href="/Books/Index">
-                        <button type="button" class="btn btn-primary">Back to list</button>
-                    </a>
-                </div>
-
-                <br/>
+                <br />
 
                 <div class="text-center">
-                    <button id="review-button" type="button" class="btn btn-primary">Leave a review</button>
+                    <button type="button" class="btn btn-info review-button">Leave a review</button>
                 </div>
 
-                <hr/>
+                <br />
+
+                <div class="text-center">
+                    @Html.ActionLink("Back to list", "", "", new { }, new { @class = "btn btn-primary" })
+                </div>
+
+                <hr />
 
                 <p class="text-center">
                     <strong>Share this book:</strong>
@@ -97,80 +98,99 @@
         </div>
     </div>
 
-    <br/><br/>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <h4 style="color: firebrick">You might also want to read the following books from @Model.Book.Genre.Name genre</h4>
-        </div>
-    </div>
-
-    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
-            {
-                if (i == 0)
-                {
-                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
-                }
-                else
-                {
-                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
-                }
-            }
-        </ol>
-
-        <div class="carousel-inner" role="listbox" style="background-color:gray">
-            @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
-            {
-                if (i == 0)
-                {
-                    <div class="item active">
-                        <a href="/Books/Details/@Model.BooksByGenre[i].Id">
-                            <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <div class="item">
-                        <a href="/Books/Details/@Model.BooksByGenre[i].Id">
-                            <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
-                        </a>
-                    </div>
-                }
-            }
-
-        </div>
-        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <h4 style="color: firebrick">Reviews </h4>
-        </div>
-    </div>
-
-    @foreach (var user in Model.ReviewsForBook)
+    <br /><br />
+    
+    @if (Model.BooksByGenre.Count > 0)
     {
-        <div class="media">
-            <div class="media-left">
-                <img src="~/images/icon.jpg" style="width: 60px"/>
-            </div>
-            <div class="media-body">
-                <p class="media-heading"><strong>@user.ReviewerUsername</strong> on <strong>@user.ReviewDate</strong></p>
-                <p>@user.ReviewMessage</p>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h4 style="color: firebrick">
+                    You might also want to read the following books from @Model.Book.Genre.Name genre:
+                </h4>
             </div>
         </div>
 
-        <hr/>
+        <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
+                {
+                    if (i == 0)
+                    {
+                        <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                    }
+                }
+            </ol>
+
+            <div class="carousel-inner" role="listbox" style="background-color: gray">
+                @for (int i = 0; i < Model.BooksByGenre.Count; ++i)
+                {
+                    if (i == 0)
+                    {
+                        <div class="item active">
+                            <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                                <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                            </a>
+                        </div>
+                    }
+                }
+
+            </div>
+            <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <br/>
+    }
+
+    @if (Model.ReviewsForBook.Count > 0)
+    {
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h4 style="color: firebrick">Reviews </h4>
+            </div>
+        </div>
+
+        foreach (var user in Model.ReviewsForBook)
+        {
+            <div class="media">
+                <div class="media-left">
+                    <img src="~/images/icon.jpg" style="width: 60px" />
+                </div>
+                <div class="media-body">
+                    <p class="media-heading"><strong>@user.ReviewerUsername</strong> on <strong>@user.ReviewDate</strong></p>
+                    <p>@user.ReviewMessage</p>
+                </div>
+            </div>
+
+            <hr />
+        }
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h4 class="text-danger alert-danger">
+                    No reviews for this book! If you have thoughts about this book, please <a class="review-button" href="#">leave a review</a>.
+                </h4>
+            </div>
+        </div>
     }
 
 </div>
@@ -248,7 +268,7 @@
                                     ReviewMessage: reviewMessage,
                                     ReviewDate: Date.now()
                                 },
-                                function (response) {
+                                function(response) {
                                     if (response.Code === "200")
                                         location.reload();
                                     else
@@ -261,7 +281,7 @@
                 }
             });
 
-            $("#review-button").click(function () {
+            $(".review-button").click(function() {
                 if ($("#IsAuthenticated").attr("value") === "False") {
                     document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
                     return;

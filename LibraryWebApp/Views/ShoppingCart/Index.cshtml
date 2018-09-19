@@ -4,53 +4,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Shopping Cart</h2>
+<h2>Your Shopping Bag (<span id="items-count">@Model.CartItems.Count</span>)</h2>
 @if (Model.CartItems.Count > 0)
 {
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-
-        @foreach (var cartItem in Model.CartItems)
-        {
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
             <tr>
-                <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new {id = cartItem.BookID}, new {})</td>
-                <td class="item-quantity">@cartItem.Count</td>
-                <td class="item-price" data-book-price="@cartItem.Book.Price"></td>
-                <td class="item-total"></td>
-                <td>
-                    <button class="btn btn-danger btn-sm js-delete" data-book-id="@cartItem.BookID">Remove Item</button>
-                </td>
+                <th>Image</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th colspan="2">Total</th>
             </tr>
-        }
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td class="text-right">
-                Total:<br/>
-                Discount:<br/>
-                Order Total:
-            </td>
-            <td id="cart-total" data-cart-total="@Model.CartTotal">
-                <span id="total"></span><br/>
-                <span id="discount"></span><br/>
-                <span id="order-total"></span>
-            </td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-    @Html.ActionLink("Go to Checkout", "ShippingAndPayment", "Checkout", new {}, new {@class = "btn btn-primary", id = "button"})
+            </thead>
+            <tbody>
+
+            @foreach (var cartItem in Model.CartItems)
+            {
+                <tr>
+                    <td><img src="@cartItem.Book.CoverURL" class="img-responsive" style="max-height: 200px; max-width: 200px" /></td>
+                    <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new {id = cartItem.BookID}, new {})</td>
+                    <td class="item-quantity">@cartItem.Count</td>
+                    <td class="item-price" data-book-price="@cartItem.Book.Price"></td>
+                    <td class="item-total"></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm js-delete" data-book-id="@cartItem.BookID">Remove Item</button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right" colspan="4">
+                        Total:<br />
+                        Discount:<br />
+                        Order Total:
+                    </td>
+                    <td id="cart-total" data-cart-total="@Model.CartTotal" colspan="2">
+                        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                            <span id="total"></span><br />
+                            <span id="discount"></span><br />
+                            <span id="order-total"></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                            @Html.ActionLink("Go to Checkout", "ShippingAndPayment", "Checkout", new {}, new {@class = "btn btn-sm btn-info", id = "button"})
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 }
 <div id="no-cart-items">
     <h4 class="alert alert-danger">
@@ -92,6 +96,7 @@
         }
 
         $(document).ready(function() {
+            var formatter = new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" });
             if (count === 0)
                 $("#no-cart-items").show();
             else
@@ -99,33 +104,24 @@
 
             $("td.item-price").each(function() {
                 var price = $(this).attr("data-book-price");
-                $(this).text(
-                    new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(price));
+                $(this).text(formatter.format(price));
             });
 
             $("td.item-total").each(function() {
                 var price = $(this).siblings(".item-price").attr("data-book-price");
                 var quantity = $(this).siblings(".item-quantity").text();
-                $(this).text(
-                    new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(price * quantity));
+                $(this).text(formatter.format(price * quantity));
             });
 
             var total = $("td#cart-total").attr("data-cart-total");
-            $("span#total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                .format(total));
+            $("span#total").text(formatter.format(total));
 
             if (discount !== 0) {
-                $("span#discount").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format((discount / 100) * total));
-                $("span#order-total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(total - ((discount / 100) * total)));
+                $("span#discount").text(formatter.format((discount / 100) * total));
+                $("span#order-total").text(formatter.format(total - ((discount / 100) * total)));
             } else {
-                $("span#discount").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(discount));
-                $("span#order-total").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                    .format(total));
+                $("span#discount").text(formatter.format(discount));
+                $("span#order-total").text(formatter.format(total));
             }
 
             $("td .js-delete").on("click",
@@ -142,18 +138,15 @@
                             } else {
                                 button.parent().siblings(".item-quantity").text(response.ItemCount);
                                 var price = button.parent().siblings(".item-price").attr("data-book-price");
-                                button.parent().siblings(".item-total").text(
-                                    new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                                    .format(response.ItemCount * price));
+                                button.parent().siblings(".item-total")
+                                    .text(formatter.format(response.ItemCount * price));
                             }
 
                             $("span#total")
-                                .text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                                    .format(response.CartTotal));
+                                .text(formatter.format(response.CartTotal));
 
                             $("span#order-total")
-                                .text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
-                                    .format(response.CartTotal - ((discount / 100) * response.CartTotal)));
+                                .text(formatter.format(response.CartTotal - ((discount / 100) * response.CartTotal)));
 
                             if (response.CartCount < 1) {
                                 $("table, #button").hide();
@@ -164,6 +157,8 @@
                             }
 
                             $("#cart-items-count").text(response.CartCount);
+
+                            $("#items-count").text(response.CartCount);
 
                             if (response.CartCount === 0)
                                 $("span.message").text("Shopping bag is empty");

@@ -1,8 +1,6 @@
-﻿@*@model IEnumerable<LibraryWebApp.Models.Book>*@
-
-@using PagedList;
+﻿@using PagedList;
 @using PagedList.Mvc;
-@model PagedList.IPagedList<LibraryWebApp.Models.Book>
+@model IPagedList<LibraryWebApp.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -17,7 +15,7 @@
     </div>
 
     <div class="clearfix">
-        <br />
+        <br/>
     </div>
 
     <div class="row">
@@ -25,15 +23,15 @@
             <div class="form-inline">
                 <div class="form-group">
                     <label for="search" style="cursor: pointer;">Search for a book:</label>
-                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query" />
+                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query"/>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="clearfix">
-        <br />
-        <br />
+        <br/>
+        <br/>
     </div>
 
     <div class="row">
@@ -42,7 +40,7 @@
             @foreach (var book in Model)
             {
                 <div class="column" style="background-color: lightcyan">
-                    <img src="@book.CoverURL" class="img-responsive center-block" />
+                    <img src="@book.CoverURL" class="img-responsive center-block"/>
 
                     <p class="text-center">
                         <strong>Book Title: @book.Title</strong>
@@ -51,18 +49,21 @@
                     @foreach (var author in book.Authors)
                     {
                         <p class="text-center">
-                            <strong>Author:</strong> <a href="/Authors/Details/@author.Id">@author.Name</a>
+                            <strong>Author:</strong> @Html.ActionLink(author.Name, "Details", "Authors", new {id = author.Id}, new {})
                         </p>
                     }
 
-                    <p class="text-center">
-                        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
-                        {
-                            <a href="/Books/Edit/@book.Id" class="btn btn-primary">Edit</a>
-                            <a href="/Books/Delete/@book.Id" class="btn btn-primary">Delete </a>
-                        }
-                        <a href="/Books/Details/@book.Id" class="btn btn-primary">Details</a>
-                    </p>
+                        <p class="text-center">
+                            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })
+                            }
+                            @Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })
+                        </p>
                 </div>
             }
         </div>
@@ -70,26 +71,15 @@
     </div>
 
     <div class="row">
-    <div class="l col-sm-2 col-md-4 col-lg-6">
-
-        <strong>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</strong>
-
-    </div>
-
+        <div class="l col-sm-2 col-md-4 col-lg-6">
+            <strong>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</strong>
         </div>
-
+    </div>
     <div class="row">
-
         <div class="pagination text-center col-sm-12 col-xs-12 col-md-12 col-lg-12">
-
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
-
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page}))
         </div>
-
     </div>
-
-
-
 </div>
 
 @section styles
@@ -101,7 +91,7 @@
 {
     <script type="text/javascript">
         var userRole = "@ViewBag.UserRole";
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $("#results, #no-results-message").hide();
 
@@ -114,11 +104,13 @@
                     if (query !== "") {
                         $.post("/Books/Search",
                             { query: query },
-                            function (response) {
+                            function(response) {
                                 if (response.hasOwnProperty("StatusCode")) {
                                     $("#no-results-message").append(
                                         '<span class="glyphicon glyphicon-info-sign"></span>' +
-                                        '<span>'+ response.StatusDescription +'</span>'
+                                        '<span>' +
+                                        response.StatusDescription +
+                                        '</span>'
                                     );
                                     $("#no-results-message").show();
                                     return;
@@ -127,20 +119,29 @@
                                 for (var i = 0; i < response.length; ++i) {
                                     $("#results").append(
                                         '<div class="column column-result" style="background-color: lightcyan">' +
-                                        '<img src="' + response[i].CoverUrl + '" class="img-responsive center-block"/>' +
+                                        '<img src="' +
+                                        response[i].CoverUrl +
+                                        '" class="img-responsive center-block"/>' +
                                         '<p class="text-center">' +
-                                        '<strong>Book Title: ' + response[i].Title + '</strong>' +
+                                        '<strong>Book Title: ' +
+                                        response[i].Title +
+                                        '</strong>' +
                                         '</p>' +
                                         '<p class="text-center">' +
-                                        '<a href="/Books/Details/' + response[i].Id + '" class="btn btn-primary">Details</a>' +
+                                        '<a href="/Books/Details/' +
+                                        response[i].Id +
+                                        '" class="btn btn-primary">Details</a>' +
                                         '</p>' +
                                         '</div>');
-                                    $(".pagination").hide();
-                                    $(".l").hide();
+
                                     if (userRole === "Admin" || userRole === "Staff")
                                         $("#results p.text-center:last").prepend(
-                                            '<a href="/Books/Edit/' + response[i].Id + '" class="btn btn-primary btn-result">Edit</a>' +
-                                            '<a href="/Books/Delete/' + response[i].Id + '" class="btn btn-primary btn-result">Delete</a>'
+                                            '<a href="/Books/Edit/' +
+                                            response[i].Id +
+                                            '" class="btn btn-warning btn-result">Edit</a>' +
+                                            '<a href="/Books/Delete/' +
+                                            response[i].Id +
+                                            '" class="btn btn-danger btn-result">Delete</a>'
                                         );
 
                                 }
@@ -149,7 +150,7 @@
                             function() {
                                 $(this).show();
                             });
-                        $("#no-results-message").hide();
+                        $("#no-results-message, .pagination, .l").hide();
                     } else {
                         $("#results, #no-results-message").empty();
                         $("#results, #no-results-message").hide();
@@ -157,6 +158,7 @@
                             function() {
                                 $(this).show();
                             });
+                        $(".pagination, .l").show();
                     }
                 });
         });

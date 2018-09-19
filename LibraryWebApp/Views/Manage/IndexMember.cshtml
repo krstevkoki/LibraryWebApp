@@ -4,41 +4,145 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 id="a">Welcome to Members section</h2>
+<h2 id="a">Members section</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
+<div class="container">
     <h4 id="b">Your personal data</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
-        <dt class="dt">Password:</dt>
-        <dd class="dd">
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
         <dt class="dt">User: </dt>
         <dd id="username" class="dd">@User.Identity.Name</dd>
         <dt class="dt">User Role:</dt>
         <dd class="dd">
             === Member ===
         </dd>
-        <dt class="dt">Member since:</dt>
-        <dd class="dd">@Model.DateRegistration</dd>
-        <dt class="dt">Expiration date:</dt>
-        <dd class="dd">@Model.DateExpiring</dd>
     </dl>
-</div>
 
-<div id="points">
-    <p id="border">Total points: @Model.Points</p>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#changeDetails">Personal details</a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#purchasedBooks">Purchased Books</a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#membershipStatus">Membership Status</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="changeDetails" class="tab-pane fade in active">
+            <br/>
+            @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new {@class = "btn btn-primary"})
+            @Html.ActionLink("Edit details", "EditDetails", "Manage", null, new {@class = "btn btn-primary"})
+            <br/>
+            <br/>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.FirstName, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.FirstName, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.LastName, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.LastName, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Age, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Age, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Gender, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBox("Gender", Model.User.Gender ? "Male" : "Female", new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Address, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Address, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.City, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.City, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Country, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Country, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="purchasedBooks" class="tab-pane fade in">
+            <br/>
+            <div class="table-responsive">
+                <table id="table" class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            Image
+                        </th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Genre
+                        </th>
+                        <th>
+                            Pages
+                        </th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.PurchasedBooks)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@item.CoverURL" style="max-width: 200px; max-height: 200px"/>
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.Title, "Details", "Books", new {id = item.Id}, new {})
+                            </td>
+                            <td>
+                                @item.Genre.Name
+                            </td>
+                            <td>
+                                @item.Pages
+                            </td>
+                            <td class="book-price">
+                                @item.Price
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="membershipStatus" class="tab-pane fade in">
+            <br/>
+            <dl class="dl-horizontal">
+                <dt class="dt">Member Since: </dt>
+                <dd class="dd">@Model.DateRegistration.Value</dd>
+                <dt class="dt">Expiration Date:</dt>
+                <dd class="dd">@Model.DateExpiring.Value</dd>
+                <dt class="dt">Points:</dt>
+                <dd class="dd">@Model.Points</dd>
+            </dl>
+            @Html.ActionLink("Cancel membership", "AddToRoleUser", "Account", new {username = User.Identity.Name}, new {@class = "btn btn-danger"})
+        </div>
+    </div>
 </div>
 
 <div id="popModal" class="modal fade" role="dialog">
@@ -82,46 +186,10 @@
     </div>
 </div>
 
-
-<table class="table">
-
-    <thead>
-        
-    <tr>
-        <th>
-          Title
-        </th>
-        <th>
-           Pages
-        </th>
-        <th>
-           Price
-        </th>
-       
-        
-        <th></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    @foreach (var item in Model.PurchasedBooks)
-    {
-        <tr>
-            <td>
-              @item.Title
-            </td>
-            <td>
-                @item.Pages
-            </td>
-            <td>
-                @item.Price
-            </td>
-            
-        </tr>
-    }
-</tbody>
-</table>
-
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css"/>
+}
 
 @section scripts {
     <script type="text/javascript">
@@ -133,25 +201,31 @@
             });
         }
 
-        $("#popModal #btn").on("click",
-            function() {
-                url = "/Account/AddToRoleUser?username=" + $("#username").html();
-                console.log(url);
-                window.location = url;
-                $(this).dialog("close");
-            });
+        $(document).ready(function() {
+            $("#popModal #btn").on("click",
+                function() {
+                    url = "/Account/AddToRoleUser?username=" + $("#username").html();
+                    console.log(url);
+                    window.location = url;
+                    $(this).dialog("close");
+                });
 
-        $("#popModal #btn2").on("click",
-            function() {
-                url = "/Account/ContinueMembership?username=" + $("#username").html();
-                console.log(url);
-                window.location = url;
-                $(this).dialog("close");
+            $("#popModal #btn2").on("click",
+                function() {
+                    url = "/Account/ContinueMembership?username=" + $("#username").html();
+                    console.log(url);
+                    window.location = url;
+                    $(this).dialog("close");
+                });
+
+            $("#table").DataTable();
+
+            $(".book-price").each(function() {
+                var price = $(this).text();
+                $(this).text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" })
+                    .format(price));
             });
+        });
+
     </script>
-}
-
-@section styles {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexMembersCss.css")" />
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" />
 }

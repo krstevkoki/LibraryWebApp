@@ -7,19 +7,15 @@
 
 <div class="container" id="container">
 
-    <div class="row bg-primary text-center" style="height: 50px;">
-
-    </div>
-    <br />
-
-    <div class="row text-center">
+    <div class="row bg-primary text-center">
         <div class="col-sm-12">
             <h2>@Model.Author.Name</h2>
         </div>
-
     </div>
 
     <br />
+    <br />
+
     <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-2">
             <img class="img-responsive" src="@Model.Author.ImageURL">
@@ -27,32 +23,46 @@
 
         <div class="col-sm-10 col-md-9 col-lg-10 text-left">
             <p class="text">
-                Sed vehicula, enim sollicitudin consectetur auctor, nibh ante finibus turpis, eleifend ullamcorper ipsum libero eu sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget rutrum nisl. Integer volutpat magna diam, id accumsan mi tempor maximus. Donec gravida felis id ipsum aliquet, eu venenatis dolor malesuada. Sed aliquam risus vitae nisl malesuada maximus. Vestibulum aliquet justo elit, vel ullamcorper erat commodo sed. Pellentesque a arcu vel felis volutpat bibendum. Suspendisse pellentesque nisi a erat fermentum, vitae fringilla quam fringilla.
+                Sed vehicula, enim sollicitudin consectetur auctor, nibh ante finibus turpis, eleifend ullamcorper
+                ipsum libero eu sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget rutrum
+                nisl. Integer volutpat magna diam, id accumsan mi tempor maximus. Donec gravida felis id ipsum aliquet,
+                eu venenatis dolor malesuada. Sed aliquam risus vitae nisl malesuada maximus. Vestibulum aliquet justo
+                elit, vel ullamcorper erat commodo sed. Pellentesque a arcu vel felis volutpat bibendum. Suspendisse
+                pellentesque nisi a erat fermentum, vitae fringilla quam fringilla.
             </p>
             <hr />
             <p class="text">
-                Donec facilisis mi sit amet dictum auctor. Sed ultricies elit risus, et eleifend risus scelerisque a. Sed eu pharetra odio. Integer aliquam erat ex, a fermentum sem pellentesque vel. Donec auctor velit sed consequat venenatis.
+                Donec facilisis mi sit amet dictum auctor. Sed ultricies elit risus, et eleifend risus scelerisque a.
+                Sed eu pharetra odio. Integer aliquam erat ex, a fermentum sem pellentesque vel. Donec auctor velit sed
+                consequat venenatis.
             </p>
             <hr />
             <p class="text">
-                Sed scelerisque tellus turpis, ut porta turpis bibendum eget. Aliquam sed tincidunt mauris. Vestibulum fermentum faucibus diam, a congue quam rhoncus a. Maecenas luctus fermentum diam a consequat. Sed lacinia condimentum sollicitudin. Nullam turpis libero, vestibulum ac ultricies et, egestas quis neque. Morbi id nisl in ante auctor porttitor. Nam ac eros sed libero posuere dictum nec id libero. Integer leo augue, lobortis vitae hendrerit eu, laoreet nec purus. Vivamus laoreet purus accumsan justo fringilla, ut rutrum nunc pellentesque. Vivamus vestibulum maximus lorem ut tempor. Proin quis lectus et dolor luctus semper ullamcorper nec ex.
+                Sed scelerisque tellus turpis, ut porta turpis bibendum eget. Aliquam sed tincidunt mauris. Vestibulum
+                fermentum faucibus diam, a congue quam rhoncus a. Maecenas luctus fermentum diam a consequat. Sed
+                lacinia condimentum sollicitudin. Nullam turpis libero, vestibulum ac ultricies et, egestas quis neque.
+                Morbi id nisl in ante auctor porttitor. Nam ac eros sed libero posuere dictum nec id libero. Integer leo
+                augue, lobortis vitae hendrerit eu, laoreet nec purus. Vivamus laoreet purus accumsan justo fringilla,
+                ut rutrum nunc pellentesque. Vivamus vestibulum maximus lorem ut tempor. Proin quis lectus et dolor
+                luctus semper ullamcorper nec ex.
             </p>
         </div>
-
     </div>
 
     <div class="row">
         <div class="col-xs-1 col-md-2 col-lg-2 text-left">
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                <a href="/Authors/Edit/@Model.Author.Id"><button type="submit" class="btn btn-primary">Edit</button></a>
+                @Html.ActionLink("Edit", "Edit", "Authors", new { id = Model.Author.Id }, new { @class = "btn btn-warning" })
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", "Authors", new { id = Model.Author.Id }, new { @class = "btn btn-danger" })
             }
         </div>
-
     </div>
 
-
-    <h4 style="color:firebrick">Books from @Model.Author.Name</h4>
+    <h4 style="color: firebrick">Books from @Model.Author.Name</h4>
 
     <div id="genreCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -69,12 +79,12 @@
             }
         </ol>
 
-        <div class="carousel-inner" role="listbox"  style="background-color:gray">
+        <div class="carousel-inner" role="listbox" style="background-color: gray">
             @for (int i = 0; i < Model.BooksByAuthor.Count; ++i)
             {
                 if (i == 0)
                 {
-                    <div class="item active"  style="background-color:gray">
+                    <div class="item active" style="background-color: gray">
                         <a href="/Books/Details/@Model.BooksByAuthor[i].Id">
                             <img src="@Model.BooksByAuthor[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                         </a>
@@ -101,34 +111,24 @@
         </a>
     </div>
 
-
-
-
-
+    <br/>
 
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-            <a href="/Books/index"><button type="submit" class="btn btn-primary">Back to list</button></a>
+            @Html.ActionLink("Back to list", "Index", "Books", new { }, new { @class = "btn btn-primary" })
         </div>
     </div>
-
+    <br />
 </div>
 
-
-
-
-
-
-
-
+@section styles
+{
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")">
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css" />
+}
 
 @section scripts
 {
-
-
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css">
     <script type="text/javascript">
         var bookCount = @Model.BooksByAuthor.Count;
         var bookId = @Model.BooksByAuthor;
