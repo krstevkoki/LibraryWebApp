@@ -25,7 +25,8 @@ namespace LibraryWebApp.Controllers.Api
                 Id = p.Id,
                 Name = p.Name,
                 Country = p.Country,
-                City = p.City
+                City = p.City,
+                PhoneNumber = p.PhoneNumber
             }).ToList();
         }
 
