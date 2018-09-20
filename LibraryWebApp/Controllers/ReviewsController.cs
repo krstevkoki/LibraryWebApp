@@ -82,6 +82,7 @@ namespace LibraryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                review.ReviewDate = DateTime.Now;
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
