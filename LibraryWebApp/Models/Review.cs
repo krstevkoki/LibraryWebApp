@@ -17,13 +17,16 @@ namespace LibraryWebApp.Models
         public int BookID { get; set; }
 
         [Required]
+        [Display(Name = "Reviewer Username")]
         public string ReviewerUsername { get; set; }
 
         [Required]
+        [Display(Name = "Message")]
         public string ReviewMessage { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
+        [Display(Name = "Date")]
         public DateTime ReviewDate { get; set; }
 
         
