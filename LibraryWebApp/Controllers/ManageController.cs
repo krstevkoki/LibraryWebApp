@@ -261,7 +261,7 @@ namespace LibraryWebApp.Controllers
         #region custom code
 
         [HttpGet]
-        public ActionResult EditDetails()
+        public ActionResult EditDetails(string returnUrl)
         {
             var user = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             var model = new EditDetailsViewModel()
@@ -274,12 +274,13 @@ namespace LibraryWebApp.Controllers
                 City = user.City,
                 Country = user.Country
             };
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDetails(EditDetailsViewModel model)
+        public ActionResult EditDetails(EditDetailsViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -293,6 +294,12 @@ namespace LibraryWebApp.Controllers
                 user.Country = model.Country;
 
                 UserManager.Update(user);
+
+                if (returnUrl == null)
+                    return RedirectToAction("Index", "Manage");
+
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
 
                 return RedirectToAction("Index", "Manage");
             }
