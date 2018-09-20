@@ -95,11 +95,23 @@
     <div class="clearfix"></div>
 }
 
+@section styles
+{
+    <style>
+        .form-group .control-label:after {
+            content: "*";
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+}
+
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
             $("#shipping input[type=text], #shipping input[type=email], #shipping input[type=tel]").each(function () {
-                if ($(this).attr("value") !== "") {
+                var valMsg = $(this).siblings("span[data-valmsg-for]").text();
+                if ($(this).attr("value") !== "" && valMsg === "") {
                     $(this).attr({
                         "title": "We got this from your profile info!",
                         "readonly": "true"
