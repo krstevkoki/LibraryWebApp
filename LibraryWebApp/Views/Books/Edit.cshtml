@@ -5,106 +5,111 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Book</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
-        @Html.HiddenFor(model => model.Book.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.Title, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.Title, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.Pages, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.Pages, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.Pages, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.Quantity, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.Quantity, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.PublishPlace, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.PublishPlace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.PublishPlace, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.PublishDate, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.TextBox("Book.PublishDate", Model.Book.PublishDate.ToShortDateString(), new { @class = "form-control", type = "date", id = "Book_PublishDate"})
-                @Html.ValidationMessageFor(model => model.Book.PublishDate, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.Price, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.Price, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Book.CoverURL, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Book.CoverURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Book.CoverURL, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Authors, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SelectedAuthor, new SelectList(Model.Authors, "Id", "Name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Book.Authors, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Publishers, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SelectedPublisher, new SelectList(Model.Publishers, "Id", "Name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Book.Publishers, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SelectedGenre, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Book.Genre, "", new { @class = "text-danger alert-danger small" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>Edit</h3>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="row">
+        <div class="col-sm-8">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <br />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
+                    @Html.HiddenFor(model => model.Book.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Title, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Book.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Book.Title, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Pages, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Book.Pages, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Book.Pages, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Quantity, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Book.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Book.Quantity, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.PublishPlace, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Book.PublishPlace, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Book.PublishPlace, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.PublishDate, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Book.PublishDate", Model.Book.PublishDate.ToShortDateString(), new { @class = "form-control", type = "date", id = "Book_PublishDate" })
+                            @Html.ValidationMessageFor(model => model.Book.PublishDate, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.Price, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Book.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Book.Price, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Book.CoverURL, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Book.CoverURL, new { @class = "form-control", rows = "5" })
+                            @Html.ValidationMessageFor(model => model.Book.CoverURL, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Authors, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.SelectedAuthor, new SelectList(Model.Authors, "Id", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Authors, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Publishers, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.SelectedPublisher, new SelectList(Model.Publishers, "Id", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Publishers, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.SelectedGenre, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Book.Genre, "", new { @class = "text-danger alert-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>

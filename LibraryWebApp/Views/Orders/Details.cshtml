@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <div class="row">
-        <h3>Details for Order - <strong>@Model.OrderId</strong></h3>
-        <hr/>
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>Details for Order - <strong>@Model.OrderId</strong></h3>
+        </div>
     </div>
-
+    <br />
     <div class="row">
         <h4>
             <strong>Shipping Details:</strong>

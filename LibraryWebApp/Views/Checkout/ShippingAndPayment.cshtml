@@ -4,96 +4,107 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("ShippingAndPayment", "Checkout", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div id="shipping">
-        <h3>Shipping Informations</h3>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger text-danger" })
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.FirstName, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.FirstName, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.LastName, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.LastName, "", new { @class = "text-danger alert-danger small" })
-
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.Email, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.Email, "", new { @class = "text-danger alert-danger small" })
-
-        </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.Phone, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.Phone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.Phone, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.Address, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.Address, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.Address, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.PostalCode, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.PostalCode, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.City, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.City, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.City, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.Country, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.Country, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.Country, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.Order.State, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.Order.State, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Order.State, "", new { @class = "text-danger alert-danger small" })
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>Shipping Informations</h3>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <div id="payment">
-        <h3>Payment Informations</h3>
-        <hr />
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.CreditCard.CardHolder, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.CreditCard.CardHolder, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CreditCard.CardHolder, "", new { @class = "text-danger alert-danger small" })
-        </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.CreditCard.CardNumber, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.CreditCard.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CreditCard.CardNumber, "", new { @class = "text-danger alert-danger small" })
+    
+    @using (Html.BeginForm("ShippingAndPayment", "Checkout", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <small>*If you want to change the personal details you can @Html.ActionLink("edit", "EditDetails", "Manage", new {ReturnUrl = "/Checkout/ShippingAndPayment" }, new {style = "font-weight: bold;"}) your profile!</small>
+        <br />
+        <div id="shipping">
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger text-danger" })
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.FirstName, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.FirstName, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.LastName, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.LastName, "", new { @class = "text-danger alert-danger small" })
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.Email, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.Email, "", new { @class = "text-danger alert-danger small" })
+
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.Phone, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.Phone, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.Address, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.Address, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.PostalCode, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.PostalCode, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.City, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.City, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.Country, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.Country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.Country, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.Order.State, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.Order.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order.State, "", new { @class = "text-danger alert-danger small" })
+            </div>
         </div>
         <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.CreditCard.ExpiryDate, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.TextBox("CreditCard.ExpiryDate", $"{DateTime.Now:yyyy}-{DateTime.Now:MM}", new { @class = "form-control", type = "month", id = "CreditCard_ExpiryDate" })
-            @Html.ValidationMessageFor(model => model.CreditCard.ExpiryDate, "", new { @class = "text-danger alert-danger small" })
+        <div class="row bg-primary">
+            <div class="col-sm-12 text-center">
+                <h3>Payment Informations</h3>
+            </div>
         </div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            @Html.LabelFor(model => model.CreditCard.CVV2, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
-            @Html.EditorFor(model => model.CreditCard.CVV2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CreditCard.CVV2, "", new { @class = "text-danger alert-danger small" })
+        <div id="payment">
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.CreditCard.CardHolder, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.CreditCard.CardHolder, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreditCard.CardHolder, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.CreditCard.CardNumber, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.CreditCard.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreditCard.CardNumber, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.CreditCard.ExpiryDate, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.TextBox("CreditCard.ExpiryDate", $"{DateTime.Now:yyyy}-{DateTime.Now:MM}", new { @class = "form-control", type = "month", id = "CreditCard_ExpiryDate" })
+                @Html.ValidationMessageFor(model => model.CreditCard.ExpiryDate, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-4">
+                @Html.LabelFor(model => model.CreditCard.CVV2, htmlAttributes: new { @class = "control-label", style = "cursor: pointer;" })
+                @Html.EditorFor(model => model.CreditCard.CVV2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreditCard.CVV2, "", new { @class = "text-danger alert-danger small" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <input type="submit" class="btn btn-primary" value="Place order" />
+            </div>
         </div>
         <div class="clearfix"></div>
-        <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
-            <input type="submit" class="btn btn-primary" value="Place order" />
-        </div>
-    </div>
-    <div class="clearfix"></div>
-}
+    }
+</div>
 
 @section styles
 {
@@ -108,8 +119,8 @@
 
 @section scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#shipping input[type=text], #shipping input[type=email], #shipping input[type=tel]").each(function () {
+        $(document).ready(function() {
+            $("#shipping input[type=text], #shipping input[type=email], #shipping input[type=tel]").each(function() {
                 var valMsg = $(this).siblings("span[data-valmsg-for]").text();
                 if ($(this).attr("value") !== "" && valMsg === "") {
                     $(this).attr({
@@ -120,7 +131,7 @@
             });
 
             $("#CreditCard_CardNumber").on("keydown",
-                function (event) {
+                function(event) {
                     if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
                         var text = $(this).val().split(' ').join('');
                         var length = text.length;
@@ -130,7 +141,7 @@
                     }
                 });
 
-            $("input[type=submit]").click(function () {
+            $("input[type=submit]").click(function() {
                 $("#CreditCard_CardNumber").val($("#CreditCard_CardNumber").val().split(' ').join(''));
             });
 

@@ -4,12 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 id="a">Members section</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div class="container">
+<div class="text-success">@ViewBag.StatusMessage</div>
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>Members section</h3>
+        </div>
+    </div>
+    
+    <br />
     <h4 id="b">Your personal data</h4>
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
         <dt class="dt">User: </dt>
         <dd id="username" class="dd">@User.Identity.Name</dd>
@@ -33,105 +39,105 @@
 
     <div class="tab-content">
         <div id="changeDetails" class="tab-pane fade in active">
-            <br/>
-            @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new {@class = "btn btn-primary"})
-            @Html.ActionLink("Edit details", "EditDetails", "Manage", null, new {@class = "btn btn-primary"})
-            <br/>
-            <br/>
+            <br />
+            @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Edit details", "EditDetails", "Manage", null, new { @class = "btn btn-primary" })
+            <br />
+            <br />
 
             <div class="form-horizontal">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.FirstName, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.FirstName, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.FirstName, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.LastName, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.LastName, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.LastName, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Age, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.Age, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.Age, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.Age, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Gender, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.Gender, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBox("Gender", Model.User.Gender ? "Male" : "Female", new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBox("Gender", Model.User.Gender ? "Male" : "Female", new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Address, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.Address, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.Address, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.Address, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.City, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.City, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.City, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.City, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Country, new {@class = "col-md-2 control-label", style = "cursor: pointer;"})
+                    @Html.LabelFor(m => m.User.Country, new { @class = "col-md-2 control-label", style = "cursor: pointer;" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.Country, new {@class = "form-control", @readonly = true, style = "cursor: not-allowed;"})
+                        @Html.TextBoxFor(m => m.User.Country, new { @class = "form-control", @readonly = true, style = "cursor: not-allowed;" })
                     </div>
                 </div>
             </div>
         </div>
         <div id="purchasedBooks" class="tab-pane fade in">
-            <br/>
+            <br />
             <div class="table-responsive">
                 <table id="table" class="table table-bordered table-hover table-striped">
                     <thead>
-                    <tr>
-                        <th>
-                            Image
-                        </th>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            Genre
-                        </th>
-                        <th>
-                            Pages
-                        </th>
-                        <th>Price</th>
-                    </tr>
+                        <tr>
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Genre
+                            </th>
+                            <th>
+                                Pages
+                            </th>
+                            <th>Price</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.PurchasedBooks)
-                    {
-                        <tr>
-                            <td>
-                                <img src="@item.CoverURL" style="max-width: 200px; max-height: 200px"/>
-                            </td>
-                            <td>
-                                @Html.ActionLink(item.Title, "Details", "Books", new {id = item.Id}, new {})
-                            </td>
-                            <td>
-                                @item.Genre.Name
-                            </td>
-                            <td>
-                                @item.Pages
-                            </td>
-                            <td class="book-price">
-                                @item.Price
-                            </td>
-                        </tr>
-                    }
+                        @foreach (var item in Model.PurchasedBooks)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.CoverURL" style="max-width: 200px; max-height: 200px" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Title, "Details", "Books", new { id = item.Id }, new { })
+                                </td>
+                                <td>
+                                    @item.Genre.Name
+                                </td>
+                                <td>
+                                    @item.Pages
+                                </td>
+                                <td class="book-price">
+                                    @item.Price
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
         <div id="membershipStatus" class="tab-pane fade in">
-            <br/>
+            <br />
             <dl class="dl-horizontal">
                 <dt class="dt">Member Since: </dt>
                 <dd class="dd">@Model.DateRegistration.Value</dd>
@@ -140,7 +146,7 @@
                 <dt class="dt">Points:</dt>
                 <dd class="dd">@Model.Points</dd>
             </dl>
-            @Html.ActionLink("Cancel membership", "AddToRoleUser", "Account", new {username = User.Identity.Name}, new {@class = "btn btn-danger"})
+            @Html.ActionLink("Cancel membership", "AddToRoleUser", "Account", new { username = User.Identity.Name }, new { @class = "btn btn-danger" })
         </div>
     </div>
 </div>

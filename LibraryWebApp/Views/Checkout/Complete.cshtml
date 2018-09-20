@@ -4,8 +4,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Your order has been placed!</h2>
-<p>Thanks for your order! Your order number is: 
-    <strong>@Html.ActionLink($"{Model}", "Details", "Orders", new {id = Model}, new {})</strong>
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>Order placed</h3>
+        </div>
+    </div>
+
+    <h2>Your order has been placed!</h2>
+    <p>
+        Thanks for your order! Your order number is:
+        <strong>@Html.ActionLink($"{Model}", "Details", "Orders", new {id = Model}, new {})</strong>
     </p>
-<p>How about shopping for some more books in our @Html.ActionLink("library!", "Index", "Books")</p>
+    <p>How about shopping for some more books in our @Html.ActionLink("library!", "Index", "Books")</p>
+</div>
