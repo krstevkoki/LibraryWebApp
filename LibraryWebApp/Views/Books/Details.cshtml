@@ -211,13 +211,13 @@
 
 @section styles
 {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")"/>
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BookDetailsCss.css")" />
 }
 
 @section scripts
 {
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
 
     <script type="text/javascript">
         var userId = "@User.Identity.Name";
@@ -227,7 +227,7 @@
         $(document).ready(function () {
             var price = $("#book-price").text();
             $("#book-price").text(new Intl.NumberFormat('en-US', { style: "currency", currency: "USD" }).format(price));
-            
+
             $(".js-add-to-cart").on("click",
                 function() {
                     if ($("#IsAuthenticated").attr("value") === "False") {

@@ -21,7 +21,7 @@
             </dl>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-            <button id="btnclick" class="btn btn-primary" type="button">Become a member</button>
+            <button id="btnclick" class="btn btn-info" type="button">Become a member</button>
         </div>
     </div>
     <ul class="nav nav-tabs">
@@ -148,11 +148,11 @@
 
 @section styles {
     <link rel="stylesheet" type="text/css" href="@Href("~/Content/IndexUserCss.css")" />
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
 }
 
 @section scripts {
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
