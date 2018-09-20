@@ -1,0 +1,29 @@
+﻿@{
+    // 404 Not Found
+    //
+    // This view was added by NotFoundMVC
+    // For inspiration see: https://www.google.be/search?q=example+404+page
+    //
+    // The following properties are available in the ViewBag:
+    // ViewData["RequestedUrl"]
+    // ViewData["ReferrerUrl"]
+    //
+
+    ViewBag.Title = "Page Not Found";
+}
+
+<div id="container" class="container">
+    <div class="row bg-primary">
+        <div class="col-sm-12 text-center">
+            <h3>@ViewBag.Title</h3>
+        </div>
+    </div>
+    <h3 class="text-center">Oops :(</h3>
+    <img src="../../images/error_404.jpg" style="max-width: 300px; max-height: 300px;" class="img-responsive center-block"/>
+    <p class="text-center">Please click the button to go back to the homepage</p>
+    @Html.ActionLink("Go Back", "Index", "Books", new {}, new {@class = "col-xs-offset-10 col-sm-offset-10 col-md-offset-10 col-lg-offset-10 btn btn-sm btn-primary"})
+    <br /><br />
+</div>
+
+@* Error page must be longer than 512 bytes for IE and Chrome to show it. So add padding in case we're short. *@
+@(new string(' ', 512))
