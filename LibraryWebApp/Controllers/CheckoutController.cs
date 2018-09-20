@@ -28,6 +28,9 @@ namespace LibraryWebApp.Controllers
             if (user == null)
                 return HttpNotFound();
 
+            if (!db.Carts.Any(c => c.CartId == user.UserName))
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
             var model = new ShippingAndPaymentViewModel()
             {
                 Order = new Order()
