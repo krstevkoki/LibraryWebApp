@@ -25,9 +25,7 @@ namespace LibraryWebApp.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 16;
 
-            // var model = db.Books.Include(m => m.Authors).ToList();
-
-            var model = db.Books.Include(m => m.Authors).OrderByDescending(b=>b.Id).ToPagedList(pageNumber, pageSize);
+            var model = db.Books.Include(m => m.Authors).OrderByDescending(b => b.Id).ToPagedList(pageNumber, pageSize);
 
             ViewBag.UserRole = User.IsInRole(Roles.Admin) ? "Admin" :
                 User.IsInRole(Roles.Staff) ? "Staff" :
@@ -38,7 +36,7 @@ namespace LibraryWebApp.Controllers
 
 
         // GET: Books/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -64,11 +62,12 @@ namespace LibraryWebApp.Controllers
                 ReviewsForBook = reviewsForBook
             };
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
         // GET: Books/Create
-        public ActionResult Create()
+        public ActionResult Create(string returnUrl)
         {
             var model = new AddAuthorToBookModel()
             {
@@ -80,6 +79,8 @@ namespace LibraryWebApp.Controllers
                 Genres = (db.Genres.ToList()),
                 SelectedGenre = -1
             };
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
@@ -88,7 +89,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddAuthorToBookModel model)
+        public ActionResult Create(AddAuthorToBookModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +108,8 @@ namespace LibraryWebApp.Controllers
                 book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
                 db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToLocal(returnUrl);
             }
 
             model = new AddAuthorToBookModel()
@@ -125,7 +127,7 @@ namespace LibraryWebApp.Controllers
 
 
         // GET: Books/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -149,6 +151,7 @@ namespace LibraryWebApp.Controllers
                 SelectedGenre = -1,
             };
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
@@ -157,7 +160,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AddAuthorToBookModel model)
+        public ActionResult Edit(AddAuthorToBookModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -177,7 +180,7 @@ namespace LibraryWebApp.Controllers
                 book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
 
             model = new AddAuthorToBookModel()
@@ -206,19 +209,9 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
-
-            return View(book);
-        }
-
-        // POST: Books/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Book book = db.Books.Find(id);
             db.Books.Remove(book);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Books");    
         }
 
         [HttpPost]
@@ -251,8 +244,8 @@ namespace LibraryWebApp.Controllers
             if (book == null)
                 return Json(new Dictionary<string, string>
                 {
-                    { "Message", "The book was not found. Review was not added!" },
-                    { "Code", "404" }
+                    {"Message", "The book was not found. Review was not added!"},
+                    {"Code", "404"}
                 });
 
             book.Reviews.Add(review);
@@ -261,8 +254,8 @@ namespace LibraryWebApp.Controllers
 
             return Json(new Dictionary<string, string>
             {
-                { "Message", "The review was successfuly added" },
-                { "Code", "200" }
+                {"Message", "The review was successfuly added"},
+                {"Code", "200"}
             });
         }
 
@@ -274,6 +267,16 @@ namespace LibraryWebApp.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Books");
         }
     }
 }

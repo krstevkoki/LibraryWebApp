@@ -23,7 +23,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Authors/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -44,13 +44,14 @@ namespace LibraryWebApp.Controllers
                 BooksByAuthor = booksByAuthor
             };
 
-          
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
         // GET: Authors/Create
-        public ActionResult Create()
+        public ActionResult Create(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -59,20 +60,20 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,ImageURL")] Author author)
+        public ActionResult Create([Bind(Include = "Id,Name,ImageURL")] Author author, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Authors.Add(author);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
 
             return View(author);
         }
 
         // GET: Authors/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -83,6 +84,8 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(author);
         }
 
@@ -91,19 +94,19 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,ImageURL")] Author author)
+        public ActionResult Edit([Bind(Include = "Id,Name,ImageURL")] Author author, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(author).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
             return View(author);
         }
 
         // GET: Authors/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -114,20 +117,11 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(author);
-        }
-
-        // POST: Authors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Author author = db.Authors.Find(id);
             db.Authors.Remove(author);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToLocal(returnUrl);
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -135,6 +129,16 @@ namespace LibraryWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Books");
         }
     }
 }

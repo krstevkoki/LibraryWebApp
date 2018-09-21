@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using LibraryWebApp.Models.ViewModels;
 
 namespace LibraryWebApp.Controllers
 {
@@ -21,7 +22,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Genres/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -32,12 +33,21 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(genre);
+
+            var model = new GenreDetailsViewModel()
+            {
+                Genre = genre,
+                Books = db.Books.Include(b => b.Genre).Where(b => b.Genre.Id == genre.Id).ToList()
+            };
+
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
         }
 
         // GET: Genres/Create
-        public ActionResult Create()
+        public ActionResult Create(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -46,20 +56,20 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description")] Genre genre)
+        public ActionResult Create([Bind(Include = "Id,Name,Description")] Genre genre, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Genres.Add(genre);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
 
             return View(genre);
         }
 
         // GET: Genres/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -70,6 +80,8 @@ namespace LibraryWebApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(genre);
         }
 
@@ -78,41 +90,31 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description")] Genre genre)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description")] Genre genre, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(genre).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
             return View(genre);
         }
 
         // GET: Genres/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Genre genre = db.Genres.Find(id);
             if (genre == null)
-            {
                 return HttpNotFound();
-            }
-            return View(genre);
-        }
 
-        // POST: Genres/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Genre genre = db.Genres.Find(id);
             db.Genres.Remove(genre);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToLocal(returnUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -122,6 +124,16 @@ namespace LibraryWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Books");
         }
     }
 }

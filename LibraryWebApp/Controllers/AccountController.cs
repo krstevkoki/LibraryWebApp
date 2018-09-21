@@ -49,7 +49,7 @@ namespace LibraryWebApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddUserToRole()
+        public ActionResult AddUserToRole(string returnUrl)
         {
             var model = new AddUserToRoleViewModel()
             {
@@ -57,12 +57,14 @@ namespace LibraryWebApp.Controllers
                 Roles = Roles.ExportToList(),
                 SelectedRole = string.Empty
             };
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> AddUserToRole(AddUserToRoleViewModel model)
+        public async Task<ActionResult> AddUserToRole(AddUserToRoleViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -117,7 +119,7 @@ namespace LibraryWebApp.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToLocal(returnUrl);
         }
 
         [HttpGet]
@@ -202,6 +204,7 @@ namespace LibraryWebApp.Controllers
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties {IsPersistent = false}, identity);
+
             return RedirectToAction("Index", "Manage");
         }
 

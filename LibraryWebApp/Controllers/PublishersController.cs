@@ -22,23 +22,23 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Publishers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Publisher publisher = db.Publishers.Find(id);
             if (publisher == null)
-            {
                 return HttpNotFound();
-            }
+            
+            ViewBag.ReturnUrl = returnUrl;
             return View(publisher);
         }
 
         // GET: Publishers/Create
-        public ActionResult Create()
+        public ActionResult Create(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -47,30 +47,30 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Country,City,Address,PhoneNumber")] Publisher publisher)
+        public ActionResult Create([Bind(Include = "Id,Name,Country,City,Address,PhoneNumber")] Publisher publisher, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Publishers.Add(publisher);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
 
             return View(publisher);
         }
 
         // GET: Publishers/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Publisher publisher = db.Publishers.Find(id);
             if (publisher == null)
-            {
                 return HttpNotFound();
-            }
+
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(publisher);
         }
 
@@ -79,41 +79,30 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Country,City,Address,PhoneNumber")] Publisher publisher)
+        public ActionResult Edit([Bind(Include = "Id,Name,Country,City,Address,PhoneNumber")] Publisher publisher, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(publisher).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
             return View(publisher);
         }
 
         // GET: Publishers/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Publisher publisher = db.Publishers.Find(id);
             if (publisher == null)
-            {
                 return HttpNotFound();
-            }
-            return View(publisher);
-        }
-
-        // POST: Publishers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Publisher publisher = db.Publishers.Find(id);
+            
             db.Publishers.Remove(publisher);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToLocal(returnUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,6 +112,16 @@ namespace LibraryWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Books");
         }
     }
 }
