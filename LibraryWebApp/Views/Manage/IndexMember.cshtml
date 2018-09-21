@@ -41,7 +41,7 @@
         <div id="changeDetails" class="tab-pane fade in active">
             <br />
             @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "btn btn-primary" })
-            @Html.ActionLink("Edit details", "EditDetails", "Manage", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Edit details", "EditDetails", "Manage", new { ReturnUrl = "/Manage" }, new { @class = "btn btn-primary" })
             <br />
             <br />
 
@@ -119,7 +119,7 @@
                                     <img src="@item.CoverURL" style="max-width: 200px; max-height: 200px" />
                                 </td>
                                 <td>
-                                    @Html.ActionLink(item.Title, "Details", "Books", new { id = item.Id }, new { })
+                                    @Html.ActionLink(item.Title, "Details", "Books", new { id = item.Id, ReturnUrl = "/Manage" }, new { })
                                 </td>
                                 <td>
                                     @item.Genre.Name
@@ -146,7 +146,9 @@
                 <dt class="dt">Points:</dt>
                 <dd class="dd">@Model.Points</dd>
             </dl>
-            @Html.ActionLink("Cancel membership", "AddToRoleUser", "Account", new { username = User.Identity.Name }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Cancel membership", "AddToRoleUser", "Account", new { username = User.Identity.Name}, new { @class = "btn btn-danger" })
+            <br />
+            <br />
         </div>
     </div>
 </div>

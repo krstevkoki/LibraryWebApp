@@ -34,11 +34,13 @@
 
         <div class="col-sm-5 col-md-6 col-lg-7">
             <h4>@Model.Book.Title</h4>
+            <p>@Html.ActionLink(Model.Book.Genre.Name, "Details", "Genres", new {id = Model.Book.Genre.Id, ReturnUrl = $"/Books/Details?id={Model.Book.Id}" }, new {})</p>
             <p>
                 by
                 @foreach (var item in Model.Book.Authors)
                 {
-                    @Html.ActionLink(item.Name, "Details", "Authors", new { id=item.Id }, new {})
+                    @Html.ActionLink(item.Name, "Details", "Authors", new { id = item.Id, ReturnUrl = $"/Books/Details?id={Model.Book.Id}" }, new { })
+                    <span>&nbsp;</span>
                 }
             </p>
 
@@ -47,17 +49,18 @@
                 by
                 @foreach (var item in Model.Book.Publishers)
                 {
-                    @Html.ActionLink(item.Name, "Details", "Publishers", new { id = item.Id }, new {})
+                    @Html.ActionLink(item.Name, "Details", "Publishers", new { id = item.Id, ReturnUrl = $"/Books/Details?id={Model.Book.Id}" }, new { })
+                    <span>&nbsp;</span>
                 }
             </p>
 
             <h4>The physical object:</h4>
             <p>Number of pages: @Model.Book.Pages</p>
-            <p>Publish date: @Model.Book.PublishDate</p>
+            <p>Publish date: @Model.Book.PublishDate.ToShortDateString()</p>
 
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                @Html.ActionLink("Edit", "Edit", "Books", new { id = Model.Book.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Edit", "Edit", "Books", new { id = Model.Book.Id, ReturnUrl = $"/Books/Details?id={Model.Book.Id}" }, new { @class = "btn btn-warning" })
             }
             @if (User.IsInRole("Admin"))
             {
@@ -93,7 +96,14 @@
                 <br />
 
                 <div class="text-center">
-                    @Html.ActionLink("Back to list", "", "", new { }, new { @class = "btn btn-primary" })
+                    @if (ViewBag.ReturnUrl == null)
+                    {
+                        @Html.ActionLink("Back to list", "Index", "Books", new {}, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        <a href="@ViewBag.ReturnUrl" class = "btn btn-primary">Back to list</a>
+                    }
                 </div>
 
                 <hr />
@@ -148,7 +158,7 @@
                     if (i == 0)
                     {
                         <div class="item active">
-                            <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                            <a href="@($"/Books/Details?id={Model.BooksByGenre[i].Id}&ReturnUrl=/Books/Details/{Model.Book.Id}")">
                                 <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                             </a>
                         </div>
@@ -156,7 +166,7 @@
                     else
                     {
                         <div class="item">
-                            <a href="/Books/Details/@Model.BooksByGenre[i].Id">
+                            <a href="@($"/Books/Details?id={Model.BooksByGenre[i].Id}&ReturnUrl=/Books/Details/{Model.Book.Id}")">
                                 <img src="@Model.BooksByGenre[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                             </a>
                         </div>

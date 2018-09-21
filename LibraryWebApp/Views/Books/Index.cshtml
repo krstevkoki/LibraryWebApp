@@ -134,16 +134,19 @@
                                         '</p>' +
                                         '</div>');
 
+                                    if (userRole === "Admin") {
+                                        $("#results p.text-center:last").prepend(
+                                            '<a href="/Books/Delete/' +
+                                            response[i].Id +
+                                            '" class="btn btn-danger btn-result">Delete</a>')
+                                    }
+
                                     if (userRole === "Admin" || userRole === "Staff")
                                         $("#results p.text-center:last").prepend(
                                             '<a href="/Books/Edit/' +
                                             response[i].Id +
-                                            '" class="btn btn-warning btn-result">Edit</a>' +
-                                            '<a href="/Books/Delete/' +
-                                            response[i].Id +
-                                            '" class="btn btn-danger btn-result">Delete</a>'
+                                            '" class="btn btn-warning btn-result">Edit</a>'
                                         );
-
                                 }
                             });
                         $("#results").fadeIn(500,
