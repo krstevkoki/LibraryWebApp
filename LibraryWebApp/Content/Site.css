@@ -39,9 +39,16 @@ textarea {
     background-repeat: repeat-x;
 }
 
-@media screen and (max-width: 768px) {
-    .ftr {
-        height: 100%;
-    }
+.dropdown-menu {
+    background-color: #222;
+}
+
+.dropdown-menu li a {
+    color: #9d9d9d;
+}
+
+.dropdown-menu li a:hover {
+    background-color: transparent;
+    color: white;
 }
 

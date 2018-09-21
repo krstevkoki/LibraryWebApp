@@ -37,46 +37,48 @@
         <footer id="ftr" class="row text-center">
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <span class="contact"><b>Our FB Page:</b></span>
+                    <span><b>Our FB Page:</b></span>
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <span class="contact"><b>Address:</b></span>
-                </div>
-
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <span class="contact"><b>E-mail: </b></span>
+                    <span><b>Address:</b></span>
                 </div>
 
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <span class="contact"><b>Phone:</b></span>
+                    <span><b>E-mail: </b></span>
+                </div>
+
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                    <span><b>Phone:</b></span>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <p class="contact">
+                    <p>
                         <a href="https://www.facebook.com/">LibraryWebApp</a>
                     </p>
                 </div>
 
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <p class="contact">
+                    <p>
                         st. Partizanski Odredi bb. Skopje
                     </p>
                 </div>
 
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <p class="contact">
+                    <p>
                         contact@librarywebapp.com
                     </p>
                 </div>
 
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <p class="contact">(+389) 71 234 567</p>
+                    <p>(+389) 71 234 567</p>
                 </div>
             </div>
             <br />
-            <p style="color: #134aa3; font-weight: bold;">&copy; @DateTime.Now.Year - LibaryWebApp</p>
+            <p style="color: #134aa3; font-weight: bold;">
+                &copy; @DateTime.Now.Year - @Html.ActionLink("LibraryWebApp", "Index", "Books", new {}, new {style = "color: #134aa3;"})
+            </p>
         </footer>
     </div>
 </div>
