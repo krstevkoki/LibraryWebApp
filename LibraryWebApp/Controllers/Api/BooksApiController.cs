@@ -98,14 +98,19 @@ namespace LibraryWebApp.Controllers.Api
         {
             Book book = db.Books.Find(id);
             if (book == null)
-            {
                 return NotFound();
-            }
+
+            var response = new BooksDto()
+            {
+                Id = book.Id,
+                Title = book.Title,
+                CoverUrl = book.CoverURL
+            };
 
             db.Books.Remove(book);
             db.SaveChanges();
 
-            return Ok(book);
+            return Ok(response);
         }
 
         protected override void Dispose(bool disposing)
