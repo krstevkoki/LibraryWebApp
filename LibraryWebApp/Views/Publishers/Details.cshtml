@@ -46,6 +46,19 @@
     <br />
 
     <div class="row">
+        <div class="col-xs-1 col-md-2 col-lg-2 text-left">
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                @Html.ActionLink("Edit", "Edit", "Publishers", new { id = Model.Publisher.Id, ReturnUrl = $"/Authors/Details?id={Model.Publisher.Id}" }, new { @class = "btn btn-warning" })
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", "Authors", new { id = Model.Publisher.Id }, new { @class = "btn btn-danger" })
+            }
+        </div>
+    </div>
+
+    <div class="row">
 
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
             <h4>Books published by @Model.Publisher.Name</h4>
@@ -116,9 +129,7 @@
 
 </div>
 
-@section scripts
-{
-    <script type="text/javascript">
+<script type="text/javascript">
         var bookCount = @Model.BooksByPublisher.Count;
         var bookId = @Model.BooksByPublisher;
 
@@ -133,7 +144,14 @@
                     var button = $(this);
                     bookId = button.attr("data-book-id");
 
-                    
+                    $.post("/ShoppingCart/AddToCart",
+                        { "id": bookId },
+                        function(response) {
+                            console.log(response);
+                            $("#cart-items-count").text(response.CartCount);
+                            $(".message").text("Go to checkout");
+                        });
+                    bookCount--;
 
                     if (bookCount === 0) {
                         $(".js-add-to-cart").prop("disabled", true);
@@ -149,5 +167,5 @@
                 wrap: "circular"
             });
         });
-    </script>
+</script>
 }
