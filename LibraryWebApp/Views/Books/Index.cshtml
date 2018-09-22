@@ -15,7 +15,7 @@
     </div>
 
     <div class="clearfix">
-        <br/>
+        <br />
     </div>
 
     <div class="row">
@@ -23,7 +23,7 @@
             <div class="form-inline">
                 <div class="form-group">
                     <label for="search" style="cursor: pointer;">Search for a book:</label>
-                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query"/>
+                    <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query" />
                 </div>
                 <br /><br />
                 <div id="order" class="form-group">
@@ -44,8 +44,8 @@
     </div>
 
     <div class="clearfix">
-        <br/>
-        <br/>
+        <br />
+        <br />
     </div>
 
     <div class="row">
@@ -54,7 +54,7 @@
             @foreach (var book in Model)
             {
                 <div class="column" style="background-color: lightcyan">
-                    <img src="@book.CoverURL" class="img-responsive center-block"/>
+                    <img src="@book.CoverURL" class="img-responsive center-block" />
 
                     <p class="text-center">
                         <strong>Book Title: @book.Title</strong>
@@ -63,21 +63,21 @@
                     @foreach (var author in book.Authors)
                     {
                         <p class="text-center">
-                            <strong>Author:</strong> @Html.ActionLink(author.Name, "Details", "Authors", new {id = author.Id}, new {})
+                            <strong>Author:</strong> @Html.ActionLink(author.Name, "Details", "Authors", new { id = author.Id }, new { })
                         </p>
                     }
 
-                        <p class="text-center">
-                            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
-                            {
-                                @Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })
-                            }
-                            @if (User.IsInRole("Admin"))
-                            {
-                                @Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })
-                            }
-                            @Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })
-                        </p>
+                    <p class="text-center">
+                        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger js-delete" })
+                        }
+                        @Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })
+                    </p>
                 </div>
             }
         </div>
@@ -91,21 +91,33 @@
     </div>
     <div class="row">
         <div class="pagination text-center col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page, orderBy = ViewBag.OrderBy}))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, orderBy = ViewBag.OrderBy }))
         </div>
     </div>
 </div>
 
+<div id="dialog">
+    <p class="alert alert-danger text-danger">
+        <span class="glyphicon glyphicon-alert"></span>
+        <span>Are you sure you want to delete this item?</span>
+    </p>
+</div>
+
 @section styles
 {
-    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BooksIndexCss.css")"/>
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/BooksIndexCss.css")" />
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
 }
 
 @section scripts
 {
+    <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
+
     <script type="text/javascript">
         var userRole = "@ViewBag.UserRole";
-        $(document).ready(function() {
+        var button;
+
+        $(document).ready(function () {
             $("select option").each(function() {
                 var value = $(this).attr("value");
                 if (document.location.search.includes(value)) {
@@ -159,7 +171,7 @@
                                         $("#results p.text-center:last").prepend(
                                             '<a href="/Books/Delete/' +
                                             response[i].Id +
-                                            '" class="btn btn-danger btn-result">Delete</a>')
+                                            '" class="btn btn-danger btn-result js-delete">Delete</a>');
                                     }
 
                                     if (userRole === "Admin" || userRole === "Staff")
@@ -190,6 +202,31 @@
                 function() {
                     document.location = "?orderBy=" + this.value;
                 });
+
+            var dialog = $("#dialog").dialog({
+                resizable: false,
+                draggable: false,
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                title: "Delete confirmation",
+                buttons: {
+                    Yes: function () {
+                        var url = button.attr("href");
+                        window.location = url;
+                        dialog.dialog("close");
+                    },
+                    No: function () {
+                        dialog.dialog("close");
+                    }
+                }
+            });
+
+            $("body").on("click", "a.js-delete", function (event) {
+                event.preventDefault();
+                button = $(this);
+                dialog.dialog("open");
+            });
         });
     </script>
 }
