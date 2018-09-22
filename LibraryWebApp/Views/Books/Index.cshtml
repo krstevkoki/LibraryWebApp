@@ -25,6 +25,20 @@
                     <label for="search" style="cursor: pointer;">Search for a book:</label>
                     <input id="search" type="search" placeholder="Enter the book title" class="form-control" name="query"/>
                 </div>
+                <br /><br />
+                <div id="order" class="form-group">
+                    <label for="order-list" style="cursor: pointer;">Order by:</label>
+                    <select id="order-list" class="form-control">
+                        <option value="title-asc">Title (A-Z)</option>
+                        <option value="title-desc">Title (Z-A)</option>
+                        <option value="price-asc">Price (lowest)</option>
+                        <option value="price-desc">Price (highest)</option>
+                        <option value="quantity-asc">Quantity (ASC)</option>
+                        <option value="quantity-desc">Quantity (DSC)</option>
+                        <option value="publish-asc">Publish Date (newest)</option>
+                        <option value="publish-desc">Publish Date (oldest)</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -77,7 +91,7 @@
     </div>
     <div class="row">
         <div class="pagination text-center col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page}))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page, orderBy = ViewBag.OrderBy}))
         </div>
     </div>
 </div>
@@ -92,13 +106,20 @@
     <script type="text/javascript">
         var userRole = "@ViewBag.UserRole";
         $(document).ready(function() {
+            $("select option").each(function() {
+                var value = $(this).attr("value");
+                if (document.location.search.includes(value)) {
+                    $(this).attr("selected", true);
+                    return;
+                }
+            });
 
             $("#results, #no-results-message").hide();
 
             $("#search").on("keyup",
                 function() {
                     var query = $(this).val().trim();
-                    $("#basic, #results, #no-results-message").hide();
+                    $("#basic, #results, #no-results-message, #order").hide();
                     $("#results, #no-results-message").empty();
 
                     if (query !== "") {
@@ -161,8 +182,13 @@
                             function() {
                                 $(this).show();
                             });
-                        $(".pagination, .l").show();
+                        $(".pagination, .l, #order").show();
                     }
+                });
+
+            $("select").on("change",
+                function() {
+                    document.location = "?orderBy=" + this.value;
                 });
         });
     </script>

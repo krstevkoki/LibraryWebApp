@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using System.Web.WebPages;
 using LibraryWebApp.Models;
 using LibraryWebApp.Models.ViewModels;
@@ -20,18 +21,53 @@ namespace LibraryWebApp.Controllers
 
 
         // GET: Books
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string orderBy)
         {
             var pageNumber = page ?? 1;
             var pageSize = 16;
 
-            var model = db.Books.Include(m => m.Authors).OrderByDescending(b => b.Id).ToPagedList(pageNumber, pageSize);
+            var books = db.Books.Include(m => m.Authors);
+
+            IOrderedQueryable<Book> model;
+            switch (orderBy)
+            {
+                case "price-asc":
+                    model = books.OrderBy(b => b.Price);
+                    break;
+                case "price-desc":
+                    model = books.OrderByDescending(b => b.Price);
+                    break;
+                case "publish-asc":
+                    model = books.OrderBy(b => b.PublishDate);
+                    break;
+                case "publish-desc":
+                    model = books.OrderByDescending(b => b.PublishDate);
+                    break;
+                case "title-asc":
+                    model = books.OrderBy(b => b.Title);
+                    break;
+                case "title-desc":
+                    model = books.OrderByDescending(b => b.Title);
+                    break;
+                case "quantity-asc":
+                    model = books.OrderBy(b => b.Quantity);
+                    break;
+                case "quantity-desc":
+                    model = books.OrderByDescending(b => b.Quantity);
+                    break;
+                default:
+                    model = books.OrderBy(b => b.Title);
+                    break;
+            }
 
             ViewBag.UserRole = User.IsInRole(Roles.Admin) ? "Admin" :
                 User.IsInRole(Roles.Staff) ? "Staff" :
                 User.IsInRole(Roles.Member) ? "Member" :
                 User.IsInRole(Roles.User) ? "User" : "";
-            return View(model);
+
+            ViewBag.OrderBy = orderBy;
+
+            return View(model.ToPagedList(pageNumber, pageSize));
         }
         
         // GET: Books/Details/5
