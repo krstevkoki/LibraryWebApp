@@ -1,4 +1,4 @@
-﻿@model LibraryWebApp.Models.Publisher
+﻿@model LibraryWebApp.Models.ViewModels.PublisherDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,45 +8,164 @@
 <div id="container" class="container">
     <div class="row bg-primary">
         <div class="col-sm-12 text-center">
-            <h3>@ViewBag.Title for @Model.Name</h3>
+            <h3>@ViewBag.Title for @Model.Publisher.Name</h3>
         </div>
     </div>
 
-    <br/>
-    
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Country)
-            </dt>
+    <br />
 
-            <dd>
-                @Html.DisplayFor(model => model.Country)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.City)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.City)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
-        </dl>
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+            <p>@Model.Publisher.Name is located in <strong>@Model.Publisher.Country</strong> near the <strong>@Model.Publisher.City</strong></p>
+            <p>You can contact them on <strong>@Model.Publisher.PhoneNumber</strong> or visit their studio which can be found on <strong>@Model.Publisher.Address</strong></p>
+        </div>
     </div>
+
+    <br />
+    <div class="row">
+
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
+            <h4>Short history for @Model.Publisher.Name</h4>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-left">
+            <p>
+                Praesent sit amet rhoncus neque, ut maximus urna. Nam fermentum elit ante. Mauris laoreet nisi ligula, at dictum nibh lobortis id. In scelerisque congue eros, vel pellentesque nisi ullamcorper in. Quisque pharetra mauris non ultricies dignissim. Curabitur odio arcu, tristique a egestas vitae, iaculis sit amet orci. Aenean eget orci posuere nulla interdum suscipit. Donec pharetra purus ut tellus venenatis laoreet. Donec pellentesque massa sit amet urna commodo, eu ullamcorper purus luctus. Sed orci ligula, finibus sit amet congue a, suscipit eu lorem. Nunc elementum pretium felis et lacinia. Aliquam erat volutpat.
+            </p>
+            <hr />
+            <p>
+                Vestibulum sollicitudin purus eget quam consequat, lobortis venenatis nisl ullamcorper. Donec ac leo molestie, dapibus sapien id, laoreet dui. Vestibulum ornare consectetur dui ut venenatis. Nulla quis feugiat odio. In orci dui, dapibus quis ornare id, sodales in justo. Pellentesque non metus vitae sapien dapibus hendrerit ut tristique mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis dictum urna. Donec id posuere dui, in iaculis nibh. Morbi vitae ultrices magna. Morbi vel nibh ullamcorper, feugiat sem eget, consectetur tortor. Etiam sed lectus orci. Pellentesque eget dolor varius, tempor felis ac, luctus nunc. Nullam vestibulum nulla elit, sed venenatis diam vestibulum at. Curabitur in massa ante.
+            </p>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-1 col-md-2 col-lg-2 text-left">
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                @Html.ActionLink("Edit", "Edit", "Publishers", new { id = Model.Publisher.Id, ReturnUrl = $"/Authors/Details?id={Model.Publisher.Id}" }, new { @class = "btn btn-warning" })
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", "Authors", new { id = Model.Publisher.Id }, new { @class = "btn btn-danger" })
+            }
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
+            <h4>Books published by @Model.Publisher.Name</h4>
+        </div>
+    </div>
+
+    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.BooksByPublisher.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
+                }
+                else
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                }
+            }
+        </ol>
+
+        <div class="carousel-inner" role="listbox" style="background-color: gray">
+            @for (int i = 0; i < Model.BooksByPublisher.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <div class="item active" style="background-color: gray">
+                        <a href="@($"/Books/Details?id={Model.BooksByPublisher[i].Id}&ReturnUrl=/Authors/Details/{Model.Publisher.Id}")">
+                            <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="item" style="background-color: gray">
+                        <a href="@($"/Books/Details?id={Model.BooksByPublisher[i].Id}&ReturnUrl=/Authors/Details/{Model.Publisher.Id}")">
+                            <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+            }
+
+        </div>
+        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    </br>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+            @if (ViewBag.ReturnUrl == null)
+            {
+                @Html.ActionLink("Back to list", "Index", "Books", new { }, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+                <a href="@ViewBag.ReturnUrl" class="btn btn-primary">Back to list</a>
+            }
+        </div>
+    </div>
+
 </div>
+
+<script type="text/javascript">
+        var bookCount = @Model.BooksByPublisher.Count;
+        var bookId = @Model.BooksByPublisher;
+
+        $(document).ready(function() {
+            $(".js-add-to-cart").on("click",
+                function() {
+                    if ($("#IsAuthenticated").attr("value") === "False") {
+                        document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
+                        return;
+                    }
+
+                    var button = $(this);
+                    bookId = button.attr("data-book-id");
+
+                    $.post("/ShoppingCart/AddToCart",
+                        { "id": bookId },
+                        function(response) {
+                            console.log(response);
+                            $("#cart-items-count").text(response.CartCount);
+                            $(".message").text("Go to checkout");
+                        });
+                    bookCount--;
+
+                    if (bookCount === 0) {
+                        $(".js-add-to-cart").prop("disabled", true);
+                        $(".js-add-to-cart").prop("title", "Out of stock");
+                    }
+                });
+
+            $('.carousel').carousel({
+                visible: 5,
+                animation: 5000,
+                pause: "hover",
+                scroll: 1,
+                wrap: "circular"
+            });
+        });
+</script>
+}
