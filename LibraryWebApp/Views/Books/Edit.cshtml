@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col-sm-8">
-            @using (Html.BeginForm("Edit", "Books", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new {}))
+            @using (Html.BeginForm("Edit", "Books", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { }))
             {
                 @Html.AntiForgeryToken()
 
@@ -23,7 +23,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
                     @Html.HiddenFor(model => model.Book.Id)
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.Title, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Book.Title, new { htmlAttributes = new { @class = "form-control" } })
@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.Pages, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Book.Pages, new { htmlAttributes = new { @class = "form-control" } })
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.Quantity, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Book.Quantity, new { htmlAttributes = new { @class = "form-control" } })
@@ -47,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.PublishPlace, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Book.PublishPlace, new { htmlAttributes = new { @class = "form-control" } })
@@ -55,7 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.PublishDate, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.TextBox("Book.PublishDate", Model.Book.PublishDate.ToShortDateString(), new { @class = "form-control", type = "date", id = "Book_PublishDate" })
@@ -63,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group required">
                         @Html.LabelFor(model => model.Book.Price, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Book.Price, new { htmlAttributes = new { @class = "form-control" } })
@@ -113,3 +113,14 @@
         </div>
     </div>
 </div>
+
+@section styles
+{
+    <style>
+        .form-group.required .control-label:after {
+            content: "*";
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+}
