@@ -303,6 +303,8 @@ namespace LibraryWebApp.Controllers
 
                 return RedirectToAction("Index", "Manage");
             }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
         #endregion

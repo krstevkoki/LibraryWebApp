@@ -33,8 +33,7 @@ namespace LibraryWebApp.Controllers
                 User.IsInRole(Roles.User) ? "User" : "";
             return View(model);
         }
-
-
+        
         // GET: Books/Details/5
         public ActionResult Details(int? id, string returnUrl)
         {
@@ -122,10 +121,11 @@ namespace LibraryWebApp.Controllers
                 Genres = (db.Genres.ToList()),
                 SelectedGenre = -1
             };
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
-
+        
         // GET: Books/Edit/5
         public ActionResult Edit(int? id, string returnUrl)
         {
@@ -193,6 +193,8 @@ namespace LibraryWebApp.Controllers
                 Genres = (db.Genres.ToList()),
                 SelectedGenre = -1,
             };
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 

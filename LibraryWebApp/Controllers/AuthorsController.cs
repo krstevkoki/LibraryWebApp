@@ -69,6 +69,7 @@ namespace LibraryWebApp.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(author);
         }
 
@@ -102,6 +103,8 @@ namespace LibraryWebApp.Controllers
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);
             }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View(author);
         }
 
