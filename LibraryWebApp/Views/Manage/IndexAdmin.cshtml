@@ -311,7 +311,37 @@
         $(document).ready(function() {
             $("#table-users").DataTable();
 
-            $("#table-authors").DataTable({
+            var tableBooks = $("#table-books").DataTable({
+                ajax: {
+                    url: "/api/BooksApi",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Name",
+                        render: function (data, type, client) {
+                            return '<a href="/Books/Details?id=' + client.Id + '&ReturnUrl=%2FManage">' + client.Title + '</a>';
+                        }
+                    },
+                    {
+                        data: "ImageUrl",
+                        render: function (data, type, client) {
+                            return '<img src="' + client.CoverUrl + '" style="max-width: 200px; max-height: 200px"/>';
+                        }
+                    }, {
+                        data: "Genre"
+                    },
+                    {
+                        data: "",
+                        render: function (data, type, client) {
+                            return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Books/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
+                                '<button style="margin-bottom: 3px;" class="btn btn-danger js-delete" data-id=' + client.Id + '>Delete</button>';
+                        }
+                    }
+                ]
+            });
+
+            var tableAuthors = $("#table-authors").DataTable({
                 ajax: {
                     url: "/api/AuthorsApi",
                     dataSrc: ""
@@ -333,43 +363,13 @@
                         data: "",
                         render: function (data, type, client) {
                             return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Authors/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
-                                '<a style="margin-bottom: 3px;" href="/Authors/Delete?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-danger">Delete</a>';
+                                '<button style="margin-bottom: 3px;" class="btn btn-danger js-delete" data-id=' + client.Id + '>Delete</button>';
                         }
                     }
                 ]
             });
 
-            $("#table-books").DataTable({
-                ajax: {
-                    url: "/api/BooksApi",
-                    dataSrc: ""
-                },
-                columns: [
-                    {
-                        data: "Name",
-                        render: function(data, type, client) {
-                            return '<a href="/Books/Details?id=' + client.Id + '&ReturnUrl=%2FManage">' + client.Title + '</a>';
-                        }
-                    },
-                    {
-                        data: "ImageUrl",
-                        render: function(data, type, client) {
-                            return '<img src="' + client.CoverUrl + '" style="max-width: 200px; max-height: 200px"/>';
-                        }
-                    }, {
-                        data: "Genre"
-                    },
-                    {
-                        data: "",
-                        render: function (data, type, client) {
-                            return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Books/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
-                                '<a style="margin-bottom: 3px;" href="/Books/Delete?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-danger">Delete</a>';
-                        }
-                    }
-                ]
-            });
-
-            $("#table-reviews").DataTable({
+            var tableReviews = $("#table-reviews").DataTable({
                 ajax: {
                     url: "/api/ReviewsApi",
                     dataSrc: ""
@@ -387,13 +387,13 @@
                         data: "",
                         render: function(data, type, client) {
                             return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Reviews/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
-                                '<a style="margin-bottom: 3px;" href="/Reviews/Delete?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-danger">Delete</a>';
+                                '<button style="margin-bottom: 3px;" class="btn btn-danger js-delete" data-id=' + client.Id + '>Delete</button>';
                         }
                     }
                 ]
             });
 
-            $("#table-genres").DataTable({
+            var tableGenres = $("#table-genres").DataTable({
                 ajax: {
                     url: "/api/GenresApi",
                     dataSrc: ""
@@ -409,13 +409,13 @@
                         data: "",
                         render: function(data, type, client) {
                             return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Genres/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
-                                '<a style="margin-bottom: 3px;" href="/Genres/Delete?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-danger">Delete</a>';
+                                '<button style="margin-bottom: 3px;" class="btn btn-danger js-delete" data-id=' + client.Id + '>Delete</button>';
                         }
                     }
                 ]
             });
 
-            $("#table-publishers").DataTable({
+            var tablePublishers = $("#table-publishers").DataTable({
                 ajax: {
                     url: "/api/PublishersApi",
                     dataSrc: ""
@@ -440,10 +440,52 @@
                         data: "",
                         render: function (data, type, client) {
                             return '<a style="margin-right: 3px; margin-bottom: 3px;" href="/Publishers/Edit?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-warning">Edit</a>' +
-                                '<a style="margin-bottom: 3px;" href="/Publishers/Delete?id=' + client.Id + '&ReturnUrl=%2FManage" class="btn btn-danger">Delete</a>';
+                                '<button style="margin-bottom: 3px;" class="btn btn-danger js-delete" data-id=' + client.Id + '>Delete</button>';
                         }
                     }
                 ]
+            });
+
+            $("body").on("click", "table button.js-delete", function () {
+                var button = $(this);
+                var id = button.attr("data-id");
+                var tableId = button.parents("table").attr("id");
+                var url = "";
+                if (tableId.includes("books"))  
+                    url = "/api/BooksApi/" + id;
+                if (tableId.includes("authors"))
+                    url = "/api/AuthorsApi/" + id;
+                if (tableId.includes("reviews"))
+                    url = "/api/ReviewsApi/" + id;
+                if (tableId.includes("genres"))
+                    url = "/api/GenresApi/" + id;
+                if (tableId.includes("publishers"))
+                    url = "/api/PublishersApi/" + id;
+
+                $.ajax({
+                    url: url,
+                    method: "DELETE",
+                    success: function (response) {
+                        console.log(response);
+                        var parent = button.parents("tr");
+                        $(parent).fadeOut("slow",
+                            function () {
+                                if (tableId.includes("books"))  
+                                    tableBooks.row(parent).remove().draw();
+                                if (tableId.includes("authors"))
+                                    tableAuthors.row(parent).remove().draw();
+                                if (tableId.includes("reviews"))
+                                    tableReviews.row(parent).remove().draw();
+                                if (tableId.includes("genres"))
+                                    tableGenres.row(parent).remove().draw();
+                                if (tableId.includes("publishers"))
+                                    tablePublishers.row(parent).remove().draw();
+                            });
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
             });
         });
     </script>
