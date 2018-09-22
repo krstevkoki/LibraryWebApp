@@ -48,7 +48,7 @@ namespace LibraryWebApp.Controllers
             };
 
             ViewBag.ReturnUrl = returnUrl;
-            return View(publisher);
+            return View(model);
         }
 
         // GET: Publishers/Create
