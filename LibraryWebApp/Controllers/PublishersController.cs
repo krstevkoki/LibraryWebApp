@@ -26,11 +26,16 @@ namespace LibraryWebApp.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
-            Publisher publisher = db.Publishers.Find(id);
+
+            var publisher = db.Publishers.Include(a => a.Books).FirstOrDefault(a => a.Id == id);
+
             if (publisher == null)
                 return HttpNotFound();
+
+            var booksByPublisher = publisher.Books.ToList();
+
             
+
             ViewBag.ReturnUrl = returnUrl;
             return View(publisher);
         }
