@@ -17,26 +17,29 @@ namespace LibraryWebApp.Models
         public string Title { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "The Pages field must be greater than zero")]
         public int Pages { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue, ErrorMessage = "The Quantity field must be non-negative number")]
         public int Quantity { get; set; }
 
         public Genre Genre { get; set; }
 
         [Required]
-        [Range(1,100000.00)]
+        [Range(0, 100000.00, ErrorMessage = "The Price field must be non-negative number")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Cover URL")]
         public string CoverURL { get; set; }
 
         [Required]
+        [Display(Name = "Publish Place")]
         public string PublishPlace { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
+        [Display(Name = "Publish Date")]
         public DateTime PublishDate { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }
