@@ -80,26 +80,44 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Authors, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        @Html.LabelFor(model => model.SelectedAuthor, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.SelectedAuthor, new SelectList(Model.Authors, "Id", "Name"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Book.Authors, "", new { @class = "text-danger alert-danger small" })
+                            <input list="authors-list" id="SelectedAuthor" name="SelectedAuthor" class="form-control"  value="@Model.Book.Authors.ElementAt(0).Id" />
+                            <datalist id="authors-list">
+                                @foreach (var genre in Model.Authors)
+                                {
+                                    <option value="@genre.Id">@genre.Name</option>
+                                }
+                            </datalist>
+                            @Html.ValidationMessageFor(model => model.SelectedAuthor, "", new { @class = "text-danger alert-danger small" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Publishers, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        @Html.LabelFor(model => model.SelectedPublisher, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.SelectedPublisher, new SelectList(Model.Publishers, "Id", "Name"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Book.Publishers, "", new { @class = "text-danger alert-danger small" })
+                            <input list="publishers-list" id="SelectedPublisher" name="SelectedPublisher" class="form-control"  value="@Model.Book.Publishers.ElementAt(0).Id"/>
+                            <datalist id="publishers-list">
+                                @foreach (var genre in Model.Publishers)
+                                {
+                                    <option value="@genre.Id">@genre.Name</option>
+                                }
+                            </datalist>
+                            @Html.ValidationMessageFor(model => model.SelectedPublisher, "", new { @class = "text-danger alert-danger small" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
+                        @Html.LabelFor(model => model.SelectedGenre, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.SelectedGenre, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Book.Genre, "", new { @class = "text-danger alert-danger small" })
+                            <input list="genres-list" id="SelectedGenre" name="SelectedGenre" class="form-control" value="@Model.Book.Genre.Id"/>
+                            <datalist id="genres-list">
+                                @foreach (var genre in Model.Genres)
+                                {
+                                    <option value="@genre.Id">@genre.Name</option>
+                                }
+                            </datalist>
+                            @Html.ValidationMessageFor(model => model.SelectedGenre, "", new { @class = "text-danger alert-danger small" })
                         </div>
                     </div>
 
