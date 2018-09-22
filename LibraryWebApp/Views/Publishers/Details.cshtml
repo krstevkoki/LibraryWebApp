@@ -1,4 +1,4 @@
-﻿@model LibraryWebApp.Models.Publisher
+﻿@model LibraryWebApp.Models.ViewModels.PublisherDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,25 +8,25 @@
 <div id="container" class="container">
     <div class="row bg-primary">
         <div class="col-sm-12 text-center">
-            <h3>@ViewBag.Title for @Model.Name</h3>
+            <h3>@ViewBag.Title for @Model.Publisher.Name</h3>
         </div>
     </div>
 
-    <br/>
-    
+    <br />
+
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-            <p>@Model.Name is located in <strong>@Model.Country</strong> near the <strong>@Model.City</strong></p>
-            <p>You can contact them on <strong>@Model.PhoneNumber</strong> or visit their studio which can be found on <strong>@Model.Address</strong></p>
+            <p>@Model.Publisher.Name is located in <strong>@Model.Publisher.Country</strong> near the <strong>@Model.Publisher.City</strong></p>
+            <p>You can contact them on <strong>@Model.Publisher.PhoneNumber</strong> or visit their studio which can be found on <strong>@Model.Publisher.Address</strong></p>
         </div>
     </div>
 
     <br />
     <div class="row">
-        
+
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
-            <h4>Short history for @Model.Name</h4>
+            <h4>Short history for @Model.Publisher.Name</h4>
         </div>
     </div>
 
@@ -48,10 +48,106 @@
     <div class="row">
 
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
-            <h4>Books published by @Model.Name</h4>
+            <h4>Books published by @Model.Publisher.Name</h4>
         </div>
     </div>
 
+    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.BooksByPublisher.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
+                }
+                else
+                {
+                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                }
+            }
+        </ol>
 
-    
+        <div class="carousel-inner" role="listbox" style="background-color: gray">
+            @for (int i = 0; i < Model.BooksByPublisher.Count; ++i)
+            {
+                if (i == 0)
+                {
+                    <div class="item active" style="background-color: gray">
+                        <a href="@($"/Books/Details?id={Model.BooksByPublisher[i].Id}&ReturnUrl=/Authors/Details/{Model.Publisher.Id}")">
+                            <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="item" style="background-color: gray">
+                        <a href="@($"/Books/Details?id={Model.BooksByPublisher[i].Id}&ReturnUrl=/Authors/Details/{Model.Publisher.Id}")">
+                            <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                        </a>
+                    </div>
+                }
+            }
+
+        </div>
+        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    </br>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+            @if (ViewBag.ReturnUrl == null)
+            {
+                @Html.ActionLink("Back to list", "Index", "Books", new { }, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+                <a href="@ViewBag.ReturnUrl" class="btn btn-primary">Back to list</a>
+            }
+        </div>
+    </div>
+
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        var bookCount = @Model.BooksByPublisher.Count;
+        var bookId = @Model.BooksByPublisher;
+
+        $(document).ready(function() {
+            $(".js-add-to-cart").on("click",
+                function() {
+                    if ($("#IsAuthenticated").attr("value") === "False") {
+                        document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
+                        return;
+                    }
+
+                    var button = $(this);
+                    bookId = button.attr("data-book-id");
+
+                    
+
+                    if (bookCount === 0) {
+                        $(".js-add-to-cart").prop("disabled", true);
+                        $(".js-add-to-cart").prop("title", "Out of stock");
+                    }
+                });
+
+            $('.carousel').carousel({
+                visible: 5,
+                animation: 5000,
+                pause: "hover",
+                scroll: 1,
+                wrap: "circular"
+            });
+        });
+    </script>
+}

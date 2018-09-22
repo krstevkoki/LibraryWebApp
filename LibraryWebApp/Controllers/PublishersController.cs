@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibraryWebApp.Models;
+using LibraryWebApp.Models.ViewModels;
+
 
 namespace LibraryWebApp.Controllers
 {
@@ -25,16 +27,25 @@ namespace LibraryWebApp.Controllers
         public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var publisher = db.Publishers.Include(a => a.Books).FirstOrDefault(a => a.Id == id);
 
             if (publisher == null)
+            {
                 return HttpNotFound();
+            }
 
             var booksByPublisher = publisher.Books.ToList();
 
-            
+
+            var model = new PublisherDetailsViewModel()
+            {
+                Publisher = publisher,
+                BooksByPublisher = booksByPublisher
+            };
 
             ViewBag.ReturnUrl = returnUrl;
             return View(publisher);
