@@ -11,7 +11,7 @@
             <h3>Details for <i>@Model.Genre.Name</i> genre</h3>
         </div>
     </div>
-    <br/>
+    <br />
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
@@ -23,11 +23,11 @@
         <div class="col-xs-1 col-md-2 col-lg-2 text-left">
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                @Html.ActionLink("Edit", "Edit", "Genres", new { id = Model.Genre.Id, ReturnUrl = $"/Genres/Details?id={Model.Genre.Id}" }, new {@class = "btn btn-warning"})
+                @Html.ActionLink("Edit", "Edit", "Genres", new { id = Model.Genre.Id, ReturnUrl = $"/Genres/Details?id={Model.Genre.Id}" }, new { @class = "btn btn-warning" })
             }
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Delete", "Delete", "Genres", new { id = Model.Genre.Id }, new {@class = "btn btn-danger"})
+                @Html.ActionLink("Delete", "Delete", "Genres", new { id = Model.Genre.Id }, new { @class = "btn btn-danger js-delete" })
             }
         </div>
     </div>
@@ -56,7 +56,7 @@
                 {
                     <div class="item active" style="background-color: gray">
                         <a href="/Books/Details/@Model.Books[i].Id">
-                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                         </a>
                     </div>
                 }
@@ -64,7 +64,7 @@
                 {
                     <div class="item" style="background-color: gray">
                         <a href="/Books/Details/@Model.Books[i].Id">
-                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
                         </a>
                     </div>
                 }
@@ -81,13 +81,13 @@
         </a>
     </div>
 
-    <br/>
+    <br />
 
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 text-right">
             @if (ViewBag.ReturnUrl == null)
             {
-                @Html.ActionLink("Back to list", "Index", "Books", new {}, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to list", "Index", "Books", new { }, new { @class = "btn btn-primary" })
             }
             else
             {
@@ -95,13 +95,27 @@
             }
         </div>
     </div>
-    <br/>
+    <br />
 </div>
+
+<div id="dialog-delete">
+    <p class="alert alert-danger text-danger">
+        <span class="glyphicon glyphicon-alert"></span>
+        <span>Are you sure you want to delete this item?</span>
+    </p>
+</div>
+
+@section styles
+{
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
+
+}
 
 @section scripts
 {
+    <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.carousel').carousel({
                 visible: 5,
                 animation: 5000,
@@ -109,6 +123,36 @@
                 scroll: 1,
                 wrap: "circular"
             });
+        });
+    </script>
+
+
+
+    <script type="text/javascript">
+        var dialogDelete = $("#dialog-delete").dialog({
+            resizable: false,
+            draggable: false,
+            autoOpen: false,
+            width: 400,
+            modal: true,
+            title: "Delete confirmation",
+            buttons: {
+                Yes: function () {
+                    var url = button.attr("href");
+                    window.location = url;
+                    dialogDelete.dialog("close");
+
+                },
+                No: function () {
+                    dialogDelete.dialog("close");
+                }
+            }
+        });
+
+        $("body").on("click", "a.js-delete", function (event) {
+            event.preventDefault();
+            button = $(this);
+            dialogDelete.dialog("open");
         });
     </script>
 }
