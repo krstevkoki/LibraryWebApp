@@ -57,7 +57,7 @@
             }
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Delete", "Delete", "Authors", new { id = Model.Author.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Delete", "Delete", "Authors", new { id = Model.Author.Id }, new { @class = "btn btn-danger js-delete" })
             }
         </div>
     </div>
@@ -111,7 +111,7 @@
         </a>
     </div>
 
-    <br/>
+    <br />
 
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 text-right">
@@ -128,13 +128,22 @@
     <br />
 </div>
 
+<div id="dialog-delete">
+    <p class="alert alert-danger text-danger">
+        <span class="glyphicon glyphicon-alert"></span>
+        <span>Are you sure you want to delete this item?</span>
+    </p>
+</div>
+
 @section styles
 {
+    <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
     <link rel="stylesheet" type="text/css" href="@Href("~/Content/AuthorDetailsCss.css")">
 }
 
 @section scripts
 {
+    <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
     <script type="text/javascript">
         var bookCount = @Model.BooksByAuthor.Count;
         var bookId = @Model.BooksByAuthor;
@@ -172,6 +181,37 @@
                 scroll: 1,
                 wrap: "circular"
             });
+
+
+           
+
         });
+    </script>
+    <script type="text/javascript">
+        var dialogDelete = $("#dialog-delete").dialog({
+            resizable: false,
+            draggable: false,
+            autoOpen: false,
+            width: 400,
+            modal: true,
+            title: "Delete confirmation",
+            buttons: {
+                Yes: function () {
+                    var url = button.attr("href");
+                    window.location = url;
+                    dialogDelete.dialog("close");
+                },
+                No: function () {
+                    dialogDelete.dialog("close");
+                }
+            }
+        });
+
+        $("body").on("click", "a.js-delete", function (event) {
+            event.preventDefault();
+            button = $(this);
+            dialogDelete.dialog("open");
+        });
+
     </script>
 }
