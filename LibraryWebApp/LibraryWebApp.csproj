@@ -465,6 +465,10 @@
     <Content Include="images\error_404.jpg" />
     <Content Include="images\facebook.png" />
     <Content Include="images\icon.jpg" />
+    <Content Include="images\l1.jpg" />
+    <Content Include="images\l2.jpg" />
+    <Content Include="images\l3.jpg" />
+    <Content Include="images\l4.jpg" />
     <Content Include="images\linkedin.png" />
     <Content Include="images\twitter.png" />
     <Content Include="images\whiteBg.jpg" />
