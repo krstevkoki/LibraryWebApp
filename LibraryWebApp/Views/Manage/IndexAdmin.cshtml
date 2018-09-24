@@ -415,7 +415,10 @@
                 },
                 columns: [
                     {
-                        data: "Name"
+                        data: "Name",
+                        render: function (data, type, client) {
+                            return '<a href="/Genres/Details?id=' + client.Id + '&ReturnUrl=%2FManage">' + client.Name + '</a>';
+                        }
                     },
                     {
                         data: "Description"

@@ -70,7 +70,7 @@
                             <img src="@item.Book.CoverURL" style="max-height: 100px; max-width: 100px"/>
                         </td>
                         <td>
-                            @Html.ActionLink(item.Book.Title, "Details", "Books", new {id = item.BookId}, new {})
+                            @Html.ActionLink(item.Book.Title, "Details", "Books", new { id = item.BookId, ReturnUrl = Html.Encode($"/Orders/Details/{Model.OrderId}") }, new {})
                         </td>
                         <td>@item.Quantity</td>
                         <td class="item-price">@item.UnitPrice</td>

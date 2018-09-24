@@ -82,11 +82,11 @@
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedAuthor, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="authors-list" id="SelectedAuthor" name="SelectedAuthor" class="form-control"  value="@Model.Book.Authors.ElementAt(0).Id" />
+                            <input list="authors-list" id="SelectedAuthor" name="SelectedAuthor" class="form-control"  value="@(Model.Book.Authors.Count != 0 ? Model.Book.Authors.ElementAt(0).Id.ToString() : "")" />
                             <datalist id="authors-list">
-                                @foreach (var genre in Model.Authors)
+                                @foreach (var author in Model.Authors)
                                 {
-                                    <option value="@genre.Id">@genre.Name</option>
+                                    <option value="@author.Id">@author.Name</option>
                                 }
                             </datalist>
                             @Html.ValidationMessageFor(model => model.SelectedAuthor, "", new { @class = "text-danger alert-danger small" })
@@ -96,11 +96,11 @@
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedPublisher, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="publishers-list" id="SelectedPublisher" name="SelectedPublisher" class="form-control"  value="@Model.Book.Publishers.ElementAt(0).Id"/>
+                            <input list="publishers-list" id="SelectedPublisher" name="SelectedPublisher" class="form-control"  value="@(Model.Book.Publishers.Count != 0 ? Model.Book.Publishers.ElementAt(0).Id.ToString() : "")"/>
                             <datalist id="publishers-list">
-                                @foreach (var genre in Model.Publishers)
+                                @foreach (var publisher in Model.Publishers)
                                 {
-                                    <option value="@genre.Id">@genre.Name</option>
+                                    <option value="@publisher.Id">@publisher.Name</option>
                                 }
                             </datalist>
                             @Html.ValidationMessageFor(model => model.SelectedPublisher, "", new { @class = "text-danger alert-danger small" })
@@ -110,7 +110,7 @@
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedGenre, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="genres-list" id="SelectedGenre" name="SelectedGenre" class="form-control" value="@Model.Book.Genre.Id"/>
+                            <input list="genres-list" id="SelectedGenre" name="SelectedGenre" class="form-control" value="@(Model.Book.Genre != null ? Model.Book.Genre.Id.ToString() : "")"/>
                             <datalist id="genres-list">
                                 @foreach (var genre in Model.Genres)
                                 {

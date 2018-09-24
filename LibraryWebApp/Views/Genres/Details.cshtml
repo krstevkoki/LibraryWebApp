@@ -11,6 +11,7 @@
             <h3>Details for <i>@Model.Genre.Name</i> genre</h3>
         </div>
     </div>
+
     <br />
 
     <div class="row">
@@ -23,83 +24,72 @@
         <div class="col-xs-1 col-md-2 col-lg-2 text-left">
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                @Html.ActionLink("Edit", "Edit", "Genres", new { id = Model.Genre.Id, ReturnUrl = $"/Genres/Details?id={Model.Genre.Id}" }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Edit", "Edit", "Genres", new { id = Model.Genre.Id, ReturnUrl = Html.Encode($"/Genres/Details/{Model.Genre.Id}") }, new { @class = "btn btn-warning" })
             }
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Delete", "Delete", "Genres", new { id = Model.Genre.Id }, new { @class = "btn btn-danger js-delete" })
+                @Html.ActionLink("Delete", "Delete", "Genres", new { id = Model.Genre.Id, ReturnUrl = ViewBag.ReturnUrl }, new { @class = "btn btn-danger js-delete" })
             }
         </div>
     </div>
+
     <br />
+    
+    @if (Model.Books.Count != 0)
+    { 
+        <h4 style="color: firebrick">Books from this genre:</h4>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="font-size:30px;">
-            <h4 class="text-primary">@Model.Genre.Name</h4>
+        <div id="genreCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.Books.Count; ++i)
+                {
+                    if (i == 0)
+                    {
+                        <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#genreCarousel" data-slide-to="@i"></li>
+                    }
+                }
+            </ol>
+
+            <div class="carousel-inner" role="listbox" style="background-color: gray">
+                @for (int i = 0; i < Model.Books.Count; ++i)
+                {
+                    if (i == 0)
+                    {
+                        <div class="item active" style="background-color: gray">
+                            <a href="/Books/Details/@Model.Books[i].Id?ReturnUrl=@(Html.Encode($"/Genres/Details/{Model.Genre.Id}"))">
+                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item" style="background-color: gray">
+                            <a href="/Books/Details/@Model.Books[i].Id?ReturnUrl=@(Html.Encode($"/Genres/Details/{Model.Genre.Id}"))">
+                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                            </a>
+                        </div>
+                    }
+                }
+
+            </div>
+            <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#genreCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <p>
-                Nunc id enim dictum nulla ullamcorper volutpat. Etiam nec orci eu elit varius finibus nec sit amet nunc. Aenean feugiat, libero at vehicula fringilla, metus erat elementum est, eget vestibulum nunc orci molestie erat. Morbi cursus est in est rhoncus tristique. Aliquam mattis orci sit amet commodo viverra. Donec iaculis ac tellus et semper. Ut nisi dui, ornare non imperdiet at, suscipit at leo.
-            </p>
-            </hr>
-
-            <p>
-                Nunc id enim dictum nulla ullamcorper volutpat. Etiam nec orci eu elit varius finibus nec sit amet nunc. Aenean feugiat, libero at vehicula fringilla, metus erat elementum est, eget vestibulum nunc orci molestie erat. Morbi cursus est in est rhoncus tristique. Aliquam mattis orci sit amet commodo viverra. Donec iaculis ac tellus et semper. Ut nisi dui, ornare non imperdiet at, suscipit at leo.
-            </p>
-        </div>
-    </div>
-
-    <h4 style="color: firebrick">Books from this genre:</h4>
-
-    <div id="genreCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @for (int i = 0; i < Model.Books.Count; ++i)
-            {
-                if (i == 0)
-                {
-                    <li data-target="#genreCarousel" data-slide-to="@i" class="active"></li>
-                }
-                else
-                {
-                    <li data-target="#genreCarousel" data-slide-to="@i"></li>
-                }
-            }
-        </ol>
-
-        <div class="carousel-inner" role="listbox" style="background-color: gray">
-            @for (int i = 0; i < Model.Books.Count; ++i)
-            {
-                if (i == 0)
-                {
-                    <div class="item active" style="background-color: gray">
-                        <a href="/Books/Details/@Model.Books[i].Id">
-                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <div class="item" style="background-color: gray">
-                        <a href="/Books/Details/@Model.Books[i].Id">
-                            <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
-                        </a>
-                    </div>
-                }
-            }
-
-        </div>
-        <a class="left carousel-control" href="#genreCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#genreCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+    }
+    else
+    {
+        <h4 class="alert-danger"><span class="text-danger">No books from this genre yet</span></h4>
+    }
 
     <br />
 
@@ -115,6 +105,7 @@
             }
         </div>
     </div>
+
     <br />
 </div>
 
@@ -128,51 +119,53 @@
 @section styles
 {
     <link rel="stylesheet" type="text/css" href="@Href("~/Content/jquery-ui.css")" />
-
 }
 
 @section scripts
 {
     <script type="text/javascript" src="@Href("~/Scripts/jquery-ui.js")"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.carousel').carousel({
-                visible: 5,
-                animation: 5000,
-                pause: "hover",
-                scroll: 1,
-                wrap: "circular"
-            });
-        });
-    </script>
-
-
 
     <script type="text/javascript">
-        var dialogDelete = $("#dialog-delete").dialog({
-            resizable: false,
-            draggable: false,
-            autoOpen: false,
-            width: 400,
-            modal: true,
-            title: "Delete confirmation",
-            buttons: {
-                Yes: function () {
-                    var url = button.attr("href");
-                    window.location = url;
-                    dialogDelete.dialog("close");
+        var button;
+        var booksCount = @Model.Books.Count;
 
-                },
-                No: function () {
-                    dialogDelete.dialog("close");
-                }
+        $(document).ready(function() {
+            if (booksCount !== 0) {
+                $('.carousel').carousel({
+                    visible: 5,
+                    animation: 5000,
+                    pause: "hover",
+                    scroll: 1,
+                    wrap: "circular"
+                });
             }
-        });
 
-        $("body").on("click", "a.js-delete", function (event) {
-            event.preventDefault();
-            button = $(this);
-            dialogDelete.dialog("open");
+            var dialogDelete = $("#dialog-delete").dialog({
+                resizable: false,
+                draggable: false,
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                title: "Delete confirmation",
+                buttons: {
+                    Yes: function() {
+                        var url = button.attr("href");
+                        window.location = url;
+                        dialogDelete.dialog("close");
+
+                    },
+                    No: function() {
+                        dialogDelete.dialog("close");
+                    }
+                }
+            });
+
+            $("body").on("click", "a.js-delete",
+                function(event) {
+                    event.preventDefault();
+                    button = $(this);
+                    dialogDelete.dialog("open");
+                });
         });
     </script>
 }

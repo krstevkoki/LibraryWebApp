@@ -34,7 +34,7 @@
                         <td>
                             <img src="@cartItem.Book.CoverURL" class="img-responsive" style="max-height: 200px; max-width: 200px"/>
                         </td>
-                        <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new {id = cartItem.BookID}, new {})</td>
+                        <td>@Html.ActionLink(cartItem.Book.Title, "Details", "Books", new { id = cartItem.BookID, ReturnUrl = Html.Encode("/ShoppingCart") }, new {})</td>
                         <td class="item-quantity">@cartItem.Count</td>
                         <td class="item-price" data-book-price="@cartItem.Book.Price"></td>
                         <td class="item-total"></td>
@@ -58,7 +58,7 @@
                             <span id="order-total"></span>
                         </div>
                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                            @Html.ActionLink("Go to Checkout", "ShippingAndPayment", "Checkout", new {}, new {@class = "btn btn-sm btn-info", id = "button"})
+                            @Html.ActionLink("Go to Checkout", "ShippingAndPayment", "Checkout", new { ReturnUrl = Html.Encode($"/ShoppingCart") }, new {@class = "btn btn-sm btn-info", id = "button"})
                         </div>
                     </td>
                 </tr>
