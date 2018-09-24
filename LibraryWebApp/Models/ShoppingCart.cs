@@ -47,7 +47,7 @@ namespace LibraryWebApp.Models
             {
                 cartItem.Count++;
             }
-
+            
             db.SaveChanges();
         }
 
@@ -126,13 +126,13 @@ namespace LibraryWebApp.Models
             db.Entry(creditCard).State = EntityState.Modified;
             db.SaveChanges();
 
-            foreach (var item in order.OrderDetails)
+            /*foreach (var item in order.OrderDetails)
             {
                 var book = db.Books.Find(item.BookId);
                 book.Quantity -= item.Quantity;
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
-            }
+            }*/
 
             EmptyCart();
 
