@@ -54,6 +54,7 @@ namespace LibraryWebApp.Models
             Authors = new List<Author>();
             Publishers = new List<Publisher>();
             Reviews = new List<Review>();
+            Pages = 1;
         }
     }
 }
