@@ -18,8 +18,7 @@ namespace LibraryWebApp.Controllers
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-
+        
         // GET: Books
         public ActionResult Index(int? page, string orderBy)
         {
@@ -102,6 +101,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Create(string returnUrl)
         {
             var model = new AddAuthorToBookModel()
@@ -124,6 +124,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Create(AddAuthorToBookModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -163,6 +164,7 @@ namespace LibraryWebApp.Controllers
         }
         
         // GET: Books/Edit/5
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
@@ -196,6 +198,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Edit(AddAuthorToBookModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -232,6 +235,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -271,6 +275,7 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult LeaveReview(Review review)
         {
             review.ReviewDate = DateTime.Now;

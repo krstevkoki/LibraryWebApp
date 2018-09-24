@@ -10,11 +10,13 @@ using LibraryWebApp.Models;
 
 namespace LibraryWebApp.Controllers
 {
+    [Authorize]
     public class ReviewsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Reviews/Edit/5
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
@@ -33,6 +35,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin Staff")]
         public ActionResult Edit([Bind(Include = "Id,ReviewerUsername,ReviewMessage,ReviewDate")] Review review, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -48,6 +51,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
