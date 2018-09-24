@@ -20,7 +20,7 @@ namespace LibraryWebApp.Controllers
 
         // GET: Checkout
         [HttpGet]
-        public ActionResult ShippingAndPayment()
+        public ActionResult ShippingAndPayment(string returnUrl)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
@@ -47,12 +47,15 @@ namespace LibraryWebApp.Controllers
                 CreditCard = new CreditCard()
             };
 
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ShippingAndPayment(ShippingAndPaymentViewModel model)
+        public ActionResult ShippingAndPayment(ShippingAndPaymentViewModel model, string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -112,9 +115,11 @@ namespace LibraryWebApp.Controllers
             if (!id.HasValue)
                 return HttpNotFound();
 
-            if (db.Orders.Any(o => o.OrderId == id.Value))
+            var order = db.Orders.FirstOrDefault(o => o.OrderId == id.Value);
+
+            if (order != null)
             {
-                if (db.Orders.Any(o => o.OrderId == id.Value && o.Username == User.Identity.Name))
+                if (order.Username == User.Identity.Name || User.IsInRole("Admin"))
                     return View(id.Value);
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
