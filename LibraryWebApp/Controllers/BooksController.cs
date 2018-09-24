@@ -179,11 +179,11 @@ namespace LibraryWebApp.Controllers
             var model = new AddAuthorToBookModel()
             {
                 Book = book,
-                Authors = (db.Authors.ToList()),
+                Authors = db.Authors.ToList(),
                 SelectedAuthor = -1,
-                Publishers = (db.Publishers.ToList()),
+                Publishers = db.Publishers.ToList(),
                 SelectedPublisher = -1,
-                Genres = (db.Genres.ToList()),
+                Genres = db.Genres.ToList(),
                 SelectedGenre = -1,
             };
 
@@ -221,13 +221,10 @@ namespace LibraryWebApp.Controllers
 
             model = new AddAuthorToBookModel()
             {
-                Book = model.Book,
-                Authors = (db.Authors.ToList()),
-                SelectedAuthor = -1,
-                Publishers = (db.Publishers.ToList()),
-                SelectedPublisher = -1,
-                Genres = (db.Genres.ToList()),
-                SelectedGenre = -1,
+                Book = db.Books.Find(model.Book.Id),
+                Authors = db.Authors.ToList(),
+                Publishers = db.Publishers.ToList(),
+                Genres = db.Genres.ToList(),
             };
 
             ViewBag.ReturnUrl = returnUrl;
