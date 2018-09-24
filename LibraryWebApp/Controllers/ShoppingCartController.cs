@@ -50,6 +50,10 @@ namespace LibraryWebApp.Controllers
 
             cart.AddToCard(book);
 
+            book.Quantity -= 1;
+            db.Entry(book).State = EntityState.Modified;
+            db.SaveChanges();
+
             var result = new ShoppingCartAddViewModel()
             {
                 Message = $"Book {Server.HtmlEncode(book.Title)} was added to your cart!",
@@ -71,6 +75,10 @@ namespace LibraryWebApp.Controllers
 
             var bookName = book.Title;
             var itemCount = cart.RemoveFromCard(id);
+
+            book.Quantity += 1;
+            db.Entry(book).State = EntityState.Modified;
+            db.SaveChanges();
 
             var results = new ShoppingCartRemoveViewModel
             {
