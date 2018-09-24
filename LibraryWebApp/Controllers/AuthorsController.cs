@@ -15,13 +15,6 @@ namespace LibraryWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Authors
-        public ActionResult Index()
-        {
-            var model = db.Authors.Include(m => m.Books).ToList();
-            return View(model);
-        }
-
         // GET: Authors/Details/5
         public ActionResult Details(int? id, string returnUrl)
         {

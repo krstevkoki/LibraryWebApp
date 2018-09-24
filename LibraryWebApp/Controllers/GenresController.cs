@@ -15,12 +15,6 @@ namespace LibraryWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Genres
-        public ActionResult Index()
-        {
-            return View(db.Genres.ToList());
-        }
-
         // GET: Genres/Details/5
         public ActionResult Details(int? id, string returnUrl)
         {
