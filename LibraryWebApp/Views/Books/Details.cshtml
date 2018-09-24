@@ -215,7 +215,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <h4 class="text-danger alert-danger">
-                    No reviews for this book! If you have thoughts about this book, please <a class="review-button" href="#">leave a review</a>.
+                    No reviews for this book! If you have thoughts about this book, please <a class="review-link" href="#">leave a review</a>.
                 </h4>
             </div>
         </div>
@@ -326,7 +326,8 @@
                 }
             });
 
-            $(".review-button").click(function() {
+            $(".review-button, .review-link").click(function (event) {
+                event.preventDefault();
                 if ($("#IsAuthenticated").attr("value") === "False") {
                     document.location = "/Account/Login?ReturnUrl=%2FBooks/Details/" + bookId;
                     return;
@@ -353,8 +354,7 @@
                 }
             });
 
-            $("body").on("click",
-                "a.js-delete",
+            $("body").on("click", "a.js-delete",
                 function(event) {
                     event.preventDefault();
                     button = $(this);
