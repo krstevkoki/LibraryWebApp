@@ -24,17 +24,16 @@ namespace LibraryWebApp.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Order order = db.Orders.Include(o => o.OrderDetails).FirstOrDefault(o => o.OrderId == id);
             if (order == null)
-            {
                 return HttpNotFound();
-            }
-            if (order.Username != User.Identity.Name)
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            return View(order);
+            
+            if (order.Username == User.Identity.Name || User.IsInRole("Admin"))
+                return View(order);
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
         }
 
         // GET: Orders/Create
