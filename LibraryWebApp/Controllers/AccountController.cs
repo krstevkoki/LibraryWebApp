@@ -48,7 +48,7 @@ namespace LibraryWebApp.Controllers
         #region  custom code
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult AddUserToRole(string returnUrl)
         {
             var model = new AddUserToRoleViewModel()
@@ -63,7 +63,7 @@ namespace LibraryWebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<ActionResult> AddUserToRole(AddUserToRoleViewModel model, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;

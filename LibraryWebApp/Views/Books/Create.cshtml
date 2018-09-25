@@ -121,7 +121,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input id="submit-button" type="submit" value="Create" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
@@ -139,4 +139,31 @@
             color: red;
         }
     </style>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var genresCount = @Model.Genres.Count;
+        var authorsCount = @Model.Authors.Count;
+        var publishersCount = @Model.Publishers.Count;
+
+        $(document).ready(function() {
+            if (genresCount === 0) {
+                $("#SelectedGenre").attr("disabled", true);
+                $("#SelectedGenre").after('<span class="alert-danger text-danger small">You have to <a href="/Genres/Create?ReturnUrl=/Books/Create">add</a> genre in database first</span>');
+                $("#submit-button").attr("disabled", true);
+            }
+            if (authorsCount === 0) {
+                $("#SelectedAuthor").attr("disabled", true);
+                $("#SelectedAuthor").after('<span class="alert-danger text-danger small">You have to <a href="/Authors/Create?ReturnUrl=/Books/Create">add</a> author in database first</span>');
+                $("#submit-button").attr("disabled", true);
+            }
+            if (publishersCount === 0) {
+                $("#SelectedPublisher").attr("disabled", true);
+                $("#SelectedPublisher").after('<span class="alert-danger text-danger small">You have to <a href="/Publishers/Create?ReturnUrl=/Books/Create">add</a> publisher in database first</span>');
+                $("#submit-button").attr("disabled", true);
+            }
+        });
+    </script>
 }

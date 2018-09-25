@@ -16,6 +16,7 @@ namespace LibraryWebApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Authors/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id, string returnUrl)
         {
             if (id == null)
@@ -42,7 +43,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Authors/Create
-        [Authorize(Roles = "Admin Staff")]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Create(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -54,7 +55,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin Staff")]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Create([Bind(Include = "Id,Name,ImageURL")] Author author, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -69,7 +70,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Authors/Edit/5
-        [Authorize(Roles = "Admin Staff")]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Edit(int? id, string returnUrl)
         {
             if (id == null)
@@ -91,7 +92,7 @@ namespace LibraryWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin Staff")]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Edit([Bind(Include = "Id,Name,ImageURL")] Author author, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -106,7 +107,7 @@ namespace LibraryWebApp.Controllers
         }
 
         // GET: Authors/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Delete(int? id, string returnUrl)
         {
             if (id == null)
