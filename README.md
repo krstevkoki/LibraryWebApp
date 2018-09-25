@@ -1,5 +1,5 @@
 <p align="center">
-    <img width=40% src="LibraryWebApp/img/logo.jpg?raw=true" alt="Лого на апликацијата/Application logo">
+    <img width=40% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/logo.jpg?raw=true?raw=true" alt="Лого на апликацијата/Application logo">
 </p>
 
 <h1 align="center">LibaryWebApp</h1>
@@ -46,7 +46,7 @@
 При стартувањето на апликацијата се прикажува Home Page-от кој е прикажан на Слика 1
 
 <p align="center">
-    <img width=90% height="60%" src="LibraryWebApp/img/1.png?raw=true"> <br>
+    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true?raw=true"> <br>
     <i>Слика 1: Главен поглед на апликацијата</i>
 </p>
 
@@ -54,8 +54,8 @@
 сортирање врз основа на понудените критериуми.
 
 <p align="center">
-    <img width=30% src="LibraryWebApp/img/2.png?raw=true" alt="Search box">
-    <img width=30% src="LibraryWebApp/img/3.png?raw=true" alt="Sort list">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/2.png?raw=true?raw=true" alt="Search box">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/3.png?raw=true?raw=true" alt="Sort list">
     <br>
     <span><i>Слика 2, 3: Функционалности на алатките за пребарување и сортирање</i></span>
 </p>
@@ -63,7 +63,7 @@
 Резултатите се прикажуваат во истиот поглед:
 
 <p align="center">
-    <img width=60% height=50% src="LibraryWebApp/img/4.png?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true?raw=true">
     <br>
     <span><i>Слика 4: Приказ на резултатите </i></span>
 </p>
@@ -164,15 +164,15 @@ This application is used for selling books. It uses the *grid of equals* design 
 When starting the application, the Home Page is displayed as shown on Image 1
 
 <p align="center">
-    <img width=90% height="60%" src="LibraryWebApp/img/1.png?raw=true"> <br>
+    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true?raw=true"> <br>
     <i>Image 1: Main view of the application</i>
 </p>
 
 After the Home Page is displayed, the user has the ability to perform a search to find the desired book or to perform sorting based on the criteria offered.
 
 <p align="center">
-    <img width=30% src="LibraryWebApp/img/2.png?raw=true" alt="Search box">
-    <img width=30% src="LibraryWebApp/img/3.png?raw=true" alt="Sort list">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/2.png?raw=true?raw=true" alt="Search box">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/3.png?raw=true?raw=true" alt="Sort list">
     <br>
     <span><i>Image 2, 3: Functions of search and sort tools</i></span>
 </p>
@@ -180,7 +180,7 @@ After the Home Page is displayed, the user has the ability to perform a search t
 The results are displayed in a the same view:
 
 <p align="center">
-    <img width=60% height=50% src="LibraryWebApp/img/4.png?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true?raw=true">
     <br>
     <span><i>Image 4: Displaying the results </i></span>
 </p>
