@@ -71,7 +71,7 @@
 При клик на копчето *Details* за било која книга се отвора нов поглед со соодветни детали за истата (автор, издавач, залиха), а во долниот дел од погледот има имплементирано carousel на кој се прикажани предлози за книги кои припаѓаат на истиот жанр како тековната.
 
 <p align="center">
-    <img width=60% height=50% src="LibraryWebApp/img/5.png?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true?raw=true">
     <br>
     <span><i>Слика 5: Приказ на Details поглед за книга </i></span>
 </p>
@@ -79,25 +79,25 @@
 Со клик на копчето *Add review* се отвора диалог-прозорец во кој може да се напише соодветната критика за книгата.
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/6.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/7.png?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true?raw=true"> <br>
     <span><i>Слика 6, 7: Прозорец за оставање критика за книгата и прикажување на истата </i></span>
 </p>
 
 Со клик на линковите кои водат до авторот и издавачот на книгата се отвораат соодветни погледи:
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/8.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/9.png?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true?raw=true"> <br>
  <span><i>Слика 8, 9: Погледи за автор и издавач </i></span>
 </p>
 
 Секој член има своја потрошувачка кошничка во која има увид во книгите кои ги избрал за купување. Со клик на копчето *Go to checkout* се отвора нов поглед во кој треба да ги потполни соодветните податоци за да може да се изврши трансакцијата.
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/10.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/11.png?raw=true">
-     <img width=30% height=30% src="LibraryWebApp/img/12.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true?raw=true">
+     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true?raw=true">
     <br>
  <span><i>Слика 10, 11, 12: Потрошувачка кошничка </i></span>
 </p>
@@ -188,7 +188,7 @@ The results are displayed in a the same view:
 Clicking on the *Details* button, for any book, opens a new view with appropriate details (author, publisher, quantity, price) and in the bottom of the view there is a carousel that displays recommendations that belong to the same genre as the current one.
 
 <p align="center">
-    <img width=60% height=50% src="LibraryWebApp/img/5.png?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true?raw=true">
     <br>
     <span><i>Image 5: Details view for the book </i></span>
 </p>
@@ -196,25 +196,25 @@ Clicking on the *Details* button, for any book, opens a new view with appropriat
 Clicking the *Add review* button opens a modal window in which you can write the appropriate review for the book.
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/6.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/7.png?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true?raw=true"> <br>
     <span><i>Image 6, 7: Displaying dialog for leaving a review for the book and showind the review comment </i></span>
 </p>
 
 Clicking the links, that lead to the author and the book publisher, will open up appropriate views:
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/8.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/9.png?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true?raw=true"> <br>
  <span><i>Image 8, 9: Views for Author and Publisher </i></span>
 </p>
 
 Each member has his own shopping bag in which he has an insight into the books he wants to purchase. Clicking the *Go to checkout* button opens a new view in which you need to complete the required data in order to be performe a transaction.
 
 <p align="center">
-    <img width=30% height=30% src="LibraryWebApp/img/10.png?raw=true">
-    <img width=30% height=30% src="LibraryWebApp/img/11.png?raw=true">
-     <img width=30% height=30% src="LibraryWebApp/img/12.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true?raw=true">
+     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true?raw=true">
     <br>
  <span><i>Image 10, 11, 12: Shopping cart</i></span>
 </p>
