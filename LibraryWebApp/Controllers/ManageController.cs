@@ -59,7 +59,7 @@ namespace LibraryWebApp.Controllers
                                     ? "Your phone number was added."
                                     : message == ManageMessageId.RemovePhoneSuccess
                                         ? "Your phone number was removed."
-                                        : "";
+                                        : null;
          
             var userId = User.Identity.GetUserId();
             var user = await UserManager.FindByIdAsync(userId);
