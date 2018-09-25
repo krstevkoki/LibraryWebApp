@@ -125,3 +125,116 @@
 **Изработено од:**
 1. [Костадин Крстев](https://github.com/krstevkoki) 161 169
 2. [Михаил Зафировски](https://github.com/mihailz) 161 162
+
+
+---
+---
+## Table of Contents
+
+- [Features](#features)
+- [Brief description of the application](#brief-description-of-the-application)
+- [User manual](#user-manual)
+- [Third-party libraries/services](#third-party-librariesservices)
+
+<br>
+
+## Features
+- Using an appropriate presentation template for books offered for sale, implementing search and sorting techniques
+- Relatively easy navigation through the content of the application
+- A consumable basket in which each registered member can see which books they have
+- 4 roles (**Administrator**, **Employee / Staff**, **Member**, **User**)
+- **Points system** that the member gets when buying a book. They can be used for discounts when buying books
+- **Special review** for each of the roles separately
+- **Manipulation** with data structures using database
+<br>
+
+## Brief description of the application
+This application is used for selling books. It uses the grid of equals template for a proper display of books on the Home Page. The user has the opportunity to search for an appropriate book. It also has the option of sorting books based on criteria such as: price, alphabetical order, quantity or date of issue. The application has 4 roles: Administrator, Employee, Member and User. The user has the option to access the details of each book separately by simply clicking the details button. Clicking on the details button opens a new overview showing the details of the book, price, author, publisher, and the ability to access an appropriate view of them. The user has the opportunity to buy the book only if he is logged in, or if he is a member in the opposite, he will be redirect to an appropriate view for registration. The registered user has the opportunity to buy a book, and for each purchased book, it is calculated the appropriate points that give him a discount when buying the next one. Each member has an appropriate consumer basket containing the books he has purchased, their amount and the total amount of payment. Every member has an insight into the books that he has purchased. Also, each member can write reviews for any book. Employees and administrators have additional opportunities to change data for an appropriate book, author or publisher.
+<br>
+
+## User manual
+
+### 1. Description of the forms in the application
+
+When starting the application, the Home Page is displayed as shown on Image 1
+
+<p align="center">
+    <img width=90% height="60%" src="https://user-images.githubusercontent.com/36881871/45980933-ab168b00-c053-11e8-9257-9f12a12567f9.png?raw=true"> <br>
+    <i>Image 1: Main view of the application</i>
+</p>
+
+After the Home Pag is displayed, the user has the opportunity to perform a search to find the desired book or perform
+sorting based on the criteria offered.
+
+<p align="center">
+    <img width=30% src="https://user-images.githubusercontent.com/36881871/45981545-ad79e480-c055-11e8-804a-45ea374266bc.png?raw=true" alt="Search box"> 
+    <img width=30% src="https://user-images.githubusercontent.com/36881871/45981547-aeab1180-c055-11e8-97e1-9c2560f2bffd.png?raw=true" alt="Sort list">
+    <br>
+    <span><i>Image 2, 3: Functions of search and sort tools</i></span>
+</p>
+
+
+The book found is displayed in a new view as a single element
+
+<p align="center">
+    <img width=60% height=50% src="https://user-images.githubusercontent.com/36881871/45981838-b15a3680-c056-11e8-96fb-16943d50abdb.png?raw=true"> 
+    <br>
+    <span><i>Image 4: View of searched book </i></span>
+</p>
+
+Clicking on Details for any book opens a new view with appropriate details about it, author, publisher, inventory, and in the lower part of the view there is a carousel that displays all the other available books that belong to the same genre as the current one.
+
+<p align="center">
+    <img width=60% height=50% src="https://user-images.githubusercontent.com/36881871/45982211-27ab6880-c058-11e8-9cfe-e70f8e89defc.png?raw=true"> 
+    <br>
+    <span><i>Image 5: Details view for the book </i></span>
+</p>
+
+Clicking the Add review button opens a window in which you can write the appropriate reviews for the book.
+
+<p align="center">
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45982653-dac89180-c059-11e8-9d3f-0aac8e96ea70.png?raw=true"> 
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45982657-e025dc00-c059-11e8-9304-b420101d2f50.png?raw=true"> <br>
+    <span><i>Image 6,7: Displaying dialog for leaving a review for the book and showind the review comment </i></span>
+</p>
+
+Clicking the links that lead to the author and the book publisher will open up appropriate views
+
+<p align="center">
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45982809-8ffb4980-c05a-11e8-91d8-4765264f136c.png?raw=true"> 
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45982815-95f12a80-c05a-11e8-8c2c-3a7913c765f0.png?raw=true"> <br>
+ <span><i>Image 8,9: Views for Author and Puslisher </i></span>
+</p>
+
+Each member has his own shopping cart in which he has an insight into the books he has purchased. Clicking Go to checkout opens a new view in which you need to complete the relevant data in order for the transaction to be performed.
+
+<p align="center">
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45983192-f896f600-c05b-11e8-8e5e-b097d2392aad.png?raw=true"> 
+    <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45983195-fa60b980-c05b-11e8-89d1-f6b5f6ffb9ba.png?raw=true"> 
+     <img width=30% height=30% src="https://user-images.githubusercontent.com/36881871/45983200-fe8cd700-c05b-11e8-983c-43da441f914f.png?raw=true"> 
+    <br>
+ <span><i>Image 9,10,11: Shopping cart </i></span>
+</p>
+
+Based on the role each member has access to a different panel
+
+<p align="center">
+    <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983958-30ec0380-c05f-11e8-93f3-90effffdfe10.png"> 
+    <img width=20% src="https://user-images.githubusercontent.com/36881871/45983728-241ae000-c05e-11e8-9b9c-5bad67c78271.png?raw=true"> 
+     <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983734-29782a80-c05e-11e8-92ef-f14e645dfa97.png?raw=true"> 
+     <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983738-3006a200-c05e-11e8-9fd4-e3138299d2c4.png?raw=true"> 
+    <br>
+ <span><i>Image 11,12,13,14: User pannels </i></span>
+</p>
+
+### 2. Description of the implementation
+The implementation takes place on the basis of several related classess Book, Publisher, Author, Genre, ShoppingCarts that are placed in a suitable base that allows them to manipulate each other. The overall application is mainly based on bootstrap, html, jquery and ajax code that allow designing the current look. We also made drastic changes in controllers and views of each class by adding custom code to achieve maximum functionality. 
+
+
+## Third-party libraries/services
+In the development of the application we used the packages offered by us **Nuget packet manager** as well as some **bootstrap and jquery** libraries from the outside that we implemented in the application to get the desired look.
+
+**Made by:**
+1. [Kostadin Krstev](https://github.com/krstevkoki) 161 169
+2. [Mihail Zafirovski](https://github.com/mihailz) 161 162
+
