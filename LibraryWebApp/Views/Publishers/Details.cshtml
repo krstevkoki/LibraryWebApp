@@ -33,11 +33,24 @@
 
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-left">
             <p>
-                Praesent sit amet rhoncus neque, ut maximus urna. Nam fermentum elit ante. Mauris laoreet nisi ligula, at dictum nibh lobortis id. In scelerisque congue eros, vel pellentesque nisi ullamcorper in. Quisque pharetra mauris non ultricies dignissim. Curabitur odio arcu, tristique a egestas vitae, iaculis sit amet orci. Aenean eget orci posuere nulla interdum suscipit. Donec pharetra purus ut tellus venenatis laoreet. Donec pellentesque massa sit amet urna commodo, eu ullamcorper purus luctus. Sed orci ligula, finibus sit amet congue a, suscipit eu lorem. Nunc elementum pretium felis et lacinia. Aliquam erat volutpat.
+                Praesent sit amet rhoncus neque, ut maximus urna. Nam fermentum elit ante. Mauris laoreet nisi ligula, 
+                at dictum nibh lobortis id. In scelerisque congue eros, vel pellentesque nisi ullamcorper in. Quisque 
+                pharetra mauris non ultricies dignissim. Curabitur odio arcu, tristique a egestas vitae, iaculis sit 
+                amet orci. Aenean eget orci posuere nulla interdum suscipit. Donec pharetra purus ut tellus venenatis 
+                laoreet. Donec pellentesque massa sit amet urna commodo, eu ullamcorper purus luctus. Sed orci ligula, 
+                finibus sit amet congue a, suscipit eu lorem. Nunc elementum pretium felis et lacinia. Aliquam erat 
+                volutpat.
             </p>
             <hr />
             <p>
-                Vestibulum sollicitudin purus eget quam consequat, lobortis venenatis nisl ullamcorper. Donec ac leo molestie, dapibus sapien id, laoreet dui. Vestibulum ornare consectetur dui ut venenatis. Nulla quis feugiat odio. In orci dui, dapibus quis ornare id, sodales in justo. Pellentesque non metus vitae sapien dapibus hendrerit ut tristique mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis dictum urna. Donec id posuere dui, in iaculis nibh. Morbi vitae ultrices magna. Morbi vel nibh ullamcorper, feugiat sem eget, consectetur tortor. Etiam sed lectus orci. Pellentesque eget dolor varius, tempor felis ac, luctus nunc. Nullam vestibulum nulla elit, sed venenatis diam vestibulum at. Curabitur in massa ante.
+                Vestibulum sollicitudin purus eget quam consequat, lobortis venenatis nisl ullamcorper. Donec ac leo 
+                molestie, dapibus sapien id, laoreet dui. Vestibulum ornare consectetur dui ut venenatis. Nulla quis 
+                feugiat odio. In orci dui, dapibus quis ornare id, sodales in justo. Pellentesque non metus vitae sapien 
+                dapibus hendrerit ut tristique mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. 
+                Pellentesque quis dictum urna. Donec id posuere dui, in iaculis nibh. Morbi vitae ultrices magna. Morbi 
+                vel nibh ullamcorper, feugiat sem eget, consectetur tortor. Etiam sed lectus orci. Pellentesque eget 
+                dolor varius, tempor felis ac, luctus nunc. Nullam vestibulum nulla elit, sed venenatis diam vestibulum 
+                at. Curabitur in massa ante.
             </p>
         </div>
     </div>
@@ -87,7 +100,7 @@
                     {
                         <div class="item active" style="background-color: gray">
                             <a href="/Books/Details/@Model.BooksByPublisher[i].Id?ReturnUrl=@(Html.Encode($"/Publishers/Details/{Model.Publisher.Id}"))">
-                                <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                                <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" style="height: 280px"/>
                             </a>
                         </div>
                     }
@@ -95,7 +108,7 @@
                     {
                         <div class="item" style="background-color: gray">
                             <a href="/Books/Details/@Model.BooksByPublisher[i].Id?ReturnUrl=@(Html.Encode($"/Publishers/Details/{Model.Publisher.Id}"))">
-                                <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block"/>
+                                <img src="@Model.BooksByPublisher[i].CoverURL" class="img-responsive img-thumbnail center-block" style="height: 280px"/>
                             </a>
                         </div>
                     }

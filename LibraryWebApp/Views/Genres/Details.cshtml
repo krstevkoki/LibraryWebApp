@@ -61,7 +61,7 @@
                     {
                         <div class="item active" style="background-color: gray">
                             <a href="/Books/Details/@Model.Books[i].Id?ReturnUrl=@(Html.Encode($"/Genres/Details/{Model.Genre.Id}"))">
-                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" style="height: 280px" />
                             </a>
                         </div>
                     }
@@ -69,7 +69,7 @@
                     {
                         <div class="item" style="background-color: gray">
                             <a href="/Books/Details/@Model.Books[i].Id?ReturnUrl=@(Html.Encode($"/Genres/Details/{Model.Genre.Id}"))">
-                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" />
+                                <img src="@Model.Books[i].CoverURL" class="img-responsive img-thumbnail center-block" style="height: 280px" />
                             </a>
                         </div>
                     }
