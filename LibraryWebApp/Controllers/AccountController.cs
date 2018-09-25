@@ -114,6 +114,13 @@ namespace LibraryWebApp.Controllers
                     user.Points = 0;
                 }
 
+                if (model.SelectedRole == Roles.Member)
+                {
+                    user.IsMember = true;
+                    user.MemberSince = DateTime.Now;
+                    user.Points = 150;
+                }
+
                 var result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
                 if (result == null)
                     return HttpNotFound();
@@ -374,7 +381,7 @@ namespace LibraryWebApp.Controllers
                 if (user.IsMember.Value)
                 {
                     user.MemberSince = DateTime.Now;
-                    user.Points = 100;
+                    user.Points = 150;
                 }
 
                 // Your code...
