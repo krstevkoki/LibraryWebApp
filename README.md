@@ -1,5 +1,5 @@
 <p align="center">
-    <img width=40% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/logo.jpg?raw=true?raw=true" alt="Лого на апликацијата/Application logo">
+    <img width=40% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/logo.jpg?raw=true" alt="Лого на апликацијата/Application logo">
 </p>
 
 <h1 align="center">LibaryWebApp</h1>
@@ -46,7 +46,7 @@
 При стартувањето на апликацијата се прикажува Home Page-от кој е прикажан на Слика 1
 
 <p align="center">
-    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true?raw=true"> <br>
+    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true"> <br>
     <i>Слика 1: Главен поглед на апликацијата</i>
 </p>
 
@@ -63,7 +63,7 @@
 Резултатите се прикажуваат во истиот поглед:
 
 <p align="center">
-    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true">
     <br>
     <span><i>Слика 4: Приказ на резултатите </i></span>
 </p>
@@ -71,7 +71,7 @@
 При клик на копчето *Details* за било која книга се отвора нов поглед со соодветни детали за истата (автор, издавач, залиха), а во долниот дел од погледот има имплементирано carousel на кој се прикажани предлози за книги кои припаѓаат на истиот жанр како тековната.
 
 <p align="center">
-    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true">
     <br>
     <span><i>Слика 5: Приказ на Details поглед за книга </i></span>
 </p>
@@ -79,25 +79,25 @@
 Со клик на копчето *Add review* се отвора диалог-прозорец во кој може да се напише соодветната критика за книгата.
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true"> <br>
     <span><i>Слика 6, 7: Прозорец за оставање критика за книгата и прикажување на истата </i></span>
 </p>
 
 Со клик на линковите кои водат до авторот и издавачот на книгата се отвораат соодветни погледи:
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true"> <br>
  <span><i>Слика 8, 9: Погледи за автор и издавач </i></span>
 </p>
 
 Секој член има своја потрошувачка кошничка во која има увид во книгите кои ги избрал за купување. Со клик на копчето *Go to checkout* се отвора нов поглед во кој треба да ги потполни соодветните податоци за да може да се изврши трансакцијата.
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true?raw=true">
-     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true">
+     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true">
     <br>
  <span><i>Слика 10, 11, 12: Потрошувачка кошничка </i></span>
 </p>
@@ -105,12 +105,12 @@
 Врз база на улогата секој член има достапност до различен панел:
 
 <p align="center">
-    <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983958-30ec0380-c05f-11e8-93f3-90effffdfe10.png">
-    <img width=20% src="https://user-images.githubusercontent.com/36881871/45983728-241ae000-c05e-11e8-9b9c-5bad67c78271.png?raw=true">
-    <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983734-29782a80-c05e-11e8-92ef-f14e645dfa97.png?raw=true">
-    <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983738-3006a200-c05e-11e8-9fd4-e3138299d2c4.png?raw=true">
+    <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l1.png?raw=true?">
+    <img width=20% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l2.png?raw=true">
+    <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l3.png?raw=true">
+    <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l4.png?raw=true">
     <br>
- <span><i>Слика 13, 14, 14, 14: Кориснички панели </i></span>
+ <span><i>Слика 13, 14, 15, 16: Кориснички панели </i></span>
 </p>
 
 ### 2. Опис на имплементацијата
@@ -164,15 +164,15 @@ This application is used for selling books. It uses the *grid of equals* design 
 When starting the application, the Home Page is displayed as shown on Image 1
 
 <p align="center">
-    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true?raw=true"> <br>
+    <img width=90% height="60%" src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/1.png?raw=true"> <br>
     <i>Image 1: Main view of the application</i>
 </p>
 
 After the Home Page is displayed, the user has the ability to perform a search to find the desired book or to perform sorting based on the criteria offered.
 
 <p align="center">
-    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/2.png?raw=true?raw=true" alt="Search box">
-    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/3.png?raw=true?raw=true" alt="Sort list">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/2.png?raw=true" alt="Search box">
+    <img width=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/3.png?raw=true" alt="Sort list">
     <br>
     <span><i>Image 2, 3: Functions of search and sort tools</i></span>
 </p>
@@ -180,7 +180,7 @@ After the Home Page is displayed, the user has the ability to perform a search t
 The results are displayed in a the same view:
 
 <p align="center">
-    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/4.png?raw=true">
     <br>
     <span><i>Image 4: Displaying the results </i></span>
 </p>
@@ -188,7 +188,7 @@ The results are displayed in a the same view:
 Clicking on the *Details* button, for any book, opens a new view with appropriate details (author, publisher, quantity, price) and in the bottom of the view there is a carousel that displays recommendations that belong to the same genre as the current one.
 
 <p align="center">
-    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true?raw=true">
+    <img width=60% height=50% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/5.png?raw=true>
     <br>
     <span><i>Image 5: Details view for the book </i></span>
 </p>
@@ -196,25 +196,25 @@ Clicking on the *Details* button, for any book, opens a new view with appropriat
 Clicking the *Add review* button opens a modal window in which you can write the appropriate review for the book.
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/6.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/7.png?raw=true"> <br>
     <span><i>Image 6, 7: Displaying dialog for leaving a review for the book and showind the review comment </i></span>
 </p>
 
 Clicking the links, that lead to the author and the book publisher, will open up appropriate views:
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true?raw=true"> <br>
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/8.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/9.png?raw=true"> <br>
  <span><i>Image 8, 9: Views for Author and Publisher </i></span>
 </p>
 
 Each member has his own shopping bag in which he has an insight into the books he wants to purchase. Clicking the *Go to checkout* button opens a new view in which you need to complete the required data in order to be performe a transaction.
 
 <p align="center">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true?raw=true">
-    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true?raw=true">
-     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/10.png?raw=true">
+    <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/11.png?raw=true">
+     <img width=30% height=30% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/12.png?raw=true">
     <br>
  <span><i>Image 10, 11, 12: Shopping cart</i></span>
 </p>
@@ -222,12 +222,12 @@ Each member has his own shopping bag in which he has an insight into the books h
 Based on the role each member has access to a different panel:
 
 <p align="center">
-    <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983958-30ec0380-c05f-11e8-93f3-90effffdfe10.png">
-    <img width=20% src="https://user-images.githubusercontent.com/36881871/45983728-241ae000-c05e-11e8-9b9c-5bad67c78271.png?raw=true">
-     <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983734-29782a80-c05e-11e8-92ef-f14e645dfa97.png?raw=true">
-     <img width=20%  src="https://user-images.githubusercontent.com/36881871/45983738-3006a200-c05e-11e8-9fd4-e3138299d2c4.png?raw=true">
+    <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l1.png?raw=true">
+    <img width=20% src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l2.png?raw=true">
+     <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l3.png?raw=true?">
+     <img width=20%  src="https://github.com/krstevkoki/LibraryWebApp/blob/documentation-img/img/l4.png?raw=true?">
     <br>
- <span><i>Image 11,12,13,14: User pannels </i></span>
+ <span><i>Image 13,14,15,16: User pannels </i></span>
 </p>
 
 ### 2. Description of the implementation
