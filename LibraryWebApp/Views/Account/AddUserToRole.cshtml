@@ -18,7 +18,13 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserName, new {@class = "col-md-2 control-label"})
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
+                        <input list="users-list" id="UserName" name="UserName" class="form-control" />
+                        <datalist id="users-list">
+                            @foreach (var user in Model.Users)
+                            {
+                                <option value="@user.UserName" />
+                            }
+                        </datalist>
                         @Html.ValidationMessageFor(m => m.UserName, "", new {@class = "alert-danger text-danger small"})
                         @if (ViewBag.Error != null)
                         {

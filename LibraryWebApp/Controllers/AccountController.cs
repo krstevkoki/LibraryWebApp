@@ -51,9 +51,12 @@ namespace LibraryWebApp.Controllers
         [Authorize(Roles = Roles.Admin)]
         public ActionResult AddUserToRole(string returnUrl)
         {
+            var users = UserManager.Users.ToList();
+            users.RemoveAll(u => u.UserName == User.Identity.Name);
             var model = new AddUserToRoleViewModel()
             {
                 UserName = string.Empty,
+                Users = users,
                 Roles = Roles.ExportToList(),
                 SelectedRole = string.Empty
             };
@@ -70,9 +73,12 @@ namespace LibraryWebApp.Controllers
 
             if (!ModelState.IsValid)
             {
+                var users = UserManager.Users.ToList();
+                users.RemoveAll(u => u.UserName == User.Identity.Name);
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
+                    Users = users,
                     Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };
@@ -83,9 +89,12 @@ namespace LibraryWebApp.Controllers
             if (user == null)
             {
                 ViewBag.Error = $"User '{model.UserName}' is not found!";
+                var users = UserManager.Users.ToList();
+                users.RemoveAll(u => u.UserName == User.Identity.Name);
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
+                    Users = users,
                     Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };
@@ -112,9 +121,12 @@ namespace LibraryWebApp.Controllers
             else
             {
                 ViewBag.Error = $"User '{model.UserName}' is already in the role '{model.SelectedRole}'";
+                var users = UserManager.Users.ToList();
+                users.RemoveAll(u => u.UserName == User.Identity.Name);
                 model = new AddUserToRoleViewModel()
                 {
                     UserName = model.UserName,
+                    Users = users,
                     Roles = Roles.ExportToList(),
                     SelectedRole = model.SelectedRole
                 };

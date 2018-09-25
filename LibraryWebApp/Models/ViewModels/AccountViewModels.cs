@@ -136,7 +136,7 @@ namespace LibraryWebApp.Models.ViewModels
         [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
-
+        public ICollection<ApplicationUser> Users { get; set; }
         public ICollection<string> Roles { get; set; }
         [Display(Name = "Select a role")] public string SelectedRole { get; set; }
     }
