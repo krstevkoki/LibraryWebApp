@@ -121,6 +121,21 @@ namespace LibraryWebApp.Controllers
                     user.Points = 150;
                 }
 
+                if (user.UserName == User.Identity.Name)
+                {
+                    ViewBag.Error = "Changing your own role is not allowed";
+                    var users = UserManager.Users.ToList();
+                    users.RemoveAll(u => u.UserName == User.Identity.Name);
+                    model = new AddUserToRoleViewModel()
+                    {
+                        UserName = model.UserName,
+                        Users = users,
+                        Roles = Roles.ExportToList(),
+                        SelectedRole = model.SelectedRole
+                    };
+                    return View(model);
+                }
+
                 var result = await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
                 if (result == null)
                     return HttpNotFound();
