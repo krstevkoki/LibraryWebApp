@@ -140,10 +140,67 @@ namespace LibraryWebApp.Controllers
                     PublishPlace = model.Book.PublishPlace,
                     PublishDate = model.Book.PublishDate,
                     Price = model.Book.Price,
-                    Genre = db.Genres.Find(model.SelectedGenre),
                 };
+                var author = db.Authors.Find(model.SelectedAuthor);
+                if (author == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorAuthor = "Author does not exists!";
+                    return View(model);
+                }
                 book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
+
+                var publisher = db.Publishers.Find(model.SelectedPublisher);
+                if (publisher == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorPublisher = "Publisher does not exists!";
+                    return View(model);
+                }
                 book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
+
+                var genre = db.Genres.Find(model.SelectedGenre);
+                if (genre == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorGenre = "Genre does not exists!";
+                    return View(model);
+                }
+                book.Genre = genre;
+
                 db.Books.Add(book);
                 db.SaveChanges();
 
@@ -216,9 +273,65 @@ namespace LibraryWebApp.Controllers
                 book.PublishPlace = model.Book.PublishPlace;
                 book.PublishDate = model.Book.PublishDate;
                 book.Price = model.Book.Price;
-                book.Genre = db.Genres.Find(model.SelectedGenre);
+                var author = db.Authors.Find(model.SelectedAuthor);
+                if (author == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorAuthor = "Author does not exists!";
+                    return View(model);
+                }
                 book.Authors.Add(db.Authors.Find(model.SelectedAuthor));
+
+                var publisher = db.Publishers.Find(model.SelectedPublisher);
+                if (publisher == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorPublisher = "Publisher does not exists!";
+                    return View(model);
+                }
                 book.Publishers.Add(db.Publishers.Find(model.SelectedPublisher));
+
+                var genre = db.Genres.Find(model.SelectedGenre);
+                if (genre == null)
+                {
+                    model = new AddAuthorToBookModel()
+                    {
+                        Book = new Book(),
+                        Authors = (db.Authors.ToList()),
+                        SelectedAuthor = -1,
+                        Publishers = (db.Publishers.ToList()),
+                        SelectedPublisher = -1,
+                        Genres = (db.Genres.ToList()),
+                        SelectedGenre = -1
+                    };
+
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.ErrorGenre = "Genre does not exists!";
+                    return View(model);
+                }
+                book.Genre = genre;
 
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);

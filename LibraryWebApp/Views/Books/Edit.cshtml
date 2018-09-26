@@ -82,7 +82,7 @@
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedAuthor, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="authors-list" id="SelectedAuthor" name="SelectedAuthor" class="form-control"  value="@(Model.Book.Authors.Count != 0 ? Model.Book.Authors.ElementAt(0).Id.ToString() : "")" />
+                            <input list="authors-list" id="SelectedAuthor" name="SelectedAuthor" class="form-control" value="@(Model.Book.Authors.Count != 0 ? Model.Book.Authors.ElementAt(0).Id.ToString() : "")" />
                             <datalist id="authors-list">
                                 @foreach (var author in Model.Authors)
                                 {
@@ -90,13 +90,17 @@
                                 }
                             </datalist>
                             @Html.ValidationMessageFor(model => model.SelectedAuthor, "", new { @class = "text-danger alert-danger small" })
+                            @if (ViewBag.ErrorAuthor != null)
+                            {
+                                <span class="text-danger alert-danger small">@ViewBag.ErrorAuthor</span>
+                            }
                         </div>
                     </div>
 
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedPublisher, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="publishers-list" id="SelectedPublisher" name="SelectedPublisher" class="form-control"  value="@(Model.Book.Publishers.Count != 0 ? Model.Book.Publishers.ElementAt(0).Id.ToString() : "")"/>
+                            <input list="publishers-list" id="SelectedPublisher" name="SelectedPublisher" class="form-control" value="@(Model.Book.Publishers.Count != 0 ? Model.Book.Publishers.ElementAt(0).Id.ToString() : "")" />
                             <datalist id="publishers-list">
                                 @foreach (var publisher in Model.Publishers)
                                 {
@@ -104,13 +108,17 @@
                                 }
                             </datalist>
                             @Html.ValidationMessageFor(model => model.SelectedPublisher, "", new { @class = "text-danger alert-danger small" })
+                            @if (ViewBag.ErrorPublisher != null)
+                            {
+                                <span class="text-danger alert-danger small">@ViewBag.ErrorPublisher</span>
+                            }
                         </div>
                     </div>
 
                     <div class="form-group required">
                         @Html.LabelFor(model => model.SelectedGenre, htmlAttributes: new { @class = "control-label col-md-2", style = "cursor: pointer;" })
                         <div class="col-md-10">
-                            <input list="genres-list" id="SelectedGenre" name="SelectedGenre" class="form-control" value="@(Model.Book.Genre != null ? Model.Book.Genre.Id.ToString() : "")"/>
+                            <input list="genres-list" id="SelectedGenre" name="SelectedGenre" class="form-control" value="@(Model.Book.Genre != null ? Model.Book.Genre.Id.ToString() : "")" />
                             <datalist id="genres-list">
                                 @foreach (var genre in Model.Genres)
                                 {
@@ -118,6 +126,10 @@
                                 }
                             </datalist>
                             @Html.ValidationMessageFor(model => model.SelectedGenre, "", new { @class = "text-danger alert-danger small" })
+                            @if (ViewBag.ErrorGenre != null)
+                            {
+                                <span class="text-danger alert-danger small">@ViewBag.ErrorGenre</span>
+                            }
                         </div>
                     </div>
 
